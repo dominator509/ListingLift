@@ -1,0 +1,16 @@
+{
+  "total_routes": 438,
+  "routes_tested": 438,
+  "pass": 438,
+  "fail": 0,
+  "status_counts": {
+    "2xx": 50,
+    "3xx": 138,
+    "4xx": 250,
+    "5xx": 0,
+    "timeout": 0,
+    "error": 0
+  },
+  "failures": [],
+  "verdict": "PASS"
+}

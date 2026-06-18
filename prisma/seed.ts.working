@@ -1,0 +1,1341 @@
+import bcrypt from 'bcryptjs';
+import { DEFAULT_PACKAGES } from '../src/domain/packages';
+import { DEFAULT_PLATFORM_PRESETS } from '../src/domain/platform-presets';
+import { DEFAULT_ROLES, DEFAULT_PERMISSIONS } from '../src/domain/roles';
+import { DEFAULT_SALES_CHANNELS } from '../src/domain/sales-channels';
+import { SALES_CHANNEL_ADAPTER_KEY_BY_CHANNEL } from '../src/domain/sales-channel-normalization';
+import { DEFAULT_IMAGE_PROVIDER_DEFINITIONS } from '../src/domain/image-providers';
+import { DEFAULT_GUMROAD_OFFER_MAPPINGS } from '../src/domain/gumroad';
+import { DEFAULT_OTHER_SALES_CHANNELS, OTHER_SALES_CHANNEL_SAFETY_RULES } from '../src/domain/generic-sales-channels';
+
+import { PrismaClient } from '@prisma/client';
+
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+      where: { key: role.key },
+      update: { name: role.name, description: role.description, system: true },
+      create: { key: role.key, name: role.name, description: role.description, system: true },
+    });
+
+    for (const permissionKey of role.permissions) {
+      const permissionId = permissionByKey.get(permissionKey);
+      if (!permissionId) continue;
+      await prisma.rolePermission.upsert({
+        where: { roleId_permissionId: { roleId: roleRecord.id, permissionId } },
+        update: {},
+        create: { roleId: roleRecord.id, permissionId },
+      });
+    }
+  }
+}
+
+async function main() {
+  await seedRolesAndPermissions();
+
+  const demoPasswordHash = await bcrypt.hash('DemoPassword123', 12);
+
+  const org = await prisma.organization.upsert({
+    where: { slug: 'demo-listinglift' },
+    update: { name: 'Demo ListingLift Workspace', organizationType: 'AGENCY' },
+    create: { name: 'Demo ListingLift Workspace', slug: 'demo-listinglift', organizationType: 'AGENCY' },
+  });
+
+  const superAdminRole = await prisma.role.findUniqueOrThrow({ where: { key: 'SUPER_ADMIN' } });
+  const agencyAdminRole = await prisma.role.findUniqueOrThrow({ where: { key: 'AGENCY_ADMIN' } });
+  const clientOwnerRole = await prisma.role.findUniqueOrThrow({ where: { key: 'CLIENT_OWNER' } });
+
+  const user = await prisma.user.upsert({
+    where: { email: 'demo-super-admin@example.com' },
+    update: { name: 'Demo Super Admin', accountStatus: 'ACTIVE', passwordHash: demoPasswordHash },
+    create: { email: 'demo-super-admin@example.com', name: 'Demo Super Admin', accountStatus: 'ACTIVE', passwordHash: demoPasswordHash },
+  });
+
+  await prisma.membership.upsert({
+    where: { organizationId_userId: { organizationId: org.id, userId: user.id } },
+    update: { roleId: superAdminRole.id, roleKey: 'SUPER_ADMIN' },
+    create: { organizationId: org.id, userId: user.id, roleId: superAdminRole.id, roleKey: 'SUPER_ADMIN' },
+  });
+
+
+  for (const mapping of DEFAULT_GUMROAD_OFFER_MAPPINGS) {
+    await prisma.gumroadProductMapping.upsert({
+      where: { organizationId_offerKey: { organizationId: org.id, offerKey: mapping.key } },
+      update: {
+        label: mapping.label,
+        productNameHints: mapping.productNameHints,
+        permalinkHints: mapping.permalinkHints,
+        packageKey: mapping.packageKey,
+        imageAllowance: mapping.imageAllowance,
+        creditAmount: mapping.creditAmount,
+        revisionAllowance: mapping.revisionAllowance,
+        fulfillmentKind: mapping.fulfillmentKind,
+        createsJob: mapping.createsJob,
+        sendsUploadLink: mapping.sendsUploadLink,
+        sendsAdminNotification: mapping.sendsAdminNotification,
+        safeDescription: mapping.safeDescription,
+        active: true,
+      },
+      create: {
+        organizationId: org.id,
+        offerKey: mapping.key,
+        label: mapping.label,
+        productNameHints: mapping.productNameHints,
+        permalinkHints: mapping.permalinkHints,
+        packageKey: mapping.packageKey,
+        imageAllowance: mapping.imageAllowance,
+        creditAmount: mapping.creditAmount,
+        revisionAllowance: mapping.revisionAllowance,
+        fulfillmentKind: mapping.fulfillmentKind,
+        createsJob: mapping.createsJob,
+        sendsUploadLink: mapping.sendsUploadLink,
+        sendsAdminNotification: mapping.sendsAdminNotification,
+        safeDescription: mapping.safeDescription,
+        active: true,
+      },
+    });
+  }
+
+  await prisma.brandSetting.upsert({
+    where: { organizationId: org.id },
+    update: { portalName: 'ListingLift Demo Portal', deliveryFooter: 'Platform-ready draft. Seller review recommended before publishing.' },
+    create: { organizationId: org.id, portalName: 'ListingLift Demo Portal', deliveryFooter: 'Platform-ready draft. Seller review recommended before publishing.' },
+  });
+
+  for (const pkg of DEFAULT_PACKAGES) {
+    await prisma.package.upsert({
+      where: { key: pkg.key },
+      update: {
+        publicSlug: pkg.publicSlug,
+        name: pkg.name,
+        shortName: pkg.shortName,
+        category: pkg.category,
+        description: pkg.description,
+        positioning: pkg.positioning,
+        imageMin: pkg.imageMin,
+        imageMax: pkg.imageMax,
+        imageAllowance: pkg.imageAllowance,
+        priceMinCents: pkg.priceMinCents,
+        priceMaxCents: pkg.priceMaxCents,
+        currency: pkg.currency,
+        billingInterval: pkg.billingInterval,
+        checkoutMode: pkg.checkoutMode,
+        deliveryWindowDays: pkg.deliveryWindowDays,
+        revisionAllowance: pkg.revisionAllowance,
+        includedOutputTypes: pkg.includedOutputTypes,
+        defaultSalesChannelKeys: pkg.defaultSalesChannelKeys,
+        features: pkg.features,
+        recommendedFor: pkg.recommendedFor,
+        deliverables: pkg.deliverables,
+        pricePolicy: pkg.pricePolicy as Prisma.InputJsonValue,
+        safeClaim: pkg.safeClaim,
+        upsellPackageKeys: pkg.upsellPackageKeys,
+        popular: pkg.popular,
+        sortOrder: pkg.sortOrder,
+        active: pkg.active,
+        manualReviewRequired: pkg.manualReviewRequired,
+      },
+      create: {
+        key: pkg.key,
+        publicSlug: pkg.publicSlug,
+        name: pkg.name,
+        shortName: pkg.shortName,
+        category: pkg.category,
+        description: pkg.description,
+        positioning: pkg.positioning,
+        imageMin: pkg.imageMin,
+        imageMax: pkg.imageMax,
+        imageAllowance: pkg.imageAllowance,
+        priceMinCents: pkg.priceMinCents,
+        priceMaxCents: pkg.priceMaxCents,
+        currency: pkg.currency,
+        billingInterval: pkg.billingInterval,
+        checkoutMode: pkg.checkoutMode,
+        deliveryWindowDays: pkg.deliveryWindowDays,
+        revisionAllowance: pkg.revisionAllowance,
+        includedOutputTypes: pkg.includedOutputTypes,
+        defaultSalesChannelKeys: pkg.defaultSalesChannelKeys,
+        features: pkg.features,
+        recommendedFor: pkg.recommendedFor,
+        deliverables: pkg.deliverables,
+        pricePolicy: pkg.pricePolicy as Prisma.InputJsonValue,
+        safeClaim: pkg.safeClaim,
+        upsellPackageKeys: pkg.upsellPackageKeys,
+        popular: pkg.popular,
+        sortOrder: pkg.sortOrder,
+        active: pkg.active,
+        manualReviewRequired: pkg.manualReviewRequired,
+      },
+    });
+  }
+
+  for (const preset of DEFAULT_PLATFORM_PRESETS) {
+    await prisma.platformPreset.upsert({
+      where: { key: preset.key },
+      update: {
+        platform: preset.platform,
+        platformKey: preset.platformKey,
+        name: preset.name,
+        description: preset.description,
+        width: preset.width,
+        height: preset.height,
+        aspectRatio: preset.aspectRatio,
+        orientation: preset.orientation,
+        format: preset.format,
+        folderPath: preset.folderPath,
+        folderDestination: preset.folderDestination as Prisma.InputJsonValue,
+        background: preset.background,
+        compressionTargetKb: preset.compressionTargetKb,
+        maxFileSizeKb: preset.maxFileSizeKb,
+        safeMarginPercent: preset.safeMarginPercent,
+        namingConvention: preset.namingConvention,
+        recommendedUse: preset.recommendedUse,
+        qualityChecks: preset.qualityChecks,
+        channelTags: preset.channelTags,
+        safeLanguage: preset.safeLanguage,
+        marketplaceSafeClaim: preset.marketplaceSafeClaim,
+        sellerReviewRequired: preset.sellerReviewRequired,
+        supportsTransparent: preset.supportsTransparent,
+        supportsWhiteBackground: preset.supportsWhiteBackground,
+        editable: preset.editable,
+        system: preset.system,
+        sortOrder: preset.sortOrder,
+        active: preset.active ?? true,
+      },
+      create: {
+        key: preset.key,
+        platform: preset.platform,
+        platformKey: preset.platformKey,
+        name: preset.name,
+        description: preset.description,
+        width: preset.width,
+        height: preset.height,
+        aspectRatio: preset.aspectRatio,
+        orientation: preset.orientation,
+        format: preset.format,
+        folderPath: preset.folderPath,
+        folderDestination: preset.folderDestination as Prisma.InputJsonValue,
+        background: preset.background,
+        compressionTargetKb: preset.compressionTargetKb,
+        maxFileSizeKb: preset.maxFileSizeKb,
+        safeMarginPercent: preset.safeMarginPercent,
+        namingConvention: preset.namingConvention,
+        recommendedUse: preset.recommendedUse,
+        qualityChecks: preset.qualityChecks,
+        channelTags: preset.channelTags,
+        safeLanguage: preset.safeLanguage,
+        marketplaceSafeClaim: preset.marketplaceSafeClaim,
+        sellerReviewRequired: preset.sellerReviewRequired,
+        supportsTransparent: preset.supportsTransparent,
+        supportsWhiteBackground: preset.supportsWhiteBackground,
+        editable: preset.editable,
+        system: preset.system,
+        sortOrder: preset.sortOrder,
+        active: preset.active ?? true,
+      },
+    });
+  }
+
+  const salesChannelByKey = new Map<string, string>();
+  for (const channel of DEFAULT_SALES_CHANNELS) {
+    const record = await prisma.salesChannel.upsert({
+      where: { organizationId_key: { organizationId: org.id, key: channel.key } },
+      update: {
+        name: channel.name,
+        channelType: channel.channelType,
+        mode: channel.defaultMode,
+        canonicalKey: channel.key,
+        adapterKey: SALES_CHANNEL_ADAPTER_KEY_BY_CHANNEL[channel.key],
+        supportedModes: [channel.defaultMode, 'MANUAL'],
+        enabled: channel.enabledByDefault,
+        notes: channel.marketplaceSafety.join(' '),
+        marketplaceSafetyRules: channel.marketplaceSafety,
+        manualFallbackEnabled: true,
+        revenueAttributionEnabled: true,
+      },
+      create: {
+        organizationId: org.id,
+        key: channel.key,
+        name: channel.name,
+        channelType: channel.channelType,
+        mode: channel.defaultMode,
+        canonicalKey: channel.key,
+        adapterKey: SALES_CHANNEL_ADAPTER_KEY_BY_CHANNEL[channel.key],
+        supportedModes: [channel.defaultMode, 'MANUAL'],
+        enabled: channel.enabledByDefault,
+        notes: channel.marketplaceSafety.join(' '),
+        marketplaceSafetyRules: channel.marketplaceSafety,
+        manualFallbackEnabled: true,
+        revenueAttributionEnabled: true,
+      },
+    });
+    salesChannelByKey.set(record.key, record.id);
+  }
+
+
+  for (const channel of DEFAULT_OTHER_SALES_CHANNELS) {
+    await prisma.genericSalesChannelMapping.upsert({
+      where: { organizationId_channelKey: { organizationId: org.id, channelKey: channel.key } },
+      update: {
+        label: channel.label,
+        category: channel.category,
+        defaultPackageKey: channel.defaultPackageKey,
+        defaultIntent: channel.defaultIntent,
+        defaultDeliveryMode: channel.defaultDeliveryMode,
+        sourceHints: channel.sourceHints,
+        manualOnly: channel.manualOnly,
+        supportsProposalTemplate: channel.supportsProposalTemplate,
+        supportsFollowUp: channel.supportsFollowUp,
+        revenueAttributionRequired: channel.revenueAttributionRequired,
+        marketplaceSafetyRules: [...OTHER_SALES_CHANNEL_SAFETY_RULES],
+        active: true,
+      },
+      create: {
+        organizationId: org.id,
+        channelKey: channel.key,
+        label: channel.label,
+        category: channel.category,
+        defaultPackageKey: channel.defaultPackageKey,
+        defaultIntent: channel.defaultIntent,
+        defaultDeliveryMode: channel.defaultDeliveryMode,
+        sourceHints: channel.sourceHints,
+        manualOnly: channel.manualOnly,
+        supportsProposalTemplate: channel.supportsProposalTemplate,
+        supportsFollowUp: channel.supportsFollowUp,
+        revenueAttributionRequired: channel.revenueAttributionRequired,
+        marketplaceSafetyRules: [...OTHER_SALES_CHANNEL_SAFETY_RULES],
+        active: true,
+      },
+    });
+  }
+
+
+  for (const provider of DEFAULT_IMAGE_PROVIDER_DEFINITIONS) {
+    const secretStatus = {
+      requiredSecretNames: provider.secretEnvVars,
+      complete: provider.secretEnvVars.length === 0,
+      storageRule: 'EncryptedSecret references only; no plaintext provider secrets in seed data.',
+    } as Prisma.InputJsonValue;
+
+    await prisma.imageProviderConfiguration.upsert({
+      where: { organizationId_providerKey: { organizationId: org.id, providerKey: provider.key } },
+      update: {
+        enabled: provider.key === 'mock-image-provider',
+        mode: provider.key === 'mock-image-provider' ? 'MOCK' : 'API',
+        status: provider.key === 'mock-image-provider' ? 'HEALTHY' : provider.secretEnvVars.length ? 'NEEDS_SECRETS' : 'DISABLED',
+        priority: provider.key === 'mock-image-provider' ? 1 : 100,
+        capabilities: provider.capabilities,
+        config: { seed: true, featureFlag: provider.enabledFeatureFlag, realCallsFeatureFlag: provider.realCallsFeatureFlag ?? null } as Prisma.InputJsonValue,
+        secretStatus,
+        healthStatus: provider.key === 'mock-image-provider' ? 'HEALTHY' : 'BLOCKED',
+        healthMessage: provider.key === 'mock-image-provider' ? 'Mock provider seeded as baseline-ready.' : 'Real provider seeded disabled. Codex must configure encrypted secrets and feature flags before use.',
+        lastHealthCheckedAt: new Date(),
+        manualFallbackEnabled: true,
+      },
+      create: {
+        organizationId: org.id,
+        providerKey: provider.key,
+        enabled: provider.key === 'mock-image-provider',
+        mode: provider.key === 'mock-image-provider' ? 'MOCK' : 'API',
+        status: provider.key === 'mock-image-provider' ? 'HEALTHY' : provider.secretEnvVars.length ? 'NEEDS_SECRETS' : 'DISABLED',
+        priority: provider.key === 'mock-image-provider' ? 1 : 100,
+        capabilities: provider.capabilities,
+        config: { seed: true, featureFlag: provider.enabledFeatureFlag, realCallsFeatureFlag: provider.realCallsFeatureFlag ?? null } as Prisma.InputJsonValue,
+        secretStatus,
+        healthStatus: provider.key === 'mock-image-provider' ? 'HEALTHY' : 'BLOCKED',
+        healthMessage: provider.key === 'mock-image-provider' ? 'Mock provider seeded as baseline-ready.' : 'Real provider seeded disabled. Codex must configure encrypted secrets and feature flags before use.',
+        lastHealthCheckedAt: new Date(),
+        manualFallbackEnabled: true,
+      },
+    });
+  }
+
+  const client = await prisma.client.upsert({
+    where: { organizationId_email: { organizationId: org.id, email: 'seller@example.com' } },
+    update: {
+      name: 'Demo Seller',
+      businessName: 'Demo Storefront',
+      contactName: 'Demo Seller',
+      storeUrl: 'https://example.com/demo-store',
+      buyerType: 'Marketplace seller',
+      primarySalesChannel: 'Direct',
+      sourceChannel: 'Direct',
+      status: 'ACTIVE',
+      creditBalance: 25,
+      assignedAdminUserId: user.id,
+    },
+    create: {
+      organizationId: org.id,
+      assignedAdminUserId: user.id,
+      name: 'Demo Seller',
+      businessName: 'Demo Storefront',
+      contactName: 'Demo Seller',
+      email: 'seller@example.com',
+      storeUrl: 'https://example.com/demo-store',
+      buyerType: 'Marketplace seller',
+      primarySalesChannel: 'Direct',
+      sourceChannel: 'Direct',
+      status: 'ACTIVE',
+      creditBalance: 25,
+    },
+  });
+
+  const agencyAdmin = await prisma.user.upsert({
+    where: { email: 'demo-agency-admin@example.com' },
+    update: { name: 'Demo Agency Admin', accountStatus: 'ACTIVE', passwordHash: demoPasswordHash },
+    create: { email: 'demo-agency-admin@example.com', name: 'Demo Agency Admin', accountStatus: 'ACTIVE', passwordHash: demoPasswordHash },
+  });
+
+  await prisma.membership.upsert({
+    where: { organizationId_userId: { organizationId: org.id, userId: agencyAdmin.id } },
+    update: { roleId: agencyAdminRole.id, roleKey: 'AGENCY_ADMIN', clientId: null, agencyScope: true },
+    create: { organizationId: org.id, userId: agencyAdmin.id, roleId: agencyAdminRole.id, roleKey: 'AGENCY_ADMIN', agencyScope: true },
+  });
+
+  const clientOwner = await prisma.user.upsert({
+    where: { email: 'demo-client-owner@example.com' },
+    update: { name: 'Demo Client Owner', accountStatus: 'ACTIVE', passwordHash: demoPasswordHash },
+    create: { email: 'demo-client-owner@example.com', name: 'Demo Client Owner', accountStatus: 'ACTIVE', passwordHash: demoPasswordHash },
+  });
+
+  await prisma.membership.upsert({
+    where: { organizationId_userId: { organizationId: org.id, userId: clientOwner.id } },
+    update: { roleId: clientOwnerRole.id, roleKey: 'CLIENT_OWNER', clientId: client.id, agencyScope: false },
+    create: { organizationId: org.id, userId: clientOwner.id, roleId: clientOwnerRole.id, roleKey: 'CLIENT_OWNER', clientId: client.id },
+  });
+
+  const packageRecord = await prisma.package.findUniqueOrThrow({ where: { key: 'MarketplaceListing25' } });
+  const directChannelId = salesChannelByKey.get('Direct');
+  if (!directChannelId) throw new Error('Direct sales channel was not seeded.');
+
+  const externalOrder = await prisma.externalOrder.upsert({
+    where: { salesChannelId_externalOrderId: { salesChannelId: directChannelId, externalOrderId: 'DEMO-DIRECT-ORDER-001' } },
+    update: {
+      clientId: client.id,
+      packageKey: packageRecord.key,
+      buyerName: client.name,
+      buyerEmailOrUsername: client.email,
+      orderAmountCents: 9900,
+      currency: 'USD',
+      paymentStatus: 'MANUAL_CONFIRMED',
+      uploadStatus: 'TOKEN_SENT',
+      fulfillmentStatus: 'NOT_STARTED',
+      channelName: 'Direct',
+      dedupeKey: `${org.id}:direct:demo-direct-order-001`,
+      normalizationStatus: 'NORMALIZED',
+      mappingStatus: 'JOB_CREATED',
+      normalizedPayload: { seed: true, channelName: 'Direct', externalOrderId: 'DEMO-DIRECT-ORDER-001', packageKey: packageRecord.key },
+      revenueAttribution: { channelName: 'Direct', grossAmountCents: 9900, currency: 'USD', attributionSource: 'manual' },
+      importedAt: new Date(),
+    },
+    create: {
+      organizationId: org.id,
+      salesChannelId: directChannelId,
+      clientId: client.id,
+      externalOrderId: 'DEMO-DIRECT-ORDER-001',
+      externalCustomerId: 'DEMO-CUSTOMER-001',
+      buyerName: client.name,
+      buyerEmailOrUsername: client.email,
+      packageKey: packageRecord.key,
+      orderAmountCents: 9900,
+      currency: 'USD',
+      revisionAllowance: 2,
+      paymentStatus: 'MANUAL_CONFIRMED',
+      uploadStatus: 'TOKEN_SENT',
+      fulfillmentStatus: 'NOT_STARTED',
+      channelName: 'Direct',
+      packagePurchasedRaw: packageRecord.key,
+      sourceFingerprint: 'seed-direct-demo-order-001',
+      dedupeKey: `${org.id}:direct:demo-direct-order-001`,
+      normalizationStatus: 'NORMALIZED',
+      mappingStatus: 'JOB_CREATED',
+      normalizedPayload: { seed: true, channelName: 'Direct', externalOrderId: 'DEMO-DIRECT-ORDER-001', packageKey: packageRecord.key },
+      revenueAttribution: { channelName: 'Direct', grossAmountCents: 9900, currency: 'USD', attributionSource: 'manual' },
+      importedAt: new Date(),
+      rawPayload: { source: 'seed', mode: 'manual' },
+    },
+  });
+
+  const job = await prisma.job.upsert({
+    where: { organizationId_jobNumber: { organizationId: org.id, jobNumber: 'JOB-DEMO-001' } },
+    update: {
+      clientId: client.id,
+      salesChannelId: directChannelId,
+      externalOrderId: externalOrder.id,
+      packageId: packageRecord.id,
+      title: 'Demo Marketplace Listing Pack',
+      status: 'WAITING_FOR_UPLOAD',
+      paymentStatus: 'MANUAL_CONFIRMED',
+      uploadStatus: 'TOKEN_SENT',
+      fulfillmentStatus: 'NOT_STARTED',
+      sourceUrl: 'https://example.com/demo-direct-order-001',
+      sourceChannelName: 'Direct',
+      revenueAttribution: { channelName: 'Direct', externalOrderId: 'DEMO-DIRECT-ORDER-001', grossAmountCents: 9900, currency: 'USD', attributionSource: 'manual' },
+    },
+    create: {
+      organizationId: org.id,
+      clientId: client.id,
+      salesChannelId: directChannelId,
+      externalOrderId: externalOrder.id,
+      packageId: packageRecord.id,
+      jobNumber: 'JOB-DEMO-001',
+      title: 'Demo Marketplace Listing Pack',
+      status: 'WAITING_FOR_UPLOAD',
+      paymentStatus: 'MANUAL_CONFIRMED',
+      uploadStatus: 'TOKEN_SENT',
+      fulfillmentStatus: 'NOT_STARTED',
+      targetPlatform: 'Amazon, Etsy, Shopify',
+      imageQuantity: 25,
+      productCategory: 'Home goods',
+      backgroundPreference: 'white and transparent',
+      fileFormat: 'JPG, PNG, WebP',
+      skuNamingPreference: 'SKU-first safe names',
+      deliveryNotes: 'Platform-ready draft. Seller review recommended before publishing.',
+      sourceUrl: 'https://example.com/demo-direct-order-001',
+      sourceChannelName: 'Direct',
+      revenueAttribution: { channelName: 'Direct', externalOrderId: 'DEMO-DIRECT-ORDER-001', grossAmountCents: 9900, currency: 'USD', attributionSource: 'manual' },
+    },
+  });
+
+  const uploadToken = await prisma.uploadToken.upsert({
+    where: { tokenHash: 'seed-upload-token-hash-demo-001' },
+    update: {
+      expiresAt: new Date('2099-01-01T00:00:00.000Z'),
+      maxFiles: 50,
+      maxBytesPerFile: 52428800,
+      allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'application/zip'],
+      metadata: { seed: true, note: 'Demo hashed upload token. Public token is never stored.' },
+    },
+    create: {
+      organizationId: org.id,
+      clientId: client.id,
+      jobId: job.id,
+      tokenHash: 'seed-upload-token-hash-demo-001',
+      purpose: 'UPLOAD',
+      expiresAt: new Date('2099-01-01T00:00:00.000Z'),
+      maxFiles: 50,
+      maxBytesPerFile: 52428800,
+      allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'application/zip'],
+      metadata: { seed: true, note: 'Demo hashed upload token. Public token is never stored.' },
+    },
+  });
+
+  const uploadBatch = await prisma.uploadBatch.upsert({
+    where: { id: 'seed-upload-batch-demo-001' },
+    update: {
+      status: 'ACCEPTED',
+      fileCount: 1,
+      acceptedFileCount: 1,
+      rejectedFileCount: 0,
+      totalBytes: BigInt(512000),
+      metadata: { seed: true, source: 'phase8-direct-upload-file-intake' },
+    },
+    create: {
+      id: 'seed-upload-batch-demo-001',
+      organizationId: org.id,
+      clientId: client.id,
+      jobId: job.id,
+      uploadTokenId: uploadToken.id,
+      sourceKind: 'DIRECT_UPLOAD',
+      status: 'ACCEPTED',
+      fileCount: 1,
+      acceptedFileCount: 1,
+      rejectedFileCount: 0,
+      totalBytes: BigInt(512000),
+      clientNotes: 'Seed upload batch for Phase 8 direct upload intake.',
+      metadata: { seed: true, source: 'phase8-direct-upload-file-intake' },
+    },
+  });
+
+  const image = await prisma.image.upsert({
+    where: { jobId_storageKey: { jobId: job.id, storageKey: 'demo/originals/demo-product-001.jpg' } },
+    update: { originalName: 'demo-product-001.jpg', status: 'ORIGINAL_UPLOADED', uploadStatus: 'COMPLETE', uploadBatchId: uploadBatch.id, uploadTokenId: uploadToken.id, sourceKind: 'DIRECT_UPLOAD', validationStatus: 'ACCEPTED' },
+    create: {
+      organizationId: org.id,
+      clientId: client.id,
+      jobId: job.id,
+      uploadBatchId: uploadBatch.id,
+      uploadTokenId: uploadToken.id,
+      sourceKind: 'DIRECT_UPLOAD',
+      originalName: 'demo-product-001.jpg',
+      originalRelativePath: 'demo-product-001.jpg',
+      storageKey: 'demo/originals/demo-product-001.jpg',
+      originalFileUrl: null,
+      mimeType: 'image/jpeg',
+      fileExtension: '.jpg',
+      sizeBytes: 512000,
+      width: 2000,
+      height: 2000,
+      sha256: 'demo-seed-not-a-real-file-hash',
+      uploadStatus: 'COMPLETE',
+      validationStatus: 'ACCEPTED',
+      status: 'ORIGINAL_UPLOADED',
+      qualityFlags: [],
+      metadata: { seed: true },
+    },
+  });
+
+  await prisma.uploadEvent.upsert({
+    where: { id: 'seed-upload-event-demo-001' },
+    update: { message: 'Seed original image accepted through Phase 8 intake.' },
+    create: {
+      id: 'seed-upload-event-demo-001',
+      organizationId: org.id,
+      clientId: client.id,
+      jobId: job.id,
+      uploadBatchId: uploadBatch.id,
+      imageId: image.id,
+      eventType: 'BATCH_ACCEPTED',
+      severity: 'INFO',
+      message: 'Seed original image accepted through Phase 8 intake.',
+      metadata: { seed: true, originalsPreserved: true, finalDeliveryRequiresApproval: true },
+    },
+  });
+
+  const processedFile = await prisma.processedFile.upsert({
+    where: { jobId_storageKey: { jobId: job.id, storageKey: 'demo/processed/JOB-DEMO-001/White-JPG/demo-product-001_white.jpg' } },
+    update: { status: 'READY_FOR_REVIEW', approvedStatus: 'PENDING' },
+    create: {
+      organizationId: org.id,
+      jobId: job.id,
+      imageId: image.id,
+      presetKey: 'AmazonMainImageDraft',
+      outputType: 'WHITE_JPG',
+      outputFormat: 'JPG',
+      backgroundType: 'WHITE',
+      fileName: 'demo-product-001_white.jpg',
+      folderPath: 'White-JPG',
+      storageKey: 'demo/processed/JOB-DEMO-001/White-JPG/demo-product-001_white.jpg',
+      mimeType: 'image/jpeg',
+      width: 2000,
+      height: 2000,
+      sizeBytes: 256000,
+      qualityScore: 92,
+      status: 'READY_FOR_REVIEW',
+      approvedStatus: 'PENDING',
+    },
+  });
+
+
+  const previewGallery = await prisma.previewGallery.upsert({
+    where: { jobId_galleryKey: { jobId: job.id, galleryKey: 'default-admin-preview' } },
+    update: {
+      status: 'READY_FOR_REVIEW',
+      clientPreviewEnabled: false,
+      itemCount: 1,
+      approvedItemCount: 0,
+      flaggedItemCount: 0,
+      failedItemCount: 0,
+      beforeAfterPairCount: 1,
+      metadata: { seed: true, phase: 13, finalDeliveryStillHidden: true },
+    },
+    create: {
+      organizationId: org.id,
+      jobId: job.id,
+      galleryKey: 'default-admin-preview',
+      status: 'READY_FOR_REVIEW',
+      clientPreviewEnabled: false,
+      approvedOnly: true,
+      itemCount: 1,
+      approvedItemCount: 0,
+      flaggedItemCount: 0,
+      failedItemCount: 0,
+      beforeAfterPairCount: 1,
+      generatedByUserId: user.id,
+      metadata: { seed: true, phase: 13, clientPreviewRequiresApprovedOutput: true, finalDeliveryStillHidden: true },
+    },
+  });
+
+  const previewGalleryItem = await prisma.previewGalleryItem.upsert({
+    where: { galleryId_itemKey: { galleryId: previewGallery.id, itemKey: 'processed-demo-white-jpg' } },
+    update: {
+      reviewStatus: 'READY_FOR_REVIEW',
+      approvedStatus: 'PENDING',
+      visibility: 'ADMIN_ONLY',
+      qualityScore: 92,
+      flags: [],
+    },
+    create: {
+      organizationId: org.id,
+      jobId: job.id,
+      galleryId: previewGallery.id,
+      itemKey: 'processed-demo-white-jpg',
+      imageId: image.id,
+      processedFileId: processedFile.id,
+      originalName: image.originalName,
+      outputFileName: processedFile.fileName,
+      originalStorageKey: image.storageKey,
+      previewStorageKey: processedFile.storageKey,
+      thumbnailStorageKey: 'demo/previews/JOB-DEMO-001/demo-product-001_white_thumb.jpg',
+      outputType: 'WHITE_JPG',
+      outputFormat: 'JPG',
+      presetKey: 'AmazonMainImageDraft',
+      platform: 'Amazon',
+      visibility: 'ADMIN_ONLY',
+      reviewStatus: 'READY_FOR_REVIEW',
+      approvedStatus: 'PENDING',
+      qualityScore: 92,
+      flags: [],
+      sortOrder: 1,
+      adminNotes: 'Seed preview item for Phase 13 admin gallery review.',
+      clientNotes: 'Preview will remain hidden until approved for client preview.',
+      metadata: { seed: true, beforeAfterPair: true, noMarketplaceGuarantee: true },
+    },
+  });
+
+
+  const qualityReview = await prisma.qualityReview.upsert({
+    where: { jobId_reviewKey: { jobId: job.id, reviewKey: 'quality-review:JOB-DEMO-001:demo-processed-white-jpg' } },
+    update: {
+      status: 'PENDING_REVIEW',
+      score: 92,
+      blockerCount: 0,
+      warningCount: 0,
+      infoCount: 0,
+      finalDeliveryBlocked: true,
+      metadata: { seed: true, phase: 14, approvalStillRequired: true },
+    },
+    create: {
+      organizationId: org.id,
+      jobId: job.id,
+      imageId: image.id,
+      processedFileId: processedFile.id,
+      previewGalleryItemId: previewGalleryItem.id,
+      reviewKey: 'quality-review:JOB-DEMO-001:demo-processed-white-jpg',
+      status: 'PENDING_REVIEW',
+      score: 92,
+      severity: 'INFO',
+      checklist: { source: 'phase14-seed', checks: ['edge_quality_issue', 'wrong_crop', 'failed_mask', 'preset_accuracy_issue'] },
+      blockerCount: 0,
+      warningCount: 0,
+      infoCount: 0,
+      adminNotes: 'Seed QC review is pending; final delivery remains blocked until approval workflow.',
+      clientVisibleNotes: null,
+      reviewedByUserId: user.id,
+      reviewedAt: null,
+      manualFallbackRequired: false,
+      manualReplacementRequired: false,
+      finalDeliveryBlocked: true,
+      metadata: { seed: true, phase: 14, noMarketplaceGuarantee: true, approvalStillRequired: true },
+    },
+  });
+
+  const qualityFlag = await prisma.qualityFlag.upsert({
+    where: { id: 'seed-quality-flag-preset-review' },
+    update: {
+      status: 'OPEN',
+      severity: 'WARNING',
+      blocksDelivery: true,
+      message: 'Seed flag: confirm preset dimensions and crop before approving output.',
+      metadata: { seed: true, phase: 14 },
+    },
+    create: {
+      id: 'seed-quality-flag-preset-review',
+      organizationId: org.id,
+      jobId: job.id,
+      reviewId: qualityReview.id,
+      imageId: image.id,
+      processedFileId: processedFile.id,
+      previewGalleryItemId: previewGalleryItem.id,
+      flagKey: 'preset_accuracy_issue',
+      category: 'PRESET',
+      severity: 'WARNING',
+      status: 'OPEN',
+      blocksDelivery: true,
+      message: 'Seed flag: confirm preset dimensions and crop before approving output.',
+      suggestedAction: 'Reviewer should verify output dimensions, crop, margin, and platform folder mapping.',
+      adminNotes: 'Demonstrates Phase 14 flagged-output workflow without exposing final delivery.',
+      clientVisible: false,
+      createdByUserId: user.id,
+      metadata: { seed: true, phase: 14, finalDeliveryBlocked: true },
+    },
+  });
+
+  await prisma.qualityReviewEvent.upsert({
+    where: { id: 'seed-quality-review-event-created' },
+    update: {
+      message: 'Seed Phase 14 QC review and flag created.',
+      metadata: { seed: true, phase: 14 },
+    },
+    create: {
+      id: 'seed-quality-review-event-created',
+      organizationId: org.id,
+      jobId: job.id,
+      reviewId: qualityReview.id,
+      flagId: qualityFlag.id,
+      actorUserId: user.id,
+      type: 'FLAG_ADDED',
+      message: 'Seed Phase 14 QC review and flag created.',
+      metadata: { seed: true, phase: 14, deliveryBlockedUntilResolved: true },
+    },
+  });
+
+
+
+  await prisma.manualApprovalGate.upsert({
+    where: { jobId: job.id },
+    update: {
+      status: 'BLOCKED_BY_FLAGS',
+      outputCount: 1,
+      approvedOutputCount: 0,
+      rejectedOutputCount: 0,
+      unresolvedBlockingFlags: 1,
+      openRevisionCount: 0,
+      manualReplacementRequiredCount: 0,
+      finalDeliveryAllowed: false,
+      metadata: { seed: true, phase: 15, finalDeliveryHidden: true },
+    },
+    create: {
+      organizationId: org.id,
+      jobId: job.id,
+      status: 'BLOCKED_BY_FLAGS',
+      outputCount: 1,
+      approvedOutputCount: 0,
+      rejectedOutputCount: 0,
+      unresolvedBlockingFlags: 1,
+      openRevisionCount: 0,
+      manualReplacementRequiredCount: 0,
+      finalDeliveryAllowed: false,
+      checkedByUserId: user.id,
+      checkedAt: new Date(),
+      notes: 'Seed Phase 15 approval gate is blocked until QC flag resolution and manual approval.',
+      metadata: { seed: true, phase: 15, finalDeliveryHidden: true },
+    },
+  });
+
+  await prisma.manualApprovalEvent.upsert({
+    where: { id: 'seed-manual-approval-event-readiness' },
+    update: { message: 'Seed Phase 15 approval readiness checked and blocked by QC flag.', metadata: { seed: true, phase: 15 } },
+    create: {
+      id: 'seed-manual-approval-event-readiness',
+      organizationId: org.id,
+      jobId: job.id,
+      processedFileId: processedFile.id,
+      actorUserId: user.id,
+      type: 'READINESS_CHECKED',
+      toStatus: 'BLOCKED_BY_FLAGS',
+      blocksDelivery: true,
+      message: 'Seed Phase 15 approval readiness checked and blocked by QC flag.',
+      metadata: { seed: true, phase: 15, deliveryStillHidden: true },
+    },
+  });
+
+  const revisionRequest = await prisma.revisionRequest.upsert({
+    where: { id: 'seed-revision-request-phase15' },
+    update: { status: 'OPEN', requestText: 'Seed revision request requiring edge cleanup review before final approval.', adminNotes: 'Phase 15 seed revision remains open to demonstrate approval blocker.' },
+    create: {
+      id: 'seed-revision-request-phase15',
+      organizationId: org.id,
+      jobId: job.id,
+      clientId: client.id,
+      imageId: image.id,
+      requestText: 'Seed revision request requiring edge cleanup review before final approval.',
+      adminNotes: 'Phase 15 seed revision remains open to demonstrate approval blocker.',
+      status: 'OPEN',
+    },
+  });
+
+  await prisma.revisionWorkflowEvent.upsert({
+    where: { id: 'seed-revision-workflow-event-requested' },
+    update: { message: 'Seed revision request created for Phase 15 workflow.', metadata: { seed: true, phase: 15 } },
+    create: {
+      id: 'seed-revision-workflow-event-requested',
+      organizationId: org.id,
+      jobId: job.id,
+      revisionId: revisionRequest.id,
+      actorUserId: user.id,
+      type: 'REQUESTED',
+      toStatus: 'OPEN',
+      clientVisible: true,
+      message: 'Seed revision request created for Phase 15 workflow.',
+      metadata: { seed: true, phase: 15, blocksFinalApproval: true },
+    },
+  });
+
+  const deliveryArchive = await prisma.deliveryArchive.upsert({
+    where: { jobId_zipStorageKey: { jobId: job.id, zipStorageKey: 'deliveries/demo-listinglift/JOB-DEMO-001/ListingLift_Delivery_Demo-Client_JOB-DEMO-001.zip' } },
+    update: {
+      status: 'PLANNED',
+      fileCount: 3,
+      outputCount: 1,
+      missingCount: 0,
+      sellerReviewRequired: true,
+      approvedOnly: true,
+      metadata: { seed: true, phase: 12, complianceSafe: true },
+    },
+    create: {
+      organizationId: org.id,
+      jobId: job.id,
+      status: 'PLANNED',
+      rootFolder: 'ListingLift_Delivery_Demo-Client_JOB-DEMO-001',
+      zipFileName: 'ListingLift_Delivery_Demo-Client_JOB-DEMO-001.zip',
+      zipStorageKey: 'deliveries/demo-listinglift/JOB-DEMO-001/ListingLift_Delivery_Demo-Client_JOB-DEMO-001.zip',
+      manifestStorageKey: 'deliveries/demo-listinglift/JOB-DEMO-001/ListingLift_Delivery_Demo-Client_JOB-DEMO-001/Manifest.csv',
+      readmeStorageKey: 'deliveries/demo-listinglift/JOB-DEMO-001/ListingLift_Delivery_Demo-Client_JOB-DEMO-001/ReadMe.txt',
+      fileCount: 3,
+      outputCount: 1,
+      missingCount: 0,
+      sellerReviewRequired: true,
+      approvedOnly: true,
+      generatedByUserId: user.id,
+      metadata: { seed: true, phase: 12, complianceSafe: true, clientDownloadsHiddenUntilApproval: true },
+    },
+  });
+
+  for (const archiveFile of [
+    {
+      archivePath: 'ListingLift_Delivery_Demo-Client_JOB-DEMO-001/White-JPG/demo-product-001_white.jpg',
+      folderPath: 'White-JPG',
+      fileName: 'demo-product-001_white.jpg',
+      kind: 'OUTPUT' as const,
+      format: 'JPG' as const,
+      mimeType: 'image/jpeg',
+      storageKey: processedFile.storageKey,
+      processedFileId: processedFile.id,
+      sourceImageId: image.id,
+      status: 'INCLUDED' as const,
+      sellerReviewRequired: true,
+      metadata: { presetKey: 'AmazonMainImageDraft', platform: 'Amazon', width: 2000, height: 2000 },
+    },
+    {
+      archivePath: 'ListingLift_Delivery_Demo-Client_JOB-DEMO-001/Manifest.csv',
+      folderPath: '',
+      fileName: 'Manifest.csv',
+      kind: 'MANIFEST' as const,
+      format: 'CSV' as const,
+      mimeType: 'text/csv',
+      storageKey: 'deliveries/demo-listinglift/JOB-DEMO-001/ListingLift_Delivery_Demo-Client_JOB-DEMO-001/Manifest.csv',
+      processedFileId: null,
+      sourceImageId: null,
+      status: 'INCLUDED' as const,
+      sellerReviewRequired: false,
+      metadata: { seed: true, csvFormulaNeutralized: true },
+    },
+    {
+      archivePath: 'ListingLift_Delivery_Demo-Client_JOB-DEMO-001/ReadMe.txt',
+      folderPath: '',
+      fileName: 'ReadMe.txt',
+      kind: 'README' as const,
+      format: 'TXT' as const,
+      mimeType: 'text/plain',
+      storageKey: 'deliveries/demo-listinglift/JOB-DEMO-001/ListingLift_Delivery_Demo-Client_JOB-DEMO-001/ReadMe.txt',
+      processedFileId: null,
+      sourceImageId: null,
+      status: 'INCLUDED' as const,
+      sellerReviewRequired: false,
+      metadata: { seed: true, safeLanguage: 'platform-ready draft; seller-review recommended; no approval guarantee' },
+    },
+  ]) {
+    await prisma.deliveryArchiveFile.upsert({
+      where: { jobId_archivePath: { jobId: job.id, archivePath: archiveFile.archivePath } },
+      update: {
+        archiveId: deliveryArchive.id,
+        storageKey: archiveFile.storageKey,
+        status: archiveFile.status,
+        metadata: archiveFile.metadata,
+      },
+      create: {
+        organizationId: org.id,
+        jobId: job.id,
+        archiveId: deliveryArchive.id,
+        processedFileId: archiveFile.processedFileId,
+        sourceImageId: archiveFile.sourceImageId,
+        kind: archiveFile.kind,
+        archivePath: archiveFile.archivePath,
+        folderPath: archiveFile.folderPath,
+        fileName: archiveFile.fileName,
+        storageKey: archiveFile.storageKey,
+        mimeType: archiveFile.mimeType,
+        format: archiveFile.format,
+        status: archiveFile.status,
+        sellerReviewRequired: archiveFile.sellerReviewRequired,
+        metadata: archiveFile.metadata,
+      },
+    });
+  }
+
+
+
+  const processingRun = await prisma.imageProcessingRun.upsert({
+    where: { id: 'seed-processing-run-demo-001' },
+    update: {
+      providerKey: 'mock-image-provider',
+      status: 'COMPLETED',
+      totalImages: 1,
+      totalRequestedOutputs: 4,
+      totalCreatedOutputs: 1,
+      totalFailedOutputs: 0,
+      selectedPresetKeys: ['TransparentPngCutout', 'WhiteJpgCatalog', 'SquareMarketplaceDraft', 'VerticalSocialDraft'],
+      operations: ['metadata-read', 'remove-background', 'transparent-png', 'white-background', 'resize', 'compress', 'preset-output'],
+      metadata: { seed: true, originalsPreserved: true, finalDeliveryRequiresApproval: true },
+    },
+    create: {
+      id: 'seed-processing-run-demo-001',
+      organizationId: org.id,
+      jobId: job.id,
+      providerKey: 'mock-image-provider',
+      status: 'COMPLETED',
+      totalImages: 1,
+      totalRequestedOutputs: 4,
+      totalCreatedOutputs: 1,
+      totalFailedOutputs: 0,
+      selectedPresetKeys: ['TransparentPngCutout', 'WhiteJpgCatalog', 'SquareMarketplaceDraft', 'VerticalSocialDraft'],
+      operations: ['metadata-read', 'remove-background', 'transparent-png', 'white-background', 'resize', 'compress', 'preset-output'],
+      metadata: { seed: true, originalsPreserved: true, finalDeliveryRequiresApproval: true },
+      startedAt: new Date(),
+      finishedAt: new Date(),
+    },
+  });
+
+  await prisma.imageProcessingStep.upsert({
+    where: { id: 'seed-processing-step-demo-001' },
+    update: { status: 'COMPLETED', outputStorageKey: 'demo/processed/JOB-DEMO-001/White-JPG/demo-product-001_white.jpg' },
+    create: {
+      id: 'seed-processing-step-demo-001',
+      organizationId: org.id,
+      jobId: job.id,
+      runId: processingRun.id,
+      imageId: image.id,
+      providerKey: 'mock-image-provider',
+      operation: 'PRESET_OUTPUT',
+      status: 'COMPLETED',
+      inputStorageKey: image.storageKey,
+      outputStorageKey: 'demo/processed/JOB-DEMO-001/White-JPG/demo-product-001_white.jpg',
+      presetKey: 'AmazonMainImageDraft',
+      outputType: 'WHITE_JPG',
+      outputFormat: 'JPG',
+      backgroundType: 'WHITE',
+      metadata: { seed: true, originalPreserved: true, outputRequiresReview: true },
+      startedAt: new Date(),
+      completedAt: new Date(),
+    },
+  });
+
+  await prisma.creditLedger.upsert({
+    where: { id: 'seed-credit-ledger-demo-001' },
+    update: { amount: 25, reason: 'Seed monthly seller credit balance' },
+    create: {
+      id: 'seed-credit-ledger-demo-001',
+      organizationId: org.id,
+      clientId: client.id,
+      amount: 25,
+      balanceAfter: 25,
+      creditType: 'seed',
+      source: 'seed',
+      reason: 'Seed monthly seller credit balance',
+    },
+  });
+
+  const existingSeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      jobId: job.id,
+      action: 'seed.phase4.tenant_rbac_agency_contract',
+      targetType: 'Job',
+      targetId: job.id,
+    },
+  });
+
+  if (!existingSeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        jobId: job.id,
+        action: 'seed.phase4.tenant_rbac_agency_contract',
+        targetType: 'Job',
+        targetId: job.id,
+        metadata: { jobNumber: job.jobNumber, note: 'Idempotent seed run completed with Phase 4 demo agency/client RBAC memberships.' },
+      },
+    });
+  }
+
+  const existingPackageSeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase5.packages_pricing_contract',
+      targetType: 'Package',
+    },
+  });
+
+  if (!existingPackageSeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        action: 'seed.phase5.packages_pricing_contract',
+        targetType: 'Package',
+        metadata: { note: 'Idempotent seed run completed with Phase 5 package pricing, checkout modes, safe claims, allowances, and sales-channel mappings.' },
+      },
+    });
+  }
+
+
+  const existingSalesChannelSeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase7.sales_channel_normalization_contract',
+      targetType: 'SalesChannel',
+    },
+  });
+
+  if (!existingSalesChannelSeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        action: 'seed.phase7.sales_channel_normalization_contract',
+        targetType: 'SalesChannel',
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 7 canonical sales-channel adapter keys, manual fallback flags, normalized payload, dedupe key, revenue attribution, and demo external order/job linkage.',
+        },
+      },
+    });
+  }
+
+
+  const existingUploadSeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase8.direct_upload_file_intake_contract',
+      targetType: 'UploadBatch',
+      targetId: uploadBatch.id,
+    },
+  });
+
+  if (!existingUploadSeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        jobId: job.id,
+        action: 'seed.phase8.direct_upload_file_intake_contract',
+        targetType: 'UploadBatch',
+        targetId: uploadBatch.id,
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 8 upload token, upload batch, upload event, original image intake, and original-preservation policy.',
+        },
+      },
+    });
+  }
+
+
+  const existingPhase9SeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase9.job_creation_admin_queue_contract',
+      targetType: 'Job',
+      targetId: job.id,
+    },
+  });
+
+  if (!existingPhase9SeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        jobId: job.id,
+        action: 'seed.phase9.job_creation_admin_queue_contract',
+        targetType: 'Job',
+        targetId: job.id,
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 9 job queue metadata, manual job creation contract, deadline warning contract, and status-event/audit requirements.',
+        },
+      },
+    });
+  }
+
+
+  const existingPhase10SeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase10.image_provider_layer_contract',
+      targetType: 'ImageProviderConfiguration',
+    },
+  });
+
+  if (!existingPhase10SeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        action: 'seed.phase10.image_provider_layer_contract',
+        targetType: 'ImageProviderConfiguration',
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 10 mock image provider enabled, real providers disabled, encrypted-secret-reference policy, and manual fallback requirements.',
+          providerKeys: DEFAULT_IMAGE_PROVIDER_DEFINITIONS.map((provider) => provider.key),
+        },
+      },
+    });
+  }
+
+
+  const existingPhase11SeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase11.core_image_processing_pipeline_contract',
+      targetType: 'ImageProcessingRun',
+      targetId: processingRun.id,
+    },
+  });
+
+  if (!existingPhase11SeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        jobId: job.id,
+        action: 'seed.phase11.core_image_processing_pipeline_contract',
+        targetType: 'ImageProcessingRun',
+        targetId: processingRun.id,
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 11 processing run, step, processed-file draft, original-preservation rule, and review-required delivery gate.',
+        },
+      },
+    });
+  }
+
+
+  const existingPhase12SeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase12.delivery_packaging_contract',
+      targetType: 'DeliveryArchive',
+      targetId: deliveryArchive.id,
+    },
+  });
+
+  if (!existingPhase12SeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        jobId: job.id,
+        action: 'seed.phase12.delivery_packaging_contract',
+        targetType: 'DeliveryArchive',
+        targetId: deliveryArchive.id,
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 12 delivery archive, manifest, ReadMe, ZIP storage key, safe folder path, and approval-gated delivery contract.',
+        },
+      },
+    });
+  }
+
+
+  const deliveryLink = await prisma.deliveryLink.upsert({
+    where: { tokenHash: 'seed-phase16-delivery-token-hash-redacted' },
+    update: {
+      status: 'DRAFT',
+      maxDownloads: 5,
+      downloadCount: 0,
+      deliveryNotes: 'Seed delivery link remains draft until Codex wires approval checks and token issuance.',
+    },
+    create: {
+      jobId: job.id,
+      tokenHash: 'seed-phase16-delivery-token-hash-redacted',
+      status: 'DRAFT',
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      approvedOnly: true,
+      maxDownloads: 5,
+      downloadCount: 0,
+      deliveryNotes: 'Seed delivery link remains draft until Codex wires approval checks and token issuance.',
+    },
+  });
+
+  await prisma.deliveryNotificationLog.upsert({
+    where: { id: 'seed-phase16-download-ready-notification' },
+    update: { status: 'PLANNED', metadata: { seed: true, phase: 16, mockEmailOnly: true } },
+    create: {
+      id: 'seed-phase16-download-ready-notification',
+      organizationId: org.id,
+      jobId: job.id,
+      clientId: client.id,
+      type: 'DOWNLOAD_READY',
+      status: 'PLANNED',
+      providerKey: 'mock-email',
+      recipientRedacted: 'c***@example.com',
+      subject: 'ListingLift JOB-DEMO-001: Download ready',
+      bodyPreview: 'Seed notification preview only. Runtime email sending remains Codex-owned.',
+      metadata: { seed: true, phase: 16, mockEmailOnly: true },
+    },
+  });
+
+  await prisma.deliveryDownloadEvent.upsert({
+    where: { id: 'seed-phase16-download-denied-event' },
+    update: { allowed: false, denialReason: 'Seed event: delivery hidden until approval, archive approval, and active token.' },
+    create: {
+      id: 'seed-phase16-download-denied-event',
+      organizationId: org.id,
+      jobId: job.id,
+      clientId: client.id,
+      deliveryLinkId: deliveryLink.id,
+      tokenHash: 'seed-phase16-delivery-token-hash-redacted',
+      type: 'DOWNLOAD_DENIED',
+      allowed: false,
+      denialReason: 'Seed event: delivery hidden until approval, archive approval, and active token.',
+      metadata: { seed: true, phase: 16, deliveryStillHidden: true },
+    },
+  });
+
+  const existingPhase16SeedAudit = await prisma.auditLog.findFirst({
+    where: {
+      organizationId: org.id,
+      action: 'seed.phase16.delivery_email_notifications_contract',
+      targetType: 'DeliveryLink',
+      targetId: deliveryLink.id,
+    },
+  });
+
+  if (!existingPhase16SeedAudit) {
+    await prisma.auditLog.create({
+      data: {
+        organizationId: org.id,
+        actorUserId: user.id,
+        jobId: job.id,
+        action: 'seed.phase16.delivery_email_notifications_contract',
+        targetType: 'DeliveryLink',
+        targetId: deliveryLink.id,
+        metadata: {
+          note: 'Idempotent seed run completed with Phase 16 delivery link, notification log, denied download event, mock email policy, and expiring-link guardrails.',
+        },
+      },
+    });
+  }
+
+}
+
+main()
+  .then(async () => prisma.$disconnect())
+  .catch(async (error) => {
+    console.error(error);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
+
+// Phase 17 Stripe billing seed note: Codex should seed a disabled Stripe provider/configuration, no real keys, and demo checkout/webhook rows only with fake IDs after Prisma schema validation.
+
+// Phase 18 Gumroad seed note: Codex should seed disabled Gumroad mappings without real product IDs or webhook secrets and verify repeatable upserts after Prisma validation.
+
+// Phase 19 Credits/subscriptions/manual invoice seed note: Codex should seed demo manual invoices, subscription entitlements, and credit ledger rows with fake references only after Prisma validation. No real payment references or secrets.
+
+// Phase 20 Fiverr workflow seed note: Codex should seed disabled Fiverr gig mappings and safe delivery templates with fake order IDs only after Prisma validation. Do not store Fiverr passwords, scrape private pages, or automate messages outside approved Fiverr rules.
+// Phase 21 Upwork workflow seed note: Codex should seed disabled Upwork offer mappings and safe proposal/delivery templates with fake contract IDs only after Prisma validation. Do not store Upwork passwords, scrape private Upwork pages, or automate proposals/messages outside approved Upwork rules.
+
+// Phase 22 Taskrabbit workflow seed note: Codex should seed disabled Taskrabbit local-service mappings with fake task IDs only after Prisma validation. Do not store Taskrabbit passwords, scrape private pages, automate task messaging, or retain unnecessary customer address/location data.
+
+// Phase 24 Etsy workflow seed note: Codex should seed disabled Etsy listing-pack mappings, fake Etsy listing import rows, and safe delivery/report templates only after Prisma validation. Do not store Etsy passwords, scrape private Etsy pages, or automate buyer messaging/listing edits outside approved Etsy integration rules.
+
+// Phase 25 Shopify workflow seed notes: Codex must seed ShopifyImagePackMapping, ShopifyProductImportRow demo rows, ShopifyStoreConnection scaffold rows, and ShopifyWorkflowEvent records idempotently using fake store/product IDs only.
+
+
+// Phase 26 Social-commerce workflow seed note: Codex should seed disabled/manual SocialCommerceChannelMapping rows for TikTok Shop, Instagram Shop/Profile, Facebook Marketplace/Page, Pinterest, TikTok Profile, YouTube Shorts, and Google Business Profile social workflows using fake source IDs only. Do not store social platform passwords, scrape private pages, automate DMs/comments/posts/uploads, or imply approval/ranking/sales/conversion guarantees.
+
+
+// Phase 28 file storage seed marker:
+// Codex must add idempotent FileStorageConnection seed rows for mock/local providers only.
+// Real Google Drive/Dropbox seed rows must not include secrets or OAuth tokens.
+
+// Phase 31 advanced image processing seed note: Codex should seed default AdvancedImageProcessingRecipe rows for marketplace-polish, brand-background-set, launch-hero-social-set, thumbnail-variation-set, and quality-report-only after Prisma validation. No real provider keys, raw image files, or secrets should be included in seed data.
+

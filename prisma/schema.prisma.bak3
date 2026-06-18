@@ -1,0 +1,4993 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  url = "postgresql://listinguser:password@localhost:5432/listinglift"
+  provider = "postgresql"
+}
+
+enum AccountStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum OrganizationType {
+  PLATFORM
+  AGENCY
+  SELLER
+  CLIENT_WORKSPACE
+}
+
+enum ClientStatus {
+  LEAD
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum RoleKey {
+  SUPER_ADMIN
+  OPERATOR
+  AGENCY_ADMIN
+  CLIENT_OWNER
+  CLIENT_VIEWER
+  FULFILLMENT_REVIEWER
+  DESIGNER_EDITOR
+  BILLING_MANAGER
+}
+
+enum JobPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum DeadlineWarningLevel {
+  NONE
+  UPCOMING
+  DUE_SOON
+  OVERDUE
+  BLOCKED
+}
+
+enum JobStatusEventType {
+  CREATED
+  STATUS_CHANGED
+  MANUAL_OVERRIDE
+  DEADLINE_CHANGED
+  PRIORITY_CHANGED
+  ADMIN_NOTE_ADDED
+  CLIENT_NOTE_ADDED
+}
+
+enum JobStatus {
+  DRAFT
+  WAITING_FOR_UPLOAD
+  UPLOAD_RECEIVED
+  PROCESSING_QUEUED
+  PROCESSING
+  WAITING_FOR_REVIEW
+  FLAGGED_OUTPUTS
+  APPROVED
+  REVISION_REQUESTED
+  REPROCESSING
+  READY_FOR_DELIVERY
+  DELIVERED
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+  MANUAL_CONFIRMED
+}
+
+enum StripeCheckoutSessionStatus {
+  DRAFT
+  CREATED
+  COMPLETED
+  EXPIRED
+  FAILED
+  CANCELLED
+}
+
+enum StripeCheckoutPurpose {
+  PACKAGE
+  SUBSCRIPTION
+  CREDITS
+  RETAINER
+  AGENCY
+}
+
+enum StripeWebhookProcessingStatus {
+  RECEIVED
+  VERIFIED
+  PROCESSING
+  PROCESSED
+  IGNORED
+  FAILED
+}
+
+enum GumroadWebhookProcessingStatus {
+  RECEIVED
+  VERIFIED
+  DUPLICATE
+  MAPPED
+  JOB_CREATED
+  CREDITS_APPLIED
+  UPLOAD_LINK_PLANNED
+  IGNORED
+  FAILED
+  REFUNDED
+}
+
+enum GumroadFulfillmentKind {
+  IMAGE_PACK_JOB
+  CREDIT_PACK
+  DIGITAL_DOWNLOAD
+  DASHBOARD_ACCESS
+  AGENCY_STARTER
+}
+
+enum FiverrDeliveryMode {
+  FIVERR_ATTACHMENT
+  FIVERR_MESSAGE_WITH_ALLOWED_LINK
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum FiverrWorkflowStatus {
+  DRAFT
+  ORDER_CAPTURED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_REVIEW
+  FLAGGED
+  APPROVED
+  DELIVERY_READY
+  DELIVERED_IN_FIVERR
+  REVISION_REQUESTED
+  REPROCESSING
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum FiverrRevisionStatus {
+  NONE
+  REQUESTED
+  ACCEPTED
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  DELIVERED
+  CLOSED
+}
+
+enum FiverrWorkflowEventType {
+  ORDER_CAPTURED
+  PACKAGE_MAPPED
+  UPLOAD_LINK_PLANNED
+  FILES_RECEIVED
+  DELIVERY_TEMPLATE_GENERATED
+  DELIVERED_IN_FIVERR
+  REVISION_STATUS_UPDATED
+  MANUAL_OVERRIDE
+  SAFETY_BLOCKED
+}
+
+enum UploadStatus {
+  NOT_STARTED
+  TOKEN_SENT
+  PARTIAL
+  COMPLETE
+  FAILED
+}
+
+enum UploadSourceKind {
+  DIRECT_UPLOAD
+  ADMIN_UPLOAD
+  ZIP_UPLOAD
+  DRIVE_IMPORT
+  DROPBOX_IMPORT
+  SHOPIFY_EXPORT
+  MANUAL_REPLACEMENT
+}
+
+enum UploadBatchStatus {
+  PLANNED
+  VALIDATING
+  REJECTED
+  ACCEPTED
+  PARTIAL
+  COMPLETE
+  FAILED
+}
+
+enum FulfillmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  NEEDS_REVIEW
+  APPROVED
+  DELIVERED
+  REVISION
+  COMPLETE
+  FAILED
+}
+
+enum ImageStatus {
+  ORIGINAL_UPLOADED
+  PROCESSING
+  PROCESSED
+  FLAGGED
+  FAILED
+  MANUAL_REPLACEMENT_UPLOADED
+}
+
+enum ProcessedFileStatus {
+  CREATED
+  PROCESSING
+  READY_FOR_REVIEW
+  FLAGGED
+  APPROVED
+  REJECTED
+  REPLACED_MANUALLY
+  FAILED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  NOT_REQUIRED
+}
+
+enum ProcessingRunStatus {
+  PLANNED
+  QUEUED
+  RUNNING
+  COMPLETED
+  COMPLETED_WITH_ERRORS
+  FAILED
+  CANCELLED
+}
+
+enum ProcessingStepStatus {
+  PLANNED
+  SKIPPED
+  RUNNING
+  COMPLETED
+  FAILED
+  MANUAL_FALLBACK_REQUIRED
+}
+
+enum ProcessingOperation {
+  METADATA_READ
+  REMOVE_BACKGROUND
+  TRANSPARENT_PNG
+  WHITE_BACKGROUND
+  WEBP
+  RESIZE
+  COMPRESS
+  PRESET_OUTPUT
+}
+
+enum DeliveryLinkStatus {
+  DRAFT
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+enum DeliveryArchiveStatus {
+  PLANNED
+  GENERATING
+  READY_FOR_REVIEW
+  APPROVED
+  FAILED
+  REVOKED
+}
+
+enum DeliveryArchiveFileKind {
+  OUTPUT
+  MANIFEST
+  README
+  BEFORE_AFTER
+  QUALITY_REPORT
+  SOURCE_REFERENCE
+}
+
+enum DeliveryNotificationType {
+  UPLOAD_RECEIVED
+  PROCESSING_STARTED
+  MANUAL_REVIEW_NEEDED
+  JOB_COMPLETE
+  REVISION_REQUESTED
+  DOWNLOAD_READY
+  CREDITS_LOW
+  SUBSCRIPTION_RENEWAL
+  FAILED_JOB_ALERT
+  UPSELL_OPPORTUNITY_ALERT
+  NEW_MARKETPLACE_ORDER_IMPORTED
+  GUMROAD_PURCHASE_RECEIVED
+  STRIPE_CHECKOUT_COMPLETED
+  FIVERR_ORDER_MANUALLY_ADDED
+  UPWORK_PROJECT_MANUALLY_ADDED
+  TASKRABBIT_TASK_MANUALLY_ADDED
+  DEADLINE_APPROACHING
+}
+
+enum DeliveryNotificationStatus {
+  PLANNED
+  QUEUED
+  SENT
+  FAILED
+  SKIPPED
+}
+
+enum DeliveryDownloadEventType {
+  TOKEN_RESOLVED
+  DOWNLOAD_STARTED
+  DOWNLOAD_COMPLETED
+  DOWNLOAD_DENIED
+  TOKEN_REVOKED
+}
+
+enum ManifestFileStatus {
+  PLANNED
+  INCLUDED
+  MISSING
+  FAILED
+  MANUAL_REPLACEMENT
+  EXCLUDED
+}
+
+enum PreviewGalleryStatus {
+  DRAFT
+  READY_FOR_REVIEW
+  CLIENT_VISIBLE
+  ARCHIVED
+}
+
+enum PreviewItemVisibility {
+  ADMIN_ONLY
+  CLIENT_VISIBLE
+  HIDDEN
+}
+
+enum PreviewReviewStatus {
+  READY_FOR_REVIEW
+  APPROVED
+  FLAGGED
+  FAILED
+  REJECTED
+}
+
+enum QualityReviewStatus {
+  PENDING_REVIEW
+  PASSED
+  FLAGGED
+  FAILED
+  NEEDS_MANUAL_REPLACEMENT
+  RESOLVED
+  DISMISSED
+}
+
+enum QualityFlagSeverity {
+  INFO
+  WARNING
+  BLOCKER
+}
+
+enum QualityFlagStatus {
+  OPEN
+  ACKNOWLEDGED
+  RESOLVED
+  DISMISSED
+}
+
+enum QualityReviewEventType {
+  REVIEW_CREATED
+  FLAG_ADDED
+  FLAG_ACKNOWLEDGED
+  FLAG_RESOLVED
+  FLAG_DISMISSED
+  REVIEW_PASSED
+  REVIEW_FAILED
+  MANUAL_REPLACEMENT_REQUIRED
+  REPROCESS_REQUESTED
+  BULK_REVIEW
+}
+
+enum IntegrationMode {
+  MOCK
+  MANUAL
+  API
+  WEBHOOK
+  EMAIL_PARSER
+  CSV_IMPORT
+}
+
+enum ImageProviderConfigStatus {
+  DRAFT
+  ENABLED
+  DISABLED
+  HEALTHY
+  DEGRADED
+  FAILED
+  NEEDS_SECRETS
+}
+
+enum ImageProviderHealthStatus {
+  UNKNOWN
+  HEALTHY
+  DEGRADED
+  FAILED
+  BLOCKED
+}
+
+enum ChannelType {
+  DIRECT
+  PAYMENT
+  MARKETPLACE
+  FREELANCE
+  SOCIAL
+  ECOMMERCE
+  LOCAL
+  COMMUNITY
+  MANUAL
+}
+
+enum OutputType {
+  TRANSPARENT_PNG
+  WHITE_JPG
+  WEBP
+  SQUARE_ECOMMERCE
+  VERTICAL_SOCIAL
+  HERO_IMAGE
+  THUMBNAIL
+  BEFORE_AFTER
+  MANIFEST
+  ZIP
+  REPORT
+  CUSTOM
+}
+
+enum OutputFormat {
+  JPG
+  PNG
+  WEBP
+  CSV
+  TXT
+  ZIP
+  PDF
+}
+
+enum BackgroundType {
+  WHITE
+  TRANSPARENT
+  BRAND_COLOR
+  ORIGINAL
+  SOFT_SHADOW
+  CUSTOM
+}
+
+enum RevisionStatus {
+  OPEN
+  ACCEPTED
+  IN_PROGRESS
+  WAITING_FOR_CLIENT
+  RESOLVED
+  REJECTED
+  CANCELLED
+}
+
+enum ReportType {
+  DELIVERY_SUMMARY
+  IMAGE_QUALITY
+  LISTING_RECOMMENDATIONS
+  MONTHLY_CLEANUP
+  WHITE_LABEL
+}
+
+enum ReportStatus {
+  DRAFT
+  WAITING_FOR_APPROVAL
+  APPROVED
+  SENT
+  ARCHIVED
+}
+
+enum WebhookEventStatus {
+  RECEIVED
+  VERIFIED
+  PROCESSING
+  PROCESSED
+  FAILED
+  IGNORED
+}
+
+enum UpsellStatus {
+  DRAFT
+  READY
+  SENT
+  ACCEPTED
+  DECLINED
+  ARCHIVED
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  PAUSED
+  CANCELLED
+  EXPIRED
+}
+
+enum TokenPurpose {
+  UPLOAD
+  DELIVERY
+  REVISION_UPLOAD
+}
+
+model User {
+  id              String        @id @default(cuid())
+  email           String        @unique
+  name            String?
+  passwordHash    String?
+  accountStatus   AccountStatus @default(INVITED)
+  lastLoginAt     DateTime?
+  memberships     Membership[]
+  sessions        Session[]
+  assignedClients Client[]      @relation("AssignedAdmin")
+  auditLogs       AuditLog[]    @relation("AuditActor")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  deletedAt       DateTime?
+
+  @@index([accountStatus])
+  @@index([createdAt])
+}
+
+model Organization {
+  id                                String                             @id @default(cuid())
+  name                              String
+  slug                              String                             @unique
+  organizationType                  OrganizationType                   @default(SELLER)
+  parentOrganizationId              String?
+  parentOrganization                Organization?                      @relation("OrganizationHierarchy", fields: [parentOrganizationId], references: [id])
+  childOrganizations                Organization[]                     @relation("OrganizationHierarchy")
+  memberships                       Membership[]
+  roles                             Role[]
+  clients                           Client[]
+  salesChannels                     SalesChannel[]
+  externalOrders                    ExternalOrder[]
+  jobs                              Job[]
+  images                            Image[]
+  processedFiles                    ProcessedFile[]
+  packages                          Package[]
+  platformPresets                   PlatformPreset[]
+  creditLedgerEntries               CreditLedger[]
+  subscriptions                     Subscription[]
+  invoicePayments                   InvoicePayment[]
+  manualInvoices                    ManualInvoice[]
+  manualInvoicePayments             ManualInvoicePayment[]
+  subscriptionEntitlements          SubscriptionEntitlement[]
+  stripeCheckoutSessions            StripeCheckoutSession[]
+  stripeWebhookEvents               StripeWebhookEvent[]
+  gumroadProductMappings            GumroadProductMapping[]
+  gumroadWebhookEvents              GumroadWebhookEvent[]
+  fiverrGigMappings                 FiverrGigMapping[]
+  fiverrDeliveryTemplates           FiverrDeliveryTemplate[]
+  fiverrWorkflowEvents              FiverrWorkflowEvent[]
+  genericSalesChannelMappings       GenericSalesChannelMapping[]
+  genericSalesChannelWorkflowEvents GenericSalesChannelWorkflowEvent[]
+  socialCommerceChannelMappings     SocialCommerceChannelMapping[]
+  socialCommerceCreativePlans       SocialCommerceCreativePlan[]
+  socialCommerceWorkflowEvents      SocialCommerceWorkflowEvent[]
+  reports                           Report[]
+  webhookEvents                     WebhookEvent[]
+  upsellOffers                      UpsellOffer[]
+  uploadTokens                      UploadToken[]
+  uploadBatches                     UploadBatch[]
+  uploadEvents                      UploadEvent[]
+  sessions                          Session[]
+  integrationConnections            IntegrationConnection[]
+  imageProviderConfigurations       ImageProviderConfiguration[]
+  imageProviderHealthChecks         ImageProviderHealthCheck[]
+  imageProcessingRuns               ImageProcessingRun[]
+  imageProcessingSteps              ImageProcessingStep[]
+  imageProcessingErrors             ImageProcessingError[]
+  deliveryArchives                  DeliveryArchive[]
+  deliveryArchiveFiles              DeliveryArchiveFile[]
+  deliveryDownloadEvents            DeliveryDownloadEvent[]
+  deliveryNotificationLogs          DeliveryNotificationLog[]
+  previewGalleries                  PreviewGallery[]
+  previewGalleryItems               PreviewGalleryItem[]
+  qualityReviews                    QualityReview[]
+  qualityFlags                      QualityFlag[]
+  qualityReviewEvents               QualityReviewEvent[]
+  encryptedSecrets                  EncryptedSecret[]
+  automationEvents                  AutomationEvent[]
+  automationWebhookSubscriptions    AutomationWebhookSubscription[]
+  automationWebhookDeliveries       AutomationWebhookDelivery[]
+  automationDeadLetters             AutomationDeadLetter[]
+  auditLogs                         AuditLog[]
+  jobStatusEvents                   JobStatusEvent[]
+  brandSetting                      BrandSetting?
+  createdAt                         DateTime                           @default(now())
+  updatedAt                         DateTime                           @updatedAt
+  deletedAt                         DateTime?
+  revisionRequests                  RevisionRequest[]
+  upworkOfferMappings               UpworkOfferMapping[]
+  upworkProposalTemplates           UpworkProposalTemplate[]
+  upworkWorkflowEvents              UpworkWorkflowEvent[]
+  taskrabbitServiceMappings         TaskrabbitServiceMapping[]
+  taskrabbitWorkflowEvents          TaskrabbitWorkflowEvent[]
+  etsyListingPackMappings           EtsyListingPackMapping[]
+  etsyListingImportRows             EtsyListingImportRow[]
+  etsyWorkflowEvents                EtsyWorkflowEvent[]
+  shopifyImagePackMappings          ShopifyImagePackMapping[]
+  shopifyProductImportRows          ShopifyProductImportRow[]
+  shopifyStoreConnections           ShopifyStoreConnection[]
+  shopifyWorkflowEvents             ShopifyWorkflowEvent[]
+  marketplaceExportMappings         MarketplaceExportMapping[]
+  marketplaceExportWorkflowEvents   MarketplaceExportWorkflowEvent[]
+  fileStorageConnections            FileStorageConnection[]
+  externalFileReferences            ExternalFileReference[]
+  fileStorageSyncEvents             FileStorageSyncEvent[]
+  taskNotificationConnections       TaskNotificationConnection[]
+  taskNotificationDeliveries        TaskNotificationDelivery[]
+  taskDataExports                   TaskDataExport[]
+  taskIntegrationTasks              TaskIntegrationTask[]
+  advancedImageProcessingRecipes    AdvancedImageProcessingRecipe[]
+  advancedImageProcessingRuns       AdvancedImageProcessingRun[]
+  advancedImageProcessingReports    AdvancedImageProcessingReport[]
+
+  @@index([organizationType])
+  @@index([parentOrganizationId])
+  @@index([createdAt])
+}
+
+model Membership {
+  id             String       @id @default(cuid())
+  organizationId String
+  userId         String
+  roleId         String
+  roleKey        RoleKey
+  clientId       String?
+  agencyScope    Boolean      @default(false)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           Role         @relation(fields: [roleId], references: [id])
+  client         Client?      @relation(fields: [clientId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, userId])
+  @@index([organizationId, roleKey])
+  @@index([organizationId, clientId])
+  @@index([clientId])
+  @@index([userId])
+  @@index([roleId])
+}
+
+model Session {
+  id               String       @id @default(cuid())
+  organizationId   String
+  userId           String
+  sessionTokenHash String       @unique
+  active           Boolean      @default(true)
+  ipAddress        String?
+  userAgent        String?
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  lastSeenAt       DateTime?
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([organizationId, userId])
+  @@index([userId, active])
+  @@index([expiresAt])
+}
+
+model Role {
+  id             String           @id @default(cuid())
+  organizationId String?
+  key            RoleKey
+  name           String
+  description    String
+  system         Boolean          @default(true)
+  organization   Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  memberships    Membership[]
+  permissions    RolePermission[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@unique([key])
+  @@index([organizationId, key])
+}
+
+model Permission {
+  id          String           @id @default(cuid())
+  key         String           @unique
+  description String
+  roles       RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+
+  @@unique([roleId, permissionId])
+  @@index([permissionId])
+}
+
+model Client {
+  id                              String                           @id @default(cuid())
+  organizationId                  String
+  assignedAdminUserId             String?
+  name                            String
+  businessName                    String?
+  storeUrl                        String?
+  contactName                     String?
+  email                           String?
+  buyerType                       String?
+  primarySalesChannel             String?
+  sourceChannel                   String?
+  subscriptionStatus              SubscriptionStatus?
+  creditBalance                   Int                              @default(0)
+  status                          ClientStatus                     @default(ACTIVE)
+  organization                    Organization                     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignedAdmin                   User?                            @relation("AssignedAdmin", fields: [assignedAdminUserId], references: [id])
+  memberships                     Membership[]
+  externalOrders                  ExternalOrder[]
+  jobs                            Job[]
+  images                          Image[]
+  creditLedgerEntries             CreditLedger[]
+  manualInvoicePayments           ManualInvoicePayment[]
+  subscriptions                   Subscription[]
+  invoicePayments                 InvoicePayment[]
+  manualInvoices                  ManualInvoice[]
+  subscriptionEntitlements        SubscriptionEntitlement[]
+  stripeCheckoutSessions          StripeCheckoutSession[]
+  gumroadWebhookEvents            GumroadWebhookEvent[]
+  fiverrWorkflowEvents            FiverrWorkflowEvent[]
+  revisionRequests                RevisionRequest[]
+  reports                         Report[]
+  upsellOffers                    UpsellOffer[]
+  uploadTokens                    UploadToken[]
+  uploadBatches                   UploadBatch[]
+  uploadEvents                    UploadEvent[]
+  createdAt                       DateTime                         @default(now())
+  updatedAt                       DateTime                         @updatedAt
+  deletedAt                       DateTime?
+  upworkWorkflowEvents            UpworkWorkflowEvent[]
+  taskrabbitWorkflowEvents        TaskrabbitWorkflowEvent[]
+  etsyWorkflowEvents              EtsyWorkflowEvent[]
+  shopifyWorkflowEvents           ShopifyWorkflowEvent[]
+  socialCommerceWorkflowEvents    SocialCommerceWorkflowEvent[]
+  marketplaceExportWorkflowEvents MarketplaceExportWorkflowEvent[]
+  externalFileReferences          ExternalFileReference[]
+
+  @@unique([organizationId, email])
+  @@index([organizationId, status, createdAt])
+  @@index([assignedAdminUserId])
+}
+
+model SalesChannel {
+  id                        String            @id @default(cuid())
+  organizationId            String
+  key                       String
+  name                      String
+  channelType               ChannelType       @default(MANUAL)
+  mode                      IntegrationMode   @default(MANUAL)
+  canonicalKey              String?
+  adapterKey                String?
+  supportedModes            IntegrationMode[] @default([])
+  enabled                   Boolean           @default(false)
+  apiStatus                 String?
+  notes                     String?
+  packageMapping            Json?
+  marketplaceSafetyRules    String[]          @default([])
+  revenueAttributionEnabled Boolean           @default(true)
+  manualFallbackEnabled     Boolean           @default(true)
+  lastImportAt              DateTime?
+  lastImportStatus          String?
+  organization              Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  externalOrders            ExternalOrder[]
+  jobs                      Job[]
+  createdAt                 DateTime          @default(now())
+  updatedAt                 DateTime          @updatedAt
+  deletedAt                 DateTime?
+
+  @@unique([organizationId, key])
+  @@index([organizationId, channelType, enabled])
+  @@index([createdAt])
+}
+
+model ExternalOrder {
+  id                                String                             @id @default(cuid())
+  organizationId                    String
+  salesChannelId                    String
+  clientId                          String?
+  externalOrderId                   String
+  externalCustomerId                String?
+  buyerName                         String?
+  buyerEmailOrUsername              String?
+  packageKey                        String?
+  packagePurchasedRaw               String?
+  orderAmountCents                  Int?
+  orderAmountRaw                    String?
+  currency                          String                             @default("USD")
+  deadline                          DateTime?
+  revisionAllowance                 Int                                @default(0)
+  sourceUrl                         String?
+  paymentStatus                     PaymentStatus                      @default(PENDING)
+  uploadStatus                      UploadStatus                       @default(NOT_STARTED)
+  fulfillmentStatus                 FulfillmentStatus                  @default(NOT_STARTED)
+  channelName                       String?
+  sourceFingerprint                 String?
+  dedupeKey                         String?
+  normalizationStatus               String                             @default("NORMALIZED")
+  mappingStatus                     String                             @default("PENDING")
+  normalizedPayload                 Json?
+  revenueAttribution                Json?
+  uploadLinkTriggeredAt             DateTime?
+  importedAt                        DateTime?
+  lastNormalizationError            String?
+  rawPayload                        Json?
+  organization                      Organization                       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  salesChannel                      SalesChannel                       @relation(fields: [salesChannelId], references: [id])
+  client                            Client?                            @relation(fields: [clientId], references: [id])
+  job                               Job?
+  webhookEvents                     WebhookEvent[]
+  gumroadWebhookEvents              GumroadWebhookEvent[]
+  fiverrWorkflowEvents              FiverrWorkflowEvent[]
+  genericSalesChannelWorkflowEvents GenericSalesChannelWorkflowEvent[]
+  socialCommerceChannelMappings     SocialCommerceChannelMapping[]
+  socialCommerceCreativePlans       SocialCommerceCreativePlan[]
+  socialCommerceWorkflowEvents      SocialCommerceWorkflowEvent[]
+  createdAt                         DateTime                           @default(now())
+  updatedAt                         DateTime                           @updatedAt
+  upworkWorkflowEvents              UpworkWorkflowEvent[]
+  taskrabbitWorkflowEvents          TaskrabbitWorkflowEvent[]
+  etsyWorkflowEvents                EtsyWorkflowEvent[]
+  shopifyWorkflowEvents             ShopifyWorkflowEvent[]
+  marketplaceExportWorkflowEvents   MarketplaceExportWorkflowEvent[]
+
+  @@unique([salesChannelId, externalOrderId])
+  @@unique([organizationId, dedupeKey])
+  @@index([organizationId, createdAt])
+  @@index([organizationId, paymentStatus, fulfillmentStatus])
+  @@index([organizationId, channelName, importedAt])
+  @@index([organizationId, normalizationStatus, mappingStatus])
+  @@index([clientId])
+}
+
+model Job {
+  id                                String                             @id @default(cuid())
+  organizationId                    String
+  clientId                          String?
+  salesChannelId                    String?
+  externalOrderId                   String?                            @unique
+  packageId                         String?
+  jobNumber                         String?
+  status                            JobStatus                          @default(DRAFT)
+  priority                          JobPriority                        @default(NORMAL)
+  queuePosition                     Int?
+  deadlineWarningLevel              DeadlineWarningLevel               @default(NONE)
+  paymentStatus                     PaymentStatus                      @default(PENDING)
+  uploadStatus                      UploadStatus                       @default(NOT_STARTED)
+  fulfillmentStatus                 FulfillmentStatus                  @default(NOT_STARTED)
+  title                             String
+  targetPlatform                    String?
+  productCategory                   String?
+  imageQuantity                     Int                                @default(0)
+  backgroundPreference              String?
+  outputSize                        String?
+  fileFormat                        String?
+  brandColors                       String?
+  skuNamingPreference               String?
+  revisionNotes                     String?
+  deadline                          DateTime?
+  adminNotes                        String?
+  clientVisibleNotes                String?
+  operatorNotes                     String?
+  clientIntakeNotes                 String?
+  adminQualityNotes                 String?
+  deliveryNotes                     String?
+  approvedAt                        DateTime?
+  approvedByUserId                  String?
+  deliveredAt                       DateTime?
+  completedAt                       DateTime?
+  cancelledAt                       DateTime?
+  failedReason                      String?
+  manuallyCreatedByUserId           String?
+  queuedAt                          DateTime?
+  lastStatusChangedAt               DateTime?
+  lastStatusChangedByUserId         String?
+  selectedPresetKeys                String[]                           @default([])
+  statusHistory                     Json?
+  sourceUrl                         String?
+  sourceChannelName                 String?
+  revenueAttribution                Json?
+  organization                      Organization                       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                            Client?                            @relation(fields: [clientId], references: [id])
+  salesChannel                      SalesChannel?                      @relation(fields: [salesChannelId], references: [id])
+  externalOrder                     ExternalOrder?                     @relation(fields: [externalOrderId], references: [id])
+  package                           Package?                           @relation(fields: [packageId], references: [id])
+  images                            Image[]
+  processedFiles                    ProcessedFile[]
+  revisions                         RevisionRequest[]
+  reports                           Report[]
+  deliveryLinks                     DeliveryLink[]
+  deliveryArchives                  DeliveryArchive[]
+  deliveryArchiveFiles              DeliveryArchiveFile[]
+  deliveryDownloadEvents            DeliveryDownloadEvent[]
+  deliveryNotificationLogs          DeliveryNotificationLog[]
+  previewGalleries                  PreviewGallery[]
+  previewGalleryItems               PreviewGalleryItem[]
+  qualityReviews                    QualityReview[]
+  qualityFlags                      QualityFlag[]
+  qualityReviewEvents               QualityReviewEvent[]
+  uploadTokens                      UploadToken[]
+  upsellOffers                      UpsellOffer[]
+  webhookEvents                     WebhookEvent[]
+  automationWebhookDeliveries       AutomationWebhookDelivery[]
+  creditLedgerEntries               CreditLedger[]
+  stripeCheckoutSessions            StripeCheckoutSession[]
+  gumroadWebhookEvents              GumroadWebhookEvent[]
+  fiverrWorkflowEvents              FiverrWorkflowEvent[]
+  genericSalesChannelWorkflowEvents GenericSalesChannelWorkflowEvent[]
+  socialCommerceChannelMappings     SocialCommerceChannelMapping[]
+  socialCommerceCreativePlans       SocialCommerceCreativePlan[]
+  socialCommerceWorkflowEvents      SocialCommerceWorkflowEvent[]
+  auditLogs                         AuditLog[]
+  statusEvents                      JobStatusEvent[]
+  imageProcessingRuns               ImageProcessingRun[]
+  imageProcessingSteps              ImageProcessingStep[]
+  imageProcessingErrors             ImageProcessingError[]
+  createdAt                         DateTime                           @default(now())
+  updatedAt                         DateTime                           @updatedAt
+  deletedAt                         DateTime?
+  uploadBatches                     UploadBatch[]
+  uploadEvents                      UploadEvent[]
+  upworkWorkflowEvents              UpworkWorkflowEvent[]
+  taskrabbitWorkflowEvents          TaskrabbitWorkflowEvent[]
+  etsyListingImportRows             EtsyListingImportRow[]
+  etsyWorkflowEvents                EtsyWorkflowEvent[]
+  shopifyProductImportRows          ShopifyProductImportRow[]
+  shopifyWorkflowEvents             ShopifyWorkflowEvent[]
+  marketplaceExportWorkflowEvents   MarketplaceExportWorkflowEvent[]
+  externalFileReferences            ExternalFileReference[]
+  fileStorageSyncEvents             FileStorageSyncEvent[]
+  taskNotificationDeliveries        TaskNotificationDelivery[]
+  taskIntegrationTasks              TaskIntegrationTask[]
+  advancedImageProcessingRuns       AdvancedImageProcessingRun[]
+  advancedImageProcessingReports    AdvancedImageProcessingReport[]
+
+  @@unique([organizationId, jobNumber])
+  @@index([organizationId, status, deadline])
+  @@index([organizationId, priority, deadline])
+  @@index([organizationId, deadlineWarningLevel])
+  @@index([organizationId, createdAt])
+  @@index([clientId, createdAt])
+  @@index([salesChannelId])
+  @@index([packageId])
+}
+
+model JobStatusEvent {
+  id             String             @id @default(cuid())
+  organizationId String
+  jobId          String
+  actorUserId    String?
+  type           JobStatusEventType
+  fromStatus     JobStatus?
+  toStatus       JobStatus?
+  note           String?
+  metadata       Json?
+  createdAt      DateTime           @default(now())
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job            Job                @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, jobId, createdAt])
+  @@index([jobId, createdAt])
+}
+
+model Image {
+  id                    String                 @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  jobId                 String
+  uploadBatchId         String?
+  uploadTokenId         String?
+  sourceKind            UploadSourceKind       @default(DIRECT_UPLOAD)
+  originalName          String
+  originalRelativePath  String?
+  storageKey            String
+  originalFileUrl       String?
+  mimeType              String
+  fileExtension         String?
+  sizeBytes             Int
+  width                 Int?
+  height                Int?
+  sha256                String?
+  uploadStatus          UploadStatus           @default(COMPLETE)
+  validationStatus      String                 @default("ACCEPTED")
+  status                ImageStatus            @default(ORIGINAL_UPLOADED)
+  qualityFlags          String[]
+  metadata              Json?
+  organization          Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                Client?                @relation(fields: [clientId], references: [id])
+  job                   Job                    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  uploadBatch           UploadBatch?           @relation(fields: [uploadBatchId], references: [id])
+  uploadToken           UploadToken?           @relation(fields: [uploadTokenId], references: [id])
+  uploadEvents          UploadEvent[]
+  processedFiles        ProcessedFile[]
+  previewGalleryItems   PreviewGalleryItem[]
+  qualityReviews        QualityReview[]
+  qualityFlagRecords    QualityFlag[]
+  revisions             RevisionRequest[]
+  imageProcessingRuns   ImageProcessingRun[]
+  imageProcessingSteps  ImageProcessingStep[]
+  imageProcessingErrors ImageProcessingError[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@unique([jobId, storageKey])
+  @@index([organizationId, createdAt])
+  @@index([jobId, status])
+  @@index([jobId, uploadStatus])
+  @@index([uploadBatchId])
+  @@index([uploadTokenId])
+  @@index([clientId])
+}
+
+model ProcessedFile {
+  id                   String                @id @default(cuid())
+  organizationId       String
+  jobId                String
+  imageId              String?
+  presetKey            String?
+  outputType           OutputType
+  outputFormat         OutputFormat
+  backgroundType       BackgroundType?
+  fileName             String
+  folderPath           String
+  storageKey           String
+  outputFileUrl        String?
+  mimeType             String
+  width                Int?
+  height               Int?
+  sizeBytes            Int?
+  qualityScore         Int?
+  status               ProcessedFileStatus   @default(CREATED)
+  approvedStatus       ApprovalStatus        @default(PENDING)
+  approvedAt           DateTime?
+  rejectedReason       String?
+  organization         Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                  Job                   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  image                Image?                @relation(fields: [imageId], references: [id])
+  deliveryArchiveFiles DeliveryArchiveFile[]
+  previewGalleryItems  PreviewGalleryItem[]
+  qualityReviews       QualityReview[]
+  qualityFlags         QualityFlag[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@unique([jobId, storageKey])
+  @@index([organizationId, createdAt])
+  @@index([jobId, presetKey])
+  @@index([jobId, status, approvedStatus])
+  @@index([imageId])
+}
+
+model ImageProcessingRun {
+  id                     String                 @id @default(cuid())
+  organizationId         String
+  jobId                  String
+  providerKey            String
+  status                 ProcessingRunStatus    @default(PLANNED)
+  totalImages            Int                    @default(0)
+  totalRequestedOutputs  Int                    @default(0)
+  totalCreatedOutputs    Int                    @default(0)
+  totalFailedOutputs     Int                    @default(0)
+  manualFallbackRequired Boolean                @default(false)
+  selectedPresetKeys     String[]               @default([])
+  operations             String[]               @default([])
+  metadata               Json?
+  startedAt              DateTime?
+  finishedAt             DateTime?
+  organization           Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                    Job                    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  steps                  ImageProcessingStep[]
+  errors                 ImageProcessingError[]
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  image                  Image?                 @relation(fields: [imageId], references: [id])
+  imageId                String?
+
+  @@index([organizationId, status, createdAt])
+  @@index([jobId, status])
+  @@index([providerKey, status])
+}
+
+model ImageProcessingStep {
+  id               String               @id @default(cuid())
+  organizationId   String
+  jobId            String
+  runId            String?
+  imageId          String?
+  providerKey      String
+  operation        ProcessingOperation
+  status           ProcessingStepStatus @default(PLANNED)
+  inputStorageKey  String
+  outputStorageKey String?
+  presetKey        String?
+  outputType       OutputType?
+  outputFormat     OutputFormat?
+  backgroundType   BackgroundType?
+  attempt          Int                  @default(1)
+  durationMs       Int?
+  errorCode        String?
+  errorMessage     String?
+  metadata         Json?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  organization     Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job              Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  run              ImageProcessingRun?  @relation(fields: [runId], references: [id], onDelete: Cascade)
+  image            Image?               @relation(fields: [imageId], references: [id])
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  @@index([organizationId, jobId, status])
+  @@index([runId, status])
+  @@index([imageId, status])
+  @@index([providerKey, operation])
+}
+
+model ImageProcessingError {
+  id                     String              @id @default(cuid())
+  organizationId         String
+  jobId                  String
+  runId                  String?
+  imageId                String?
+  providerKey            String?
+  code                   String
+  message                String
+  retryable              Boolean             @default(false)
+  manualFallbackRequired Boolean             @default(true)
+  safeDetails            Json?
+  metadata               Json?
+  resolvedAt             DateTime?
+  organization           Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                    Job                 @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  run                    ImageProcessingRun? @relation(fields: [runId], references: [id], onDelete: SetNull)
+  image                  Image?              @relation(fields: [imageId], references: [id])
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+
+  @@index([organizationId, jobId, createdAt])
+  @@index([runId])
+  @@index([imageId])
+  @@index([providerKey, code])
+  @@index([manualFallbackRequired, resolvedAt])
+}
+
+model Package {
+  id                      String        @id @default(cuid())
+  organizationId          String?
+  key                     String        @unique
+  publicSlug              String?       @unique
+  name                    String
+  shortName               String?
+  category                String        @default("custom")
+  description             String
+  positioning             String?
+  imageMin                Int?
+  imageMax                Int?
+  imageAllowance          Int?
+  priceMinCents           Int?
+  priceMaxCents           Int?
+  currency                String        @default("USD")
+  billingInterval         String?
+  checkoutMode            String        @default("manual_quote")
+  deliveryWindowDays      Int?
+  revisionAllowance       Int           @default(0)
+  includedOutputTypes     String[]
+  defaultSalesChannelKeys String[]
+  features                String[]
+  recommendedFor          String[]
+  deliverables            String[]
+  pricePolicy             Json?
+  safeClaim               String        @default("Formatted as platform-ready drafts. Seller review recommended before publishing.")
+  upsellPackageKeys       String[]
+  popular                 Boolean       @default(false)
+  sortOrder               Int           @default(0)
+  active                  Boolean       @default(true)
+  manualReviewRequired    Boolean       @default(false)
+  organization            Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobs                    Job[]
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+  deletedAt               DateTime?
+
+  @@index([organizationId, active, sortOrder])
+  @@index([category, active])
+}
+
+model PlatformPreset {
+  id                      String          @id @default(cuid())
+  organizationId          String?
+  key                     String          @unique
+  platform                String
+  platformKey             String          @default("custom")
+  name                    String
+  description             String?
+  width                   Int
+  height                  Int
+  aspectRatio             String?
+  orientation             String          @default("custom")
+  format                  OutputFormat
+  folderPath              String
+  folderDestination       Json?
+  background              BackgroundType?
+  compressionTargetKb     Int?
+  maxFileSizeKb           Int?
+  safeMarginPercent       Float           @default(5)
+  namingConvention        String?
+  recommendedUse          String?
+  qualityChecks           String[]        @default([])
+  channelTags             String[]        @default([])
+  safeLanguage            String          @default("platform-ready draft; seller-review recommended")
+  marketplaceSafeClaim    String          @default("Formatted for common marketplace use. Review against current platform guidelines before publishing.")
+  sellerReviewRequired    Boolean         @default(true)
+  supportsTransparent     Boolean         @default(false)
+  supportsWhiteBackground Boolean         @default(false)
+  editable                Boolean         @default(true)
+  system                  Boolean         @default(true)
+  sortOrder               Int             @default(100)
+  active                  Boolean         @default(true)
+  organization            Organization?   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+  deletedAt               DateTime?
+
+  @@index([organizationId, platform, active])
+  @@index([platformKey, active])
+  @@index([sortOrder])
+}
+
+model CreditLedger {
+  id                  String                @id @default(cuid())
+  organizationId      String
+  clientId            String?
+  jobId               String?
+  invoicePaymentId    String?
+  amount              Int
+  balanceAfter        Int?
+  creditType          String                @default("manual")
+  entryType           CreditLedgerEntryType @default(MANUAL_ADJUSTMENT)
+  source              String                @default("manual")
+  sourceReferenceType String?
+  sourceReferenceId   String?
+  reason              String
+  notes               String?
+  createdByUserId     String?
+  expiresAt           DateTime?
+  organization        Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client              Client?               @relation(fields: [clientId], references: [id])
+  job                 Job?                  @relation(fields: [jobId], references: [id])
+  invoicePayment      InvoicePayment?       @relation(fields: [invoicePaymentId], references: [id])
+  createdAt           DateTime              @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([clientId, createdAt])
+  @@index([jobId])
+}
+
+model Subscription {
+  id                    String                    @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  provider              String
+  externalId            String?
+  stripeCustomerId      String?
+  stripeSubscriptionId  String?
+  status                SubscriptionStatus        @default(ACTIVE)
+  planKey               String
+  planName              String?
+  monthlyImageAllowance Int?
+  entitlements          SubscriptionEntitlement[]
+  currentPeriodStart    DateTime?
+  currentPeriodEnd      DateTime?
+  cancelAt              DateTime?
+  organization          Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                Client?                   @relation(fields: [clientId], references: [id])
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+
+  @@unique([provider, externalId])
+  @@index([organizationId, status])
+  @@index([clientId])
+}
+
+model InvoicePayment {
+  id                    String                 @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  provider              String
+  externalId            String?
+  amountCents           Int
+  currency              String                 @default("USD")
+  status                PaymentStatus          @default(PENDING)
+  paidAt                DateTime?
+  organization          Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                Client?                @relation(fields: [clientId], references: [id])
+  creditLedgerEntries   CreditLedger[]
+  manualInvoicePayments ManualInvoicePayment[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@unique([provider, externalId])
+  @@index([organizationId, status, createdAt])
+  @@index([clientId])
+}
+
+model RevisionRequest {
+  id             String         @id @default(cuid())
+  organizationId String
+  jobId          String
+  clientId       String?
+  imageId        String?
+  requestText    String
+  adminNotes     String?
+  status         RevisionStatus @default(OPEN)
+  resolvedAt     DateTime?
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job            Job            @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  client         Client?        @relation(fields: [clientId], references: [id])
+  image          Image?         @relation(fields: [imageId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([jobId, status])
+  @@index([clientId])
+}
+
+model Report {
+  id              String       @id @default(cuid())
+  organizationId  String
+  jobId           String?
+  clientId        String?
+  type            ReportType   @default(DELIVERY_SUMMARY)
+  status          ReportStatus @default(DRAFT)
+  title           String
+  body            String
+  pdfUrl          String?
+  approvedByAdmin Boolean      @default(false)
+  approvedAt      DateTime?
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job             Job?         @relation(fields: [jobId], references: [id])
+  client          Client?      @relation(fields: [clientId], references: [id])
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([organizationId, type, status])
+  @@index([jobId])
+  @@index([clientId])
+}
+
+model WebhookEvent {
+  id                String             @id @default(cuid())
+  organizationId    String?
+  externalOrderId   String?
+  jobId             String?
+  provider          String
+  eventType         String
+  externalId        String?
+  status            WebhookEventStatus @default(RECEIVED)
+  signatureVerified Boolean            @default(false)
+  payload           Json
+  processedAt       DateTime?
+  error             String?
+  organization      Organization?      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  externalOrder     ExternalOrder?     @relation(fields: [externalOrderId], references: [id])
+  job               Job?               @relation(fields: [jobId], references: [id])
+  createdAt         DateTime           @default(now())
+
+  @@unique([provider, externalId])
+  @@index([provider, eventType])
+  @@index([organizationId, status, createdAt])
+}
+
+model UpsellOffer {
+  id                  String       @id @default(cuid())
+  organizationId      String
+  clientId            String?
+  jobId               String?
+  offerType           String
+  title               String
+  body                String
+  cta                 String
+  suggestedPriceCents Int?
+  currency            String       @default("USD")
+  status              UpsellStatus @default(DRAFT)
+  sentAt              DateTime?
+  acceptedAt          DateTime?
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client              Client?      @relation(fields: [clientId], references: [id])
+  job                 Job?         @relation(fields: [jobId], references: [id])
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([clientId])
+  @@index([jobId])
+}
+
+model UploadToken {
+  id               String        @id @default(cuid())
+  organizationId   String
+  clientId         String?
+  jobId            String?
+  tokenHash        String        @unique
+  purpose          TokenPurpose  @default(UPLOAD)
+  expiresAt        DateTime
+  usedAt           DateTime?
+  revokedAt        DateTime?
+  maxFiles         Int?
+  maxBytesPerFile  Int?
+  allowedMimeTypes String[]      @default([])
+  metadata         Json?
+  organization     Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client           Client?       @relation(fields: [clientId], references: [id])
+  job              Job?          @relation(fields: [jobId], references: [id])
+  uploadBatches    UploadBatch[]
+  images           Image[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([organizationId, expiresAt])
+  @@index([clientId])
+  @@index([jobId])
+}
+
+model UploadBatch {
+  id                String            @id @default(cuid())
+  organizationId    String
+  clientId          String?
+  jobId             String?
+  uploadTokenId     String?
+  sourceKind        UploadSourceKind  @default(DIRECT_UPLOAD)
+  status            UploadBatchStatus @default(PLANNED)
+  fileCount         Int               @default(0)
+  acceptedFileCount Int               @default(0)
+  rejectedFileCount Int               @default(0)
+  totalBytes        BigInt            @default(0)
+  clientNotes       String?
+  adminNotes        String?
+  metadata          Json?
+  completedAt       DateTime?
+  failedReason      String?
+  organization      Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client            Client?           @relation(fields: [clientId], references: [id])
+  job               Job?              @relation(fields: [jobId], references: [id])
+  uploadToken       UploadToken?      @relation(fields: [uploadTokenId], references: [id])
+  images            Image[]
+  events            UploadEvent[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([jobId, status])
+  @@index([clientId])
+  @@index([uploadTokenId])
+}
+
+model UploadEvent {
+  id             String       @id @default(cuid())
+  organizationId String
+  clientId       String?
+  jobId          String?
+  uploadBatchId  String?
+  imageId        String?
+  eventType      String
+  severity       String       @default("INFO")
+  message        String
+  metadata       Json?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client         Client?      @relation(fields: [clientId], references: [id])
+  job            Job?         @relation(fields: [jobId], references: [id])
+  uploadBatch    UploadBatch? @relation(fields: [uploadBatchId], references: [id])
+  image          Image?       @relation(fields: [imageId], references: [id])
+  createdAt      DateTime     @default(now())
+
+  @@index([organizationId, eventType, createdAt])
+  @@index([jobId, createdAt])
+  @@index([uploadBatchId])
+  @@index([imageId])
+}
+
+model DeliveryLink {
+  id                         String             @id @default(cuid())
+  jobId                      String
+  tokenHash                  String             @unique
+  status                     DeliveryLinkStatus @default(DRAFT)
+  expiresAt                  DateTime
+  approvedOnly               Boolean            @default(true)
+  downloadedAt               DateTime?
+  revokedAt                  DateTime?
+  maxDownloads               Int                @default(5)
+  downloadCount              Int                @default(0)
+  recipientEmailHash         String?
+  sentAt                     DateTime?
+  sentByUserId               String?
+  deliveryNotes              String?
+  marketplaceDeliveryMessage String?
+  job                        Job                @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  createdAt                  DateTime           @default(now())
+  updatedAt                  DateTime           @updatedAt
+
+  @@index([jobId, status])
+  @@index([expiresAt])
+  @@index([sentAt])
+}
+
+model DeliveryDownloadEvent {
+  id             String                    @id @default(cuid())
+  organizationId String
+  jobId          String?
+  clientId       String?
+  deliveryLinkId String?
+  tokenHash      String
+  type           DeliveryDownloadEventType
+  allowed        Boolean                   @default(false)
+  denialReason   String?
+  requestIpHash  String?
+  userAgent      String?
+  metadata       Json?
+  organization   Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job            Job?                      @relation(fields: [jobId], references: [id])
+  createdAt      DateTime                  @default(now())
+
+  @@index([organizationId, type, createdAt])
+  @@index([jobId, createdAt])
+  @@index([deliveryLinkId])
+  @@index([tokenHash])
+}
+
+model DeliveryNotificationLog {
+  id                String                     @id @default(cuid())
+  organizationId    String
+  jobId             String?
+  clientId          String?
+  type              DeliveryNotificationType
+  status            DeliveryNotificationStatus @default(PLANNED)
+  providerKey       String
+  recipientRedacted String
+  subject           String
+  bodyPreview       String?
+  providerMessageId String?
+  errorMessage      String?
+  metadata          Json?
+  organization      Organization               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job               Job?                       @relation(fields: [jobId], references: [id])
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+
+  @@index([organizationId, type, status])
+  @@index([jobId, createdAt])
+  @@index([status])
+}
+
+model DeliveryArchive {
+  id                   String                @id @default(cuid())
+  organizationId       String
+  jobId                String
+  status               DeliveryArchiveStatus @default(PLANNED)
+  rootFolder           String
+  zipFileName          String
+  zipStorageKey        String
+  manifestStorageKey   String?
+  readmeStorageKey     String?
+  fileCount            Int                   @default(0)
+  outputCount          Int                   @default(0)
+  missingCount         Int                   @default(0)
+  sellerReviewRequired Boolean               @default(true)
+  approvedOnly         Boolean               @default(true)
+  generatedByUserId    String?
+  approvedAt           DateTime?
+  approvedByUserId     String?
+  failedReason         String?
+  metadata             Json?
+  organization         Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                  Job                   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  files                DeliveryArchiveFile[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@unique([jobId, zipStorageKey])
+  @@index([organizationId, status, createdAt])
+  @@index([jobId, status])
+  @@index([approvedOnly, status])
+}
+
+model DeliveryArchiveFile {
+  id                   String                  @id @default(cuid())
+  organizationId       String
+  jobId                String
+  archiveId            String?
+  processedFileId      String?
+  sourceImageId        String?
+  kind                 DeliveryArchiveFileKind
+  archivePath          String
+  folderPath           String
+  fileName             String
+  storageKey           String?
+  mimeType             String
+  format               OutputFormat
+  status               ManifestFileStatus      @default(PLANNED)
+  sellerReviewRequired Boolean                 @default(true)
+  metadata             Json?
+  organization         Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                  Job                     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  archive              DeliveryArchive?        @relation(fields: [archiveId], references: [id], onDelete: Cascade)
+  processedFile        ProcessedFile?          @relation(fields: [processedFileId], references: [id])
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+
+  @@unique([jobId, archivePath])
+  @@index([organizationId, jobId, kind])
+  @@index([archiveId, kind])
+  @@index([processedFileId])
+  @@index([status])
+}
+
+model PreviewGallery {
+  id                   String               @id @default(cuid())
+  organizationId       String
+  jobId                String
+  galleryKey           String
+  status               PreviewGalleryStatus @default(DRAFT)
+  clientPreviewEnabled Boolean              @default(false)
+  approvedOnly         Boolean              @default(true)
+  itemCount            Int                  @default(0)
+  approvedItemCount    Int                  @default(0)
+  flaggedItemCount     Int                  @default(0)
+  failedItemCount      Int                  @default(0)
+  beforeAfterPairCount Int                  @default(0)
+  generatedByUserId    String?
+  metadata             Json?
+  organization         Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                  Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  items                PreviewGalleryItem[]
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@unique([jobId, galleryKey])
+  @@index([organizationId, status, createdAt])
+  @@index([jobId, status])
+  @@index([clientPreviewEnabled, status])
+}
+
+model PreviewGalleryItem {
+  id                  String                @id @default(cuid())
+  organizationId      String
+  jobId               String
+  galleryId           String
+  itemKey             String
+  imageId             String?
+  processedFileId     String?
+  originalName        String?
+  outputFileName      String
+  originalStorageKey  String?
+  previewStorageKey   String?
+  thumbnailStorageKey String?
+  outputType          OutputType?
+  outputFormat        OutputFormat?
+  presetKey           String?
+  platform            String?
+  visibility          PreviewItemVisibility @default(ADMIN_ONLY)
+  reviewStatus        PreviewReviewStatus   @default(READY_FOR_REVIEW)
+  approvedStatus      ApprovalStatus        @default(PENDING)
+  qualityScore        Int?
+  flags               String[]              @default([])
+  sortOrder           Int                   @default(0)
+  adminNotes          String?
+  clientNotes         String?
+  metadata            Json?
+  organization        Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                 Job                   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  gallery             PreviewGallery        @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  image               Image?                @relation(fields: [imageId], references: [id])
+  processedFile       ProcessedFile?        @relation(fields: [processedFileId], references: [id])
+  qualityReviews      QualityReview[]
+  qualityFlagRecords  QualityFlag[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@unique([galleryId, itemKey])
+  @@index([organizationId, jobId, reviewStatus])
+  @@index([jobId, visibility, approvedStatus])
+  @@index([imageId])
+  @@index([processedFileId])
+  @@index([presetKey])
+}
+
+model IntegrationConnection {
+  id                          String                       @id @default(cuid())
+  organizationId              String
+  providerKey                 String
+  mode                        IntegrationMode              @default(MOCK)
+  enabled                     Boolean                      @default(false)
+  config                      Json?
+  healthStatus                String?
+  lastCheckedAt               DateTime?
+  organization                Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  imageProviderConfigurations ImageProviderConfiguration[]
+  createdAt                   DateTime                     @default(now())
+  updatedAt                   DateTime                     @updatedAt
+
+  @@unique([organizationId, providerKey])
+  @@index([organizationId, enabled])
+}
+
+model ImageProviderConfiguration {
+  id                    String                     @id @default(cuid())
+  organizationId        String
+  providerKey           String
+  connectionId          String?
+  enabled               Boolean                    @default(false)
+  mode                  IntegrationMode            @default(MOCK)
+  status                ImageProviderConfigStatus  @default(DRAFT)
+  priority              Int                        @default(100)
+  capabilities          String[]                   @default([])
+  config                Json?
+  secretStatus          Json?
+  healthStatus          ImageProviderHealthStatus  @default(UNKNOWN)
+  healthMessage         String?
+  lastHealthCheckedAt   DateTime?
+  manualFallbackEnabled Boolean                    @default(true)
+  organization          Organization               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  connection            IntegrationConnection?     @relation(fields: [connectionId], references: [id])
+  healthChecks          ImageProviderHealthCheck[]
+  createdAt             DateTime                   @default(now())
+  updatedAt             DateTime                   @updatedAt
+  deletedAt             DateTime?
+
+  @@unique([organizationId, providerKey])
+  @@index([organizationId, enabled, priority])
+  @@index([providerKey, status])
+}
+
+model ImageProviderHealthCheck {
+  id              String                      @id @default(cuid())
+  organizationId  String
+  providerKey     String
+  configurationId String?
+  status          ImageProviderHealthStatus   @default(UNKNOWN)
+  message         String
+  safeDetails     Json?
+  checkedAt       DateTime                    @default(now())
+  organization    Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  configuration   ImageProviderConfiguration? @relation(fields: [configurationId], references: [id])
+
+  @@index([organizationId, providerKey, checkedAt])
+  @@index([configurationId, checkedAt])
+}
+
+model EncryptedSecret {
+  id                             String                          @id @default(cuid())
+  organizationId                 String
+  providerKey                    String
+  name                           String
+  ciphertext                     String
+  keyVersion                     String?
+  organization                   Organization                    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                      DateTime                        @default(now())
+  updatedAt                      DateTime                        @updatedAt
+  fileStorageConnections         FileStorageConnection[]
+  automationWebhookSubscriptions AutomationWebhookSubscription[]
+  taskNotificationConnections    TaskNotificationConnection[]
+
+  @@unique([organizationId, providerKey, name])
+  @@index([providerKey])
+}
+
+model AutomationEvent {
+  id             String       @id @default(cuid())
+  organizationId String
+  provider       String
+  eventType      String
+  payload        Json
+  status         String       @default("queued")
+  error          String?
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([provider, eventType])
+}
+
+model AuditLog {
+  id             String        @id @default(cuid())
+  organizationId String?
+  actorUserId    String?
+  jobId          String?
+  action         String
+  targetType     String
+  targetId       String?
+  metadata       Json?
+  ipAddress      String?
+  userAgent      String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actor          User?         @relation("AuditActor", fields: [actorUserId], references: [id])
+  job            Job?          @relation(fields: [jobId], references: [id])
+  createdAt      DateTime      @default(now())
+
+  @@index([organizationId, action, createdAt])
+  @@index([actorUserId])
+  @@index([jobId])
+}
+
+model BrandSetting {
+  id                      String       @id @default(cuid())
+  organizationId          String       @unique
+  logoUrl                 String?
+  primaryColor            String?
+  secondaryColor          String?
+  deliveryFooter          String?
+  portalName              String?
+  customDomain            String?
+  supportEmail            String?
+  hideListingLiftBranding Boolean      @default(false)
+  organization            Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+}
+
+model QualityReview {
+  id                        String               @id @default(cuid())
+  organizationId            String
+  jobId                     String
+  imageId                   String?
+  processedFileId           String?
+  previewGalleryItemId      String?
+  reviewKey                 String
+  status                    QualityReviewStatus  @default(PENDING_REVIEW)
+  score                     Int?
+  severity                  QualityFlagSeverity?
+  checklist                 Json?
+  blockerCount              Int                  @default(0)
+  warningCount              Int                  @default(0)
+  infoCount                 Int                  @default(0)
+  adminNotes                String?
+  clientVisibleNotes        String?
+  reviewedByUserId          String?
+  reviewedAt                DateTime?
+  resolvedAt                DateTime?
+  manualFallbackRequired    Boolean              @default(false)
+  manualReplacementRequired Boolean              @default(false)
+  finalDeliveryBlocked      Boolean              @default(true)
+  metadata                  Json?
+  organization              Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                       Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  image                     Image?               @relation(fields: [imageId], references: [id])
+  processedFile             ProcessedFile?       @relation(fields: [processedFileId], references: [id])
+  previewGalleryItem        PreviewGalleryItem?  @relation(fields: [previewGalleryItemId], references: [id])
+  flags                     QualityFlag[]
+  events                    QualityReviewEvent[]
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+
+  @@unique([jobId, reviewKey])
+  @@index([organizationId, jobId, status])
+  @@index([organizationId, finalDeliveryBlocked])
+  @@index([jobId, status])
+  @@index([processedFileId])
+  @@index([previewGalleryItemId])
+}
+
+model QualityFlag {
+  id                   String               @id @default(cuid())
+  organizationId       String
+  jobId                String
+  reviewId             String?
+  imageId              String?
+  processedFileId      String?
+  previewGalleryItemId String?
+  flagKey              String
+  category             String
+  severity             QualityFlagSeverity  @default(WARNING)
+  status               QualityFlagStatus    @default(OPEN)
+  blocksDelivery       Boolean              @default(true)
+  message              String
+  suggestedAction      String?
+  adminNotes           String?
+  clientVisible        Boolean              @default(false)
+  createdByUserId      String?
+  resolvedByUserId     String?
+  resolvedAt           DateTime?
+  resolution           String?
+  metadata             Json?
+  organization         Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                  Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  review               QualityReview?       @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  image                Image?               @relation(fields: [imageId], references: [id])
+  processedFile        ProcessedFile?       @relation(fields: [processedFileId], references: [id])
+  previewGalleryItem   PreviewGalleryItem?  @relation(fields: [previewGalleryItemId], references: [id])
+  events               QualityReviewEvent[]
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@index([organizationId, jobId, status])
+  @@index([organizationId, severity, status])
+  @@index([jobId, blocksDelivery])
+  @@index([reviewId])
+  @@index([processedFileId])
+  @@index([previewGalleryItemId])
+  @@index([flagKey])
+}
+
+model QualityReviewEvent {
+  id             String                 @id @default(cuid())
+  organizationId String
+  jobId          String
+  reviewId       String?
+  flagId         String?
+  actorUserId    String?
+  type           QualityReviewEventType
+  message        String?
+  metadata       Json?
+  organization   Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job            Job                    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  review         QualityReview?         @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  flag           QualityFlag?           @relation(fields: [flagId], references: [id], onDelete: Cascade)
+  createdAt      DateTime               @default(now())
+
+  @@index([organizationId, jobId, createdAt])
+  @@index([reviewId, createdAt])
+  @@index([flagId, createdAt])
+}
+
+enum ManualApprovalGateStatus {
+  WAITING_FOR_QC
+  READY_FOR_ADMIN_REVIEW
+  BLOCKED_BY_FLAGS
+  BLOCKED_BY_REVISIONS
+  APPROVED
+  REJECTED
+  REVISION_REQUESTED
+}
+
+enum ManualApprovalEventType {
+  READINESS_CHECKED
+  OUTPUT_APPROVED
+  OUTPUT_REJECTED
+  JOB_APPROVED
+  JOB_REJECTED
+  REVISION_REQUESTED
+  MANUAL_REPLACEMENT_MARKED
+  DELIVERY_GATE_CHECKED
+}
+
+enum RevisionWorkflowEventTypeV2 {
+  REQUESTED
+  ACCEPTED
+  REJECTED
+  STARTED
+  COMMENT_ADDED
+  MANUAL_REPLACEMENT_UPLOADED
+  REPROCESSING_REQUESTED
+  RESOLVED
+  CANCELLED
+}
+
+model ManualApprovalGate {
+  id                             String                   @id @default(cuid())
+  organizationId                 String
+  jobId                          String                   @unique
+  status                         ManualApprovalGateStatus @default(WAITING_FOR_QC)
+  outputCount                    Int                      @default(0)
+  approvedOutputCount            Int                      @default(0)
+  rejectedOutputCount            Int                      @default(0)
+  unresolvedBlockingFlags        Int                      @default(0)
+  openRevisionCount              Int                      @default(0)
+  manualReplacementRequiredCount Int                      @default(0)
+  finalDeliveryAllowed           Boolean                  @default(false)
+  checkedByUserId                String?
+  checkedAt                      DateTime?
+  approvedByUserId               String?
+  approvedAt                     DateTime?
+  notes                          String?
+  metadata                       Json?
+  createdAt                      DateTime                 @default(now())
+  updatedAt                      DateTime                 @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, finalDeliveryAllowed])
+  @@index([jobId])
+}
+
+model ManualApprovalEvent {
+  id              String                  @id @default(cuid())
+  organizationId  String
+  jobId           String
+  processedFileId String?
+  revisionId      String?
+  actorUserId     String?
+  type            ManualApprovalEventType
+  fromStatus      String?
+  toStatus        String?
+  decision        String?
+  blocksDelivery  Boolean                 @default(true)
+  message         String?
+  metadata        Json?
+  createdAt       DateTime                @default(now())
+
+  @@index([organizationId, jobId, createdAt])
+  @@index([processedFileId])
+  @@index([revisionId])
+  @@index([type])
+}
+
+model RevisionWorkflowEvent {
+  id             String                      @id @default(cuid())
+  organizationId String
+  jobId          String
+  revisionId     String
+  actorUserId    String?
+  type           RevisionWorkflowEventTypeV2
+  fromStatus     String?
+  toStatus       String?
+  clientVisible  Boolean                     @default(false)
+  message        String?
+  metadata       Json?
+  createdAt      DateTime                    @default(now())
+
+  @@index([organizationId, jobId, createdAt])
+  @@index([revisionId, createdAt])
+  @@index([clientVisible])
+}
+
+model StripeCheckoutSession {
+  id                      String                      @id @default(cuid())
+  organizationId          String
+  clientId                String?
+  jobId                   String?
+  packageKey              String?
+  provider                String                      @default("stripe")
+  stripeCheckoutSessionId String?                     @unique
+  stripeCustomerId        String?
+  stripeSubscriptionId    String?
+  clientReferenceId       String                      @unique
+  purpose                 StripeCheckoutPurpose       @default(PACKAGE)
+  mode                    String                      @default("payment")
+  amountCents             Int
+  currency                String                      @default("USD")
+  status                  StripeCheckoutSessionStatus @default(DRAFT)
+  paymentStatus           PaymentStatus               @default(PENDING)
+  checkoutUrl             String?
+  successUrl              String?
+  cancelUrl               String?
+  metadata                Json?
+  rawStripePayload        Json?
+  completedAt             DateTime?
+  expiresAt               DateTime?
+  organization            Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                  Client?                     @relation(fields: [clientId], references: [id])
+  job                     Job?                        @relation(fields: [jobId], references: [id])
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([clientId, status])
+  @@index([jobId])
+  @@index([stripeCustomerId])
+  @@index([stripeSubscriptionId])
+}
+
+model StripeWebhookEvent {
+  id                String                        @id @default(cuid())
+  organizationId    String?
+  stripeEventId     String                        @unique
+  eventType         String
+  livemode          Boolean                       @default(false)
+  signatureVerified Boolean                       @default(false)
+  processingStatus  StripeWebhookProcessingStatus @default(RECEIVED)
+  payload           Json
+  processingResult  Json?
+  error             String?
+  processedAt       DateTime?
+  organization      Organization?                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt         DateTime                      @default(now())
+  updatedAt         DateTime                      @updatedAt
+
+  @@index([organizationId, processingStatus, createdAt])
+  @@index([eventType, createdAt])
+}
+
+model GumroadProductMapping {
+  id                     String                 @id @default(cuid())
+  organizationId         String
+  offerKey               String
+  label                  String
+  productId              String?
+  permalink              String?
+  productNameHints       String[]               @default([])
+  permalinkHints         String[]               @default([])
+  packageKey             String?
+  imageAllowance         Int?
+  creditAmount           Int                    @default(0)
+  revisionAllowance      Int                    @default(0)
+  fulfillmentKind        GumroadFulfillmentKind @default(IMAGE_PACK_JOB)
+  createsJob             Boolean                @default(true)
+  sendsUploadLink        Boolean                @default(true)
+  sendsAdminNotification Boolean                @default(true)
+  safeDescription        String
+  active                 Boolean                @default(true)
+  organization           Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+
+  @@unique([organizationId, offerKey])
+  @@unique([organizationId, productId])
+  @@index([organizationId, active])
+  @@index([organizationId, fulfillmentKind])
+}
+
+model GumroadWebhookEvent {
+  id                 String                         @id @default(cuid())
+  organizationId     String?
+  clientId           String?
+  externalOrderId    String?
+  jobId              String?
+  gumroadSaleId      String                         @unique
+  productId          String?
+  permalink          String?
+  productName        String?
+  buyerEmailRedacted String?
+  amountCents        Int                            @default(0)
+  currency           String                         @default("USD")
+  signatureVerified  Boolean                        @default(false)
+  processingStatus   GumroadWebhookProcessingStatus @default(RECEIVED)
+  dedupeKey          String?
+  payload            Json
+  mappingPayload     Json?
+  processingResult   Json?
+  error              String?
+  processedAt        DateTime?
+  organization       Organization?                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client             Client?                        @relation(fields: [clientId], references: [id])
+  externalOrder      ExternalOrder?                 @relation(fields: [externalOrderId], references: [id])
+  job                Job?                           @relation(fields: [jobId], references: [id])
+  createdAt          DateTime                       @default(now())
+  updatedAt          DateTime                       @updatedAt
+
+  @@index([organizationId, processingStatus, createdAt])
+  @@index([organizationId, dedupeKey])
+  @@index([clientId, createdAt])
+  @@index([jobId])
+}
+
+model FiverrGigMapping {
+  id                    String             @id @default(cuid())
+  organizationId        String
+  gigKey                String
+  gigTitle              String
+  searchHints           String[]           @default([])
+  packageKey            String
+  imageAllowance        Int
+  revisionAllowance     Int                @default(0)
+  defaultTurnaroundDays Int                @default(3)
+  deliveryMode          FiverrDeliveryMode @default(FIVERR_ATTACHMENT)
+  createsUploadLink     Boolean            @default(true)
+  deliveryTemplateKey   String
+  safeDescription       String
+  active                Boolean            @default(true)
+  organization          Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  @@unique([organizationId, gigKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+}
+
+model FiverrDeliveryTemplate {
+  id                  String             @id @default(cuid())
+  organizationId      String
+  templateKey         String
+  label               String
+  deliveryMode        FiverrDeliveryMode @default(FIVERR_ATTACHMENT)
+  subjectHint         String?
+  bodyTemplate        String
+  safeLanguage        String
+  externalLinkAllowed Boolean            @default(false)
+  active              Boolean            @default(true)
+  organization        Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  @@unique([organizationId, templateKey])
+  @@index([organizationId, active])
+}
+
+model FiverrWorkflowEvent {
+  id                    String                  @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  externalOrderId       String?
+  jobId                 String?
+  fiverrOrderId         String
+  dedupeKey             String
+  workflowStatus        FiverrWorkflowStatus    @default(DRAFT)
+  eventType             FiverrWorkflowEventType
+  revisionStatus        FiverrRevisionStatus    @default(NONE)
+  buyerUsernameRedacted String?
+  gigTitle              String?
+  packageKey            String?
+  amountCents           Int?
+  currency              String                  @default("USD")
+  deliveryMode          FiverrDeliveryMode?
+  sourceUrl             String?
+  payload               Json?
+  safetyPayload         Json?
+  operatorNotes         String?
+  occurredAt            DateTime                @default(now())
+  organization          Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                Client?                 @relation(fields: [clientId], references: [id])
+  externalOrder         ExternalOrder?          @relation(fields: [externalOrderId], references: [id])
+  job                   Job?                    @relation(fields: [jobId], references: [id])
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, workflowStatus, occurredAt])
+  @@index([organizationId, fiverrOrderId])
+  @@index([jobId])
+  @@index([externalOrderId])
+}
+
+enum CreditLedgerEntryType {
+  PURCHASE
+  MANUAL_ADJUSTMENT
+  JOB_DEBIT
+  REVISION_DEBIT
+  REFUND_REVERSAL
+  SUBSCRIPTION_ALLOWANCE
+  EXPIRATION
+  IMPORT_CORRECTION
+}
+
+enum ManualInvoiceStatus {
+  DRAFT
+  SENT
+  PARTIALLY_PAID
+  PAID
+  VOID
+  OVERDUE
+  FAILED
+}
+
+enum ManualInvoicePaymentStatus {
+  DRAFT
+  CONFIRMED
+  REJECTED
+  REVERSED
+}
+
+enum SubscriptionEntitlementStatus {
+  ACTIVE
+  PAUSED
+  EXPIRED
+  CANCELLED
+  PENDING_PAYMENT
+}
+
+model ManualInvoice {
+  id              String                 @id @default(cuid())
+  organizationId  String
+  clientId        String?
+  invoiceNumber   String
+  status          ManualInvoiceStatus    @default(DRAFT)
+  amountCents     Int
+  paidCents       Int                    @default(0)
+  currency        String                 @default("USD")
+  creditsIncluded Int                    @default(0)
+  packageKey      String?
+  dueAt           DateTime?
+  sentAt          DateTime?
+  paidAt          DateTime?
+  voidedAt        DateTime?
+  clientNotes     String?
+  internalNotes   String?
+  createdByUserId String?
+  organization    Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client          Client?                @relation(fields: [clientId], references: [id])
+  payments        ManualInvoicePayment[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@unique([organizationId, invoiceNumber])
+  @@index([organizationId, status, createdAt])
+  @@index([clientId, status])
+  @@index([dueAt])
+}
+
+model ManualInvoicePayment {
+  id                       String                     @id @default(cuid())
+  organizationId           String
+  clientId                 String?
+  manualInvoiceId          String
+  invoicePaymentId         String?
+  amountCents              Int
+  currency                 String                     @default("USD")
+  status                   ManualInvoicePaymentStatus @default(CONFIRMED)
+  paymentReferenceRedacted String?
+  notes                    String?
+  confirmedAt              DateTime?
+  confirmedByUserId        String?
+  organization             Organization               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                   Client?                    @relation(fields: [clientId], references: [id])
+  manualInvoice            ManualInvoice              @relation(fields: [manualInvoiceId], references: [id], onDelete: Cascade)
+  invoicePayment           InvoicePayment?            @relation(fields: [invoicePaymentId], references: [id])
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([manualInvoiceId])
+  @@index([clientId])
+}
+
+model SubscriptionEntitlement {
+  id                    String                        @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  subscriptionId        String?
+  entitlementKey        String
+  monthlyImageAllowance Int                           @default(0)
+  usedThisPeriod        Int                           @default(0)
+  status                SubscriptionEntitlementStatus @default(ACTIVE)
+  resetsAt              DateTime?
+  source                String                        @default("subscription")
+  metadata              Json?
+  organization          Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                Client?                       @relation(fields: [clientId], references: [id])
+  subscription          Subscription?                 @relation(fields: [subscriptionId], references: [id])
+  createdAt             DateTime                      @default(now())
+  updatedAt             DateTime                      @updatedAt
+
+  @@unique([organizationId, clientId, entitlementKey])
+  @@index([organizationId, status])
+  @@index([clientId, status])
+  @@index([subscriptionId])
+}
+
+enum UpworkContractType {
+  FIXED_PRICE
+  HOURLY
+  RETAINER
+  AGENCY_SUBCONTRACT
+  BULK_CATALOG
+}
+
+enum UpworkMilestoneStatus {
+  NONE
+  PROPOSED
+  ACTIVE
+  SUBMITTED
+  APPROVED
+  PAID
+  PAUSED
+  CLOSED
+  DISPUTED
+}
+
+enum UpworkWorkflowStatus {
+  DRAFT
+  CONTRACT_CAPTURED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_REVIEW
+  FLAGGED
+  APPROVED
+  DELIVERY_READY
+  DELIVERED_IN_UPWORK
+  REVISION_REQUESTED
+  REPROCESSING
+  RETAINER_REMINDER_SENT
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum UpworkDeliveryMode {
+  UPWORK_ATTACHMENT
+  UPWORK_MESSAGE_WITH_ALLOWED_LINK
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum UpworkRevisionStatus {
+  NONE
+  REQUESTED
+  ACCEPTED
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  DELIVERED
+  CLOSED
+}
+
+enum UpworkWorkflowEventType {
+  CONTRACT_CAPTURED
+  MAPPING_APPLIED
+  CLIENT_MATCHED
+  JOB_PLANNED
+  UPLOAD_LINK_PLANNED
+  PROPOSAL_TEMPLATE_GENERATED
+  MESSAGE_TEMPLATE_GENERATED
+  DELIVERY_TEMPLATE_GENERATED
+  RETAINER_REMINDER_PLANNED
+  REVISION_STATUS_UPDATED
+  MANUAL_DELIVERY_RECORDED
+  SAFETY_CHECKED
+  ERROR
+}
+
+model UpworkOfferMapping {
+  id                      String                @id @default(cuid())
+  organizationId          String
+  offerKey                String
+  offerTitle              String
+  searchHints             String[]              @default([])
+  contractType            UpworkContractType    @default(FIXED_PRICE)
+  packageKey              String
+  imageAllowance          Int
+  revisionAllowance       Int                   @default(0)
+  defaultTurnaroundDays   Int                   @default(5)
+  defaultMilestoneStatus  UpworkMilestoneStatus @default(ACTIVE)
+  deliveryMode            UpworkDeliveryMode    @default(UPWORK_ATTACHMENT)
+  createsUploadLink       Boolean               @default(true)
+  proposalTemplateKey     String
+  deliveryTemplateKey     String
+  retainerReminderEnabled Boolean               @default(false)
+  safeDescription         String
+  active                  Boolean               @default(true)
+  organization            Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+
+  @@unique([organizationId, offerKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+  @@index([organizationId, contractType])
+}
+
+model UpworkProposalTemplate {
+  id                  String             @id @default(cuid())
+  organizationId      String
+  templateKey         String
+  label               String
+  contractType        UpworkContractType @default(FIXED_PRICE)
+  subjectHint         String?
+  proposalBody        String
+  messageBody         String?
+  deliveryBody        String?
+  safeLanguage        String
+  retainerUpsellText  String?
+  externalLinkAllowed Boolean            @default(false)
+  active              Boolean            @default(true)
+  organization        Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  @@unique([organizationId, templateKey])
+  @@index([organizationId, active])
+  @@index([organizationId, contractType])
+}
+
+model UpworkWorkflowEvent {
+  id                 String                  @id @default(cuid())
+  organizationId     String
+  clientId           String?
+  externalOrderId    String?
+  jobId              String?
+  upworkContractId   String
+  dedupeKey          String
+  workflowStatus     UpworkWorkflowStatus    @default(DRAFT)
+  eventType          UpworkWorkflowEventType
+  revisionStatus     UpworkRevisionStatus    @default(NONE)
+  clientNameRedacted String?
+  contractTitle      String?
+  contractType       UpworkContractType      @default(FIXED_PRICE)
+  milestoneTitle     String?
+  milestoneStatus    UpworkMilestoneStatus   @default(NONE)
+  dueDate            DateTime?
+  packageKey         String?
+  billedAmountCents  Int?
+  hourlyRateCents    Int?
+  estimatedHours     Float?
+  currency           String                  @default("USD")
+  deliveryMode       UpworkDeliveryMode?
+  sourceUrl          String?
+  payload            Json?
+  safetyPayload      Json?
+  operatorNotes      String?
+  occurredAt         DateTime                @default(now())
+  organization       Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client             Client?                 @relation(fields: [clientId], references: [id])
+  externalOrder      ExternalOrder?          @relation(fields: [externalOrderId], references: [id])
+  job                Job?                    @relation(fields: [jobId], references: [id])
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, workflowStatus, occurredAt])
+  @@index([organizationId, upworkContractId])
+  @@index([jobId])
+  @@index([externalOrderId])
+  @@index([dueDate])
+}
+
+enum TaskrabbitTaskCategory {
+  PRODUCT_PHOTO_CLEANUP
+  MARKETPLACE_LISTING_HELP
+  RESTAURANT_MENU_CLEANUP
+  REAL_ESTATE_LISTING_VISUALS
+  SMALL_BUSINESS_ECOMMERCE_SETUP
+  LOCAL_SELLER_SUPPORT
+  OTHER_LOCAL_SERVICE
+}
+
+enum TaskrabbitWorkflowStatus {
+  DRAFT
+  TASK_CAPTURED
+  CUSTOMER_CONTACTED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_REVIEW
+  DELIVERY_READY
+  DELIVERED_IN_TASKRABBIT
+  REVISION_REQUESTED
+  DIRECT_FOLLOW_UP_PLANNED
+  DIRECT_RETAINER_CONVERTED
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum TaskrabbitDeliveryMode {
+  TASKRABBIT_MESSAGE
+  TASKRABBIT_MESSAGE_WITH_ALLOWED_LINK
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum TaskrabbitConversionStatus {
+  NOT_TRACKED
+  FOLLOW_UP_NEEDED
+  FOLLOW_UP_SENT
+  INTERESTED
+  CONVERTED_TO_DIRECT_CLIENT
+  DECLINED
+  DO_NOT_CONTACT
+}
+
+enum TaskrabbitAppointmentStatus {
+  NOT_SCHEDULED
+  REQUESTED
+  SCHEDULED
+  RESCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum TaskrabbitWorkflowEventType {
+  TASK_CAPTURED
+  MAPPING_APPLIED
+  CUSTOMER_MATCHED
+  JOB_PLANNED
+  UPLOAD_LINK_PLANNED
+  DELIVERY_MESSAGE_GENERATED
+  CONVERSION_STATUS_UPDATED
+  DIRECT_FOLLOW_UP_PLANNED
+  MANUAL_DELIVERY_RECORDED
+  SAFETY_CHECKED
+  ERROR
+}
+
+model TaskrabbitServiceMapping {
+  id                            String                 @id @default(cuid())
+  organizationId                String
+  serviceKey                    String
+  serviceTitle                  String
+  searchHints                   String[]               @default([])
+  taskCategory                  TaskrabbitTaskCategory @default(PRODUCT_PHOTO_CLEANUP)
+  packageKey                    String
+  imageAllowance                Int
+  revisionAllowance             Int                    @default(0)
+  defaultTurnaroundDays         Int                    @default(3)
+  defaultDeliveryMode           TaskrabbitDeliveryMode @default(TASKRABBIT_MESSAGE_WITH_ALLOWED_LINK)
+  createsUploadLink             Boolean                @default(true)
+  conversionFollowUpRecommended Boolean                @default(false)
+  safeDescription               String
+  active                        Boolean                @default(true)
+  organization                  Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                     DateTime               @default(now())
+  updatedAt                     DateTime               @updatedAt
+
+  @@unique([organizationId, serviceKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+  @@index([organizationId, taskCategory])
+}
+
+model TaskrabbitWorkflowEvent {
+  id                   String                      @id @default(cuid())
+  organizationId       String
+  clientId             String?
+  externalOrderId      String?
+  jobId                String?
+  taskrabbitTaskId     String
+  dedupeKey            String
+  workflowStatus       TaskrabbitWorkflowStatus    @default(DRAFT)
+  eventType            TaskrabbitWorkflowEventType
+  taskCategory         TaskrabbitTaskCategory      @default(PRODUCT_PHOTO_CLEANUP)
+  appointmentStatus    TaskrabbitAppointmentStatus @default(NOT_SCHEDULED)
+  conversionStatus     TaskrabbitConversionStatus  @default(NOT_TRACKED)
+  customerNameRedacted String?
+  businessName         String?
+  taskTitle            String?
+  cityOrArea           String?
+  appointmentAt        DateTime?
+  deadline             DateTime?
+  packageKey           String?
+  taskValueCents       Int?
+  currency             String                      @default("USD")
+  deliveryMode         TaskrabbitDeliveryMode?
+  sourceUrl            String?
+  payload              Json?
+  safetyPayload        Json?
+  conversionPayload    Json?
+  operatorNotes        String?
+  occurredAt           DateTime                    @default(now())
+  organization         Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client               Client?                     @relation(fields: [clientId], references: [id])
+  externalOrder        ExternalOrder?              @relation(fields: [externalOrderId], references: [id])
+  job                  Job?                        @relation(fields: [jobId], references: [id])
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, workflowStatus, occurredAt])
+  @@index([organizationId, taskrabbitTaskId])
+  @@index([organizationId, conversionStatus])
+  @@index([jobId])
+  @@index([externalOrderId])
+  @@index([deadline])
+}
+
+enum GenericSalesChannelCategory {
+  FREELANCE_MARKETPLACE
+  LOCAL_LEAD_DIRECTORY
+  SOCIAL_PROFILE
+  COMMUNITY_PLATFORM
+  LAUNCH_DIRECTORY
+  BUSINESS_DIRECTORY
+}
+
+enum GenericSalesChannelWorkflowStatus {
+  LEAD_CAPTURED
+  QUALIFICATION_NEEDED
+  PROPOSAL_DRAFTED
+  WAITING_FOR_RESPONSE
+  ORDER_CONFIRMED
+  UPLOAD_LINK_SENT
+  FILES_RECEIVED
+  JOB_CREATED
+  IN_FULFILLMENT
+  DELIVERY_READY
+  DELIVERED_ON_SOURCE
+  FOLLOW_UP_NEEDED
+  RETAINER_CONVERTED
+  CLOSED_WON
+  CLOSED_LOST
+  DO_NOT_CONTACT
+}
+
+enum GenericSalesChannelTemplateType {
+  PROPOSAL
+  FOLLOW_UP
+  DELIVERY
+  RETAINER_UPSELL
+  CASE_STUDY_REQUEST
+}
+
+enum GenericSalesChannelEventType {
+  LEAD_CAPTURED
+  PROPOSAL_GENERATED
+  FOLLOW_UP_STATUS_UPDATED
+  ORDER_IMPORTED
+  JOB_CREATED
+  UPLOAD_LINK_CREATED
+  DELIVERY_TEMPLATE_GENERATED
+  DELIVERY_RECORDED
+  REVENUE_ATTRIBUTED
+  SAFETY_BLOCKED
+  MANUAL_OVERRIDE
+}
+
+model GenericSalesChannelMapping {
+  id                         String                      @id @default(cuid())
+  organizationId             String
+  channelKey                 String
+  label                      String
+  category                   GenericSalesChannelCategory
+  defaultPackageKey          String
+  defaultIntent              String
+  defaultDeliveryMode        String
+  sourceHints                String[]                    @default([])
+  manualOnly                 Boolean                     @default(true)
+  supportsProposalTemplate   Boolean                     @default(true)
+  supportsFollowUp           Boolean                     @default(true)
+  revenueAttributionRequired Boolean                     @default(true)
+  marketplaceSafetyRules     String[]                    @default([])
+  active                     Boolean                     @default(true)
+  organization               Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                  DateTime                    @default(now())
+  updatedAt                  DateTime                    @updatedAt
+
+  @@unique([organizationId, channelKey])
+  @@index([organizationId, category, active])
+  @@index([createdAt])
+}
+
+model GenericSalesChannelWorkflowEvent {
+  id                  String                            @id @default(cuid())
+  organizationId      String
+  externalOrderId     String?
+  jobId               String?
+  actorUserId         String?
+  channelKey          String
+  channelLabel        String?
+  externalReference   String
+  workflowStatus      GenericSalesChannelWorkflowStatus @default(LEAD_CAPTURED)
+  eventType           GenericSalesChannelEventType
+  templateType        GenericSalesChannelTemplateType?
+  amountCents         Int?
+  currency            String                            @default("USD")
+  sourceUrl           String?
+  nextFollowUpAt      DateTime?
+  externalLinkAllowed Boolean                           @default(false)
+  notes               String?
+  metadata            Json?
+  organization        Organization                      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  externalOrder       ExternalOrder?                    @relation(fields: [externalOrderId], references: [id])
+  job                 Job?                              @relation(fields: [jobId], references: [id])
+  createdAt           DateTime                          @default(now())
+  updatedAt           DateTime                          @updatedAt
+
+  @@index([organizationId, channelKey, workflowStatus])
+  @@index([organizationId, externalReference])
+  @@index([externalOrderId])
+  @@index([jobId])
+  @@index([createdAt])
+}
+
+enum EtsyOrderSourceMode {
+  MANUAL
+  CSV_IMPORT
+  API_SCAFFOLD
+  WEBHOOK_SCAFFOLD
+}
+
+enum EtsyWorkflowStatus {
+  DRAFT
+  ORDER_CAPTURED
+  LISTING_DATA_NEEDED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_QC
+  WAITING_FOR_APPROVAL
+  DELIVERY_READY
+  DELIVERED_IN_ETSY
+  REVISION_REQUESTED
+  SHOP_REFRESH_UPSELL_READY
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum EtsyListingImageUseCase {
+  SQUARE_LISTING_IMAGE
+  WHITE_BACKGROUND_IMAGE
+  TRANSPARENT_CUTOUT
+  LIFESTYLE_STYLE_MOCKUP
+  SHOP_VISUAL_CONSISTENCY
+  LISTING_SEQUENCE_RECOMMENDATION
+}
+
+enum EtsyDeliveryMode {
+  ETSY_MESSAGE
+  ETSY_MESSAGE_WITH_ALLOWED_LINK
+  EMAIL_WITH_ALLOWED_LINK
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum EtsyRevisionStatus {
+  NONE
+  REQUESTED
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  DELIVERED
+  CLOSED
+}
+
+enum EtsyWorkflowEventType {
+  ORDER_CAPTURED
+  LISTING_IMPORT_PLANNED
+  MAPPING_APPLIED
+  CLIENT_MATCHED
+  JOB_PLANNED
+  UPLOAD_LINK_PLANNED
+  PRESET_OUTPUTS_PLANNED
+  VISUAL_REPORT_GENERATED
+  DELIVERY_TEMPLATE_GENERATED
+  REVISION_STATUS_UPDATED
+  DELIVERY_RECORDED
+  SAFETY_CHECKED
+  ERROR
+}
+
+model EtsyListingPackMapping {
+  id                                     String                    @id @default(cuid())
+  organizationId                         String
+  etsyPackKey                            String
+  title                                  String
+  packageKey                             String
+  imageAllowance                         Int
+  revisionAllowance                      Int                       @default(1)
+  defaultUseCases                        EtsyListingImageUseCase[] @default([])
+  defaultDeliveryMode                    EtsyDeliveryMode          @default(ETSY_MESSAGE_WITH_ALLOWED_LINK)
+  includesShopVisualReport               Boolean                   @default(false)
+  includesListingSequenceRecommendations Boolean                   @default(true)
+  safeDescription                        String
+  active                                 Boolean                   @default(true)
+  organization                           Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                              DateTime                  @default(now())
+  updatedAt                              DateTime                  @updatedAt
+
+  @@unique([organizationId, etsyPackKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+}
+
+model EtsyListingImportRow {
+  id                    String              @id @default(cuid())
+  organizationId        String
+  jobId                 String?
+  shopId                String?
+  shopName              String?
+  listingId             String
+  title                 String
+  sku                   String?
+  category              String?
+  sourceUrl             String?
+  imageCount            Int                 @default(0)
+  importMode            EtsyOrderSourceMode @default(CSV_IMPORT)
+  recommendedPresetKeys String[]            @default([])
+  metadata              Json?
+  organization          Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                   Job?                @relation(fields: [jobId], references: [id])
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@unique([organizationId, listingId])
+  @@index([organizationId, shopId])
+  @@index([jobId])
+}
+
+model EtsyWorkflowEvent {
+  id                           String                @id @default(cuid())
+  organizationId               String
+  clientId                     String?
+  externalOrderId              String?
+  jobId                        String?
+  etsyOrderId                  String
+  shopId                       String?
+  shopName                     String?
+  dedupeKey                    String
+  workflowStatus               EtsyWorkflowStatus    @default(DRAFT)
+  eventType                    EtsyWorkflowEventType
+  sourceMode                   EtsyOrderSourceMode   @default(MANUAL)
+  deliveryMode                 EtsyDeliveryMode?
+  revisionStatus               EtsyRevisionStatus    @default(NONE)
+  buyerNameRedacted            String?
+  buyerEmailOrUsernameRedacted String?
+  listingIds                   String[]              @default([])
+  listingTitles                String[]              @default([])
+  packageKey                   String?
+  orderAmountCents             Int?
+  currency                     String                @default("USD")
+  deadline                     DateTime?
+  sourceUrl                    String?
+  payload                      Json?
+  reportPayload                Json?
+  safetyPayload                Json?
+  operatorNotes                String?
+  occurredAt                   DateTime              @default(now())
+  organization                 Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                       Client?               @relation(fields: [clientId], references: [id])
+  externalOrder                ExternalOrder?        @relation(fields: [externalOrderId], references: [id])
+  job                          Job?                  @relation(fields: [jobId], references: [id])
+  createdAt                    DateTime              @default(now())
+  updatedAt                    DateTime              @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, workflowStatus, occurredAt])
+  @@index([organizationId, etsyOrderId])
+  @@index([organizationId, shopId])
+  @@index([jobId])
+  @@index([externalOrderId])
+  @@index([deadline])
+}
+
+enum ShopifySourceMode {
+  MANUAL
+  CSV_IMPORT
+  API_SCAFFOLD
+  OAUTH_APP_SCAFFOLD
+  WEBHOOK_SCAFFOLD
+}
+
+enum ShopifyWorkflowStatus {
+  DRAFT
+  STORE_CAPTURED
+  PRODUCT_EXPORT_NEEDED
+  PRODUCT_CSV_IMPORTED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_QC
+  WAITING_FOR_APPROVAL
+  REPLACEMENT_APPROVAL_NEEDED
+  DELIVERY_READY
+  DELIVERED_TO_MERCHANT
+  REVISION_REQUESTED
+  STORE_REFRESH_UPSELL_READY
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum ShopifyProductImportMode {
+  MANUAL_CSV
+  PRODUCT_EXPORT_CSV
+  API_SCAFFOLD
+  OAUTH_APP_SCAFFOLD
+}
+
+enum ShopifyDeliveryMode {
+  SHOPIFY_ADMIN_MANUAL_UPLOAD
+  SHOPIFY_FILE_IMPORT_GUIDE
+  EMAIL_WITH_ALLOWED_LINK
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum ShopifyImageReplacementApprovalStatus {
+  NOT_REQUESTED
+  PENDING_MERCHANT_REVIEW
+  APPROVED_FOR_MANUAL_UPLOAD
+  REJECTED
+  REPLACED_MANUALLY
+  CLOSED
+}
+
+enum ShopifyOAuthStatus {
+  NOT_CONFIGURED
+  SCAFFOLD_ONLY
+  PENDING_APP_REVIEW
+  CONNECTED_TEST_STORE
+  CONNECTED_PRODUCTION_STORE
+  DISABLED
+}
+
+enum ShopifyWorkflowEventType {
+  STORE_CAPTURED
+  PRODUCT_IMPORT_PLANNED
+  MAPPING_APPLIED
+  CLIENT_MATCHED
+  JOB_PLANNED
+  UPLOAD_LINK_PLANNED
+  PRODUCT_SKU_ZIP_PLANNED
+  VISUAL_AUDIT_GENERATED
+  DELIVERY_TEMPLATE_GENERATED
+  REPLACEMENT_APPROVAL_UPDATED
+  OAUTH_SCAFFOLD_PLANNED
+  DELIVERY_RECORDED
+  SAFETY_CHECKED
+  ERROR
+}
+
+model ShopifyImagePackMapping {
+  id                          String              @id @default(cuid())
+  organizationId              String
+  shopifyPackKey              String
+  title                       String
+  packageKey                  String
+  imageAllowance              Int
+  revisionAllowance           Int                 @default(1)
+  defaultPresetKeys           String[]            @default([])
+  defaultDeliveryMode         ShopifyDeliveryMode @default(SHOPIFY_FILE_IMPORT_GUIDE)
+  supportsCsvImport           Boolean             @default(true)
+  supportsOauthScaffold       Boolean             @default(false)
+  includesStorefrontAudit     Boolean             @default(false)
+  includesReplacementApproval Boolean             @default(true)
+  safeDescription             String
+  active                      Boolean             @default(true)
+  organization                Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                   DateTime            @default(now())
+  updatedAt                   DateTime            @updatedAt
+
+  @@unique([organizationId, shopifyPackKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+}
+
+model ShopifyProductImportRow {
+  id                    String                   @id @default(cuid())
+  organizationId        String
+  jobId                 String?
+  storeDomain           String
+  storeName             String?
+  productId             String?
+  variantId             String?
+  handle                String?
+  title                 String
+  sku                   String?
+  productType           String?
+  vendor                String?
+  sourceUrl             String?
+  imageCount            Int                      @default(0)
+  importMode            ShopifyProductImportMode @default(PRODUCT_EXPORT_CSV)
+  recommendedPresetKeys String[]                 @default([])
+  productFolderPath     String?
+  metadata              Json?
+  organization          Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                   Job?                     @relation(fields: [jobId], references: [id])
+  createdAt             DateTime                 @default(now())
+  updatedAt             DateTime                 @updatedAt
+
+  @@unique([organizationId, storeDomain, productId, sku])
+  @@index([organizationId, storeDomain])
+  @@index([organizationId, sku])
+  @@index([jobId])
+}
+
+model ShopifyStoreConnection {
+  id                           String             @id @default(cuid())
+  organizationId               String
+  storeDomain                  String
+  storeName                    String?
+  oauthStatus                  ShopifyOAuthStatus @default(NOT_CONFIGURED)
+  requestedScopes              String[]           @default([])
+  encryptedAccessTokenSecretId String?
+  tokenLastFour                String?
+  lastHealthStatus             String?
+  lastHealthCheckedAt          DateTime?
+  featureFlagEnabled           Boolean            @default(false)
+  manualFallbackAvailable      Boolean            @default(true)
+  organization                 Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                    DateTime           @default(now())
+  updatedAt                    DateTime           @updatedAt
+
+  @@unique([organizationId, storeDomain])
+  @@index([organizationId, oauthStatus])
+}
+
+model ShopifyWorkflowEvent {
+  id                        String                                @id @default(cuid())
+  organizationId            String
+  clientId                  String?
+  externalOrderId           String?
+  jobId                     String?
+  storeDomain               String
+  storeName                 String?
+  productId                 String?
+  sku                       String?
+  dedupeKey                 String
+  workflowStatus            ShopifyWorkflowStatus                 @default(DRAFT)
+  eventType                 ShopifyWorkflowEventType
+  sourceMode                ShopifySourceMode                     @default(MANUAL)
+  deliveryMode              ShopifyDeliveryMode?
+  replacementApprovalStatus ShopifyImageReplacementApprovalStatus @default(NOT_REQUESTED)
+  oauthStatus               ShopifyOAuthStatus                    @default(NOT_CONFIGURED)
+  merchantNameRedacted      String?
+  merchantEmailRedacted     String?
+  productIds                String[]                              @default([])
+  skus                      String[]                              @default([])
+  productTitles             String[]                              @default([])
+  packageKey                String?
+  orderAmountCents          Int?
+  currency                  String                                @default("USD")
+  deadline                  DateTime?
+  sourceUrl                 String?
+  payload                   Json?
+  auditPayload              Json?
+  safetyPayload             Json?
+  operatorNotes             String?
+  occurredAt                DateTime                              @default(now())
+  organization              Organization                          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client                    Client?                               @relation(fields: [clientId], references: [id])
+  externalOrder             ExternalOrder?                        @relation(fields: [externalOrderId], references: [id])
+  job                       Job?                                  @relation(fields: [jobId], references: [id])
+  createdAt                 DateTime                              @default(now())
+  updatedAt                 DateTime                              @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, workflowStatus, occurredAt])
+  @@index([organizationId, storeDomain])
+  @@index([organizationId, sku])
+  @@index([jobId])
+  @@index([externalOrderId])
+  @@index([deadline])
+}
+
+enum SocialCommerceChannelType {
+  SOCIAL_SHOP
+  SOCIAL_PROFILE
+  SOCIAL_MARKETPLACE
+  LOCAL_SOCIAL
+  CONTENT_PLATFORM
+}
+
+enum SocialCommerceWorkflowStatus {
+  DRAFT
+  SOURCE_CAPTURED
+  CREATIVE_BRIEF_NEEDED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_QC
+  WAITING_FOR_APPROVAL
+  CREATIVE_PLAN_READY
+  DELIVERY_READY
+  DELIVERED_MANUALLY
+  REVISION_REQUESTED
+  UPSELL_READY
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum SocialCommerceDeliveryMode {
+  PLATFORM_MANUAL_UPLOAD
+  EMAIL_WITH_ALLOWED_LINK
+  DASHBOARD_DOWNLOAD
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum SocialCommerceCreativeFormat {
+  SQUARE_POST
+  VERTICAL_VIDEO_COVER
+  STORY_REEL
+  SHOP_PRODUCT_CARD
+  PINTEREST_PIN
+  MARKETPLACE_SQUARE
+  LOCAL_LISTING_IMAGE
+}
+
+enum SocialCommerceRevisionStatus {
+  NONE
+  REQUESTED
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  DELIVERED
+  CLOSED
+}
+
+enum SocialCommerceWorkflowEventType {
+  SOURCE_CAPTURED
+  MAPPING_APPLIED
+  CLIENT_MATCHED
+  JOB_PLANNED
+  UPLOAD_LINK_PLANNED
+  CREATIVE_PLAN_GENERATED
+  DELIVERY_TEMPLATE_GENERATED
+  REVISION_STATUS_UPDATED
+  DELIVERY_RECORDED
+  SAFETY_CHECKED
+  EXPORT_PLANNED
+  ERROR
+}
+
+model SocialCommerceChannelMapping {
+  id                           String                         @id @default(cuid())
+  organizationId               String
+  channelKey                   String
+  channelLabel                 String
+  channelType                  SocialCommerceChannelType
+  packageKey                   String
+  defaultPresetKeys            String[]                       @default([])
+  defaultCreativeFormats       SocialCommerceCreativeFormat[] @default([])
+  defaultDeliveryMode          SocialCommerceDeliveryMode     @default(DASHBOARD_DOWNLOAD)
+  manualFallbackOnly           Boolean                        @default(true)
+  supportsExternalLinks        Boolean                        @default(false)
+  supportsPaidOrderAttribution Boolean                        @default(false)
+  safeDescription              String
+  active                       Boolean                        @default(true)
+  organization                 Organization                   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt                    DateTime                       @default(now())
+  updatedAt                    DateTime                       @updatedAt
+  externalOrder                ExternalOrder?                 @relation(fields: [externalOrderId], references: [id])
+  externalOrderId              String?
+  job                          Job?                           @relation(fields: [jobId], references: [id])
+  jobId                        String?
+
+  @@unique([organizationId, channelKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+}
+
+model SocialCommerceCreativePlan {
+  id                   String                         @id @default(cuid())
+  organizationId       String
+  jobId                String?
+  channelKey           String
+  creativeFormats      SocialCommerceCreativeFormat[] @default([])
+  presetKeys           String[]                       @default([])
+  productSequence      Json?
+  captionNotes         String[]                       @default([])
+  hashtagNotes         String[]                       @default([])
+  sellerReviewRequired Boolean                        @default(true)
+  safeCopy             String
+  organization         Organization                   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job                  Job?                           @relation(fields: [jobId], references: [id])
+  createdAt            DateTime                       @default(now())
+  updatedAt            DateTime                       @updatedAt
+  externalOrder        ExternalOrder?                 @relation(fields: [externalOrderId], references: [id])
+  externalOrderId      String?
+
+  @@index([organizationId, channelKey])
+  @@index([jobId])
+}
+
+model SocialCommerceWorkflowEvent {
+  id                  String                          @id @default(cuid())
+  organizationId      String
+  clientId            String?
+  externalOrderId     String?
+  jobId               String?
+  channelKey          String
+  dedupeKey           String
+  workflowStatus      SocialCommerceWorkflowStatus    @default(DRAFT)
+  eventType           SocialCommerceWorkflowEventType
+  deliveryMode        SocialCommerceDeliveryMode?
+  revisionStatus      SocialCommerceRevisionStatus    @default(NONE)
+  buyerNameRedacted   String?
+  buyerHandleRedacted String?
+  businessName        String?
+  externalReference   String?
+  sourceUrl           String?
+  productNames        String[]                        @default([])
+  creativeFormats     SocialCommerceCreativeFormat[]  @default([])
+  packageKey          String?
+  orderAmountCents    Int?
+  currency            String                          @default("USD")
+  deadline            DateTime?
+  externalLinkAllowed Boolean                         @default(false)
+  payload             Json?
+  safetyPayload       Json?
+  operatorNotes       String?
+  occurredAt          DateTime                        @default(now())
+  organization        Organization                    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client              Client?                         @relation(fields: [clientId], references: [id])
+  externalOrder       ExternalOrder?                  @relation(fields: [externalOrderId], references: [id])
+  job                 Job?                            @relation(fields: [jobId], references: [id])
+  createdAt           DateTime                        @default(now())
+  updatedAt           DateTime                        @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, channelKey, workflowStatus])
+  @@index([organizationId, occurredAt])
+  @@index([jobId])
+  @@index([externalOrderId])
+  @@index([deadline])
+}
+
+enum MarketplaceExportChannelType {
+  AMAZON_MANUAL
+  EBAY_MANUAL
+  WOOCOMMERCE_MANUAL
+}
+
+enum MarketplaceExportWorkflowStatus {
+  DRAFT
+  SOURCE_CAPTURED
+  SELLER_EXPORT_NEEDED
+  FILES_NEEDED
+  FILES_RECEIVED
+  PROCESSING
+  WAITING_FOR_QC
+  WAITING_FOR_APPROVAL
+  EXPORT_PLAN_READY
+  DELIVERY_READY
+  DELIVERED_MANUALLY
+  REVISION_REQUESTED
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum MarketplaceExportDeliveryMode {
+  PLATFORM_MANUAL_UPLOAD
+  SELLER_EXPORT_PACKAGE
+  DASHBOARD_DOWNLOAD
+  MANUAL_EXTERNAL_DELIVERY_RECORDED
+}
+
+enum MarketplaceExportWorkflowEventType {
+  MANUAL_ORDER_CREATED
+  SELLER_EXPORT_IMPORTED
+  EXPORT_PLAN_GENERATED
+  COMPLIANCE_WARNING_GENERATED
+  DELIVERY_TEMPLATE_GENERATED
+  REVISION_STATUS_UPDATED
+  MANUAL_DELIVERY_RECORDED
+  SAFETY_CHECK_RECORDED
+}
+
+enum MarketplaceExportRevisionStatus {
+  NONE
+  REQUESTED
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  DELIVERED
+  CLOSED
+}
+
+model MarketplaceExportMapping {
+  id                   String                        @id @default(cuid())
+  organizationId       String
+  channelKey           String
+  channelType          MarketplaceExportChannelType
+  packageKey           String
+  defaultPresetKeys    String[]                      @default([])
+  defaultImageRoles    String[]                      @default([])
+  defaultDeliveryMode  MarketplaceExportDeliveryMode @default(SELLER_EXPORT_PACKAGE)
+  sellerReviewRequired Boolean                       @default(true)
+  manualFallbackOnly   Boolean                       @default(true)
+  supportsCsvImport    Boolean                       @default(true)
+  supportsApiLater     Boolean                       @default(false)
+  safeDescription      String
+  active               Boolean                       @default(true)
+  organization         Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt            DateTime                      @default(now())
+  updatedAt            DateTime                      @updatedAt
+
+  @@unique([organizationId, channelKey])
+  @@index([organizationId, active])
+  @@index([organizationId, packageKey])
+}
+
+model MarketplaceExportWorkflowEvent {
+  id                   String                             @id @default(cuid())
+  organizationId       String
+  clientId             String?
+  externalOrderId      String?
+  jobId                String?
+  channelKey           String
+  channelType          MarketplaceExportChannelType
+  dedupeKey            String
+  workflowStatus       MarketplaceExportWorkflowStatus    @default(DRAFT)
+  eventType            MarketplaceExportWorkflowEventType
+  deliveryMode         MarketplaceExportDeliveryMode?
+  revisionStatus       MarketplaceExportRevisionStatus    @default(NONE)
+  storeName            String?
+  sellerName           String?
+  buyerRedacted        String?
+  externalReference    String?
+  sourceUrl            String?
+  sku                  String?
+  productNames         String[]                           @default([])
+  imageRoles           String[]                           @default([])
+  presetKeys           String[]                           @default([])
+  packageKey           String?
+  orderAmountCents     Int?
+  currency             String                             @default("USD")
+  deadline             DateTime?
+  externalLinkAllowed  Boolean                            @default(false)
+  sellerReviewRequired Boolean                            @default(true)
+  payload              Json?
+  safetyPayload        Json?
+  operatorNotes        String?
+  occurredAt           DateTime                           @default(now())
+  organization         Organization                       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client               Client?                            @relation(fields: [clientId], references: [id])
+  externalOrder        ExternalOrder?                     @relation(fields: [externalOrderId], references: [id])
+  job                  Job?                               @relation(fields: [jobId], references: [id])
+  createdAt            DateTime                           @default(now())
+  updatedAt            DateTime                           @updatedAt
+
+  @@unique([organizationId, dedupeKey, eventType])
+  @@index([organizationId, channelKey, workflowStatus])
+  @@index([organizationId, occurredAt])
+  @@index([jobId])
+  @@index([externalOrderId])
+  @@index([deadline])
+}
+
+enum FileStorageProviderKey {
+  LOCAL
+  MOCK
+  GOOGLE_DRIVE
+  DROPBOX
+  ONEDRIVE_LATER
+  BOX_LATER
+}
+
+enum FileStorageConnectionStatus {
+  DISABLED
+  MOCK_ENABLED
+  CONFIGURED
+  NEEDS_AUTH
+  HEALTHY
+  DEGRADED
+  FAILED
+  REVOKED
+}
+
+enum FileStorageObjectKind {
+  ORIGINAL_UPLOAD
+  PROCESSED_OUTPUT
+  PREVIEW_IMAGE
+  DELIVERY_ARCHIVE
+  MANIFEST
+  README
+  MANUAL_REPLACEMENT
+  REPORT
+  TEMPORARY_EXPORT
+}
+
+enum FileStorageOperationKind {
+  UPLOAD
+  DOWNLOAD
+  COPY
+  MOVE
+  DELETE
+  LIST
+  SYNC_IN
+  SYNC_OUT
+  HEALTH_CHECK
+  CREATE_FOLDER
+}
+
+enum FileStorageSyncStatus {
+  PLANNED
+  RUNNING
+  COMPLETED
+  PARTIAL
+  FAILED
+  CANCELLED
+}
+
+model FileStorageConnection {
+  id                String                      @id @default(cuid())
+  organizationId    String
+  organization      Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  providerKey       FileStorageProviderKey
+  displayName       String
+  status            FileStorageConnectionStatus @default(DISABLED)
+  rootFolderId      String?
+  rootFolderPath    String?
+  encryptedSecretId String?
+  encryptedSecret   EncryptedSecret?            @relation(fields: [encryptedSecretId], references: [id])
+  config            Json                        @default("{}")
+  scopes            String[]                    @default([])
+  lastHealthStatus  String?
+  lastHealthMessage String?
+  lastCheckedAt     DateTime?
+  createdByUserId   String?
+  updatedByUserId   String?
+  revokedAt         DateTime?
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @updatedAt
+  syncEvents        FileStorageSyncEvent[]
+  externalFiles     ExternalFileReference[]
+
+  @@unique([organizationId, providerKey, displayName])
+  @@index([organizationId, providerKey])
+  @@index([organizationId, status])
+}
+
+model ExternalFileReference {
+  id                String                 @id @default(cuid())
+  organizationId    String
+  organization      Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  connectionId      String?
+  connection        FileStorageConnection? @relation(fields: [connectionId], references: [id])
+  providerKey       FileStorageProviderKey
+  objectKind        FileStorageObjectKind
+  jobId             String?
+  job               Job?                   @relation(fields: [jobId], references: [id])
+  clientId          String?
+  client            Client?                @relation(fields: [clientId], references: [id])
+  storageKey        String
+  externalFileId    String?
+  externalFolderId  String?
+  fileName          String
+  contentType       String?
+  sizeBytes         BigInt?
+  checksumSha256    String?
+  sourceUrl         String?
+  approvedForClient Boolean                @default(false)
+  metadata          Json                   @default("{}")
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+
+  @@unique([organizationId, providerKey, storageKey])
+  @@index([organizationId, providerKey])
+  @@index([organizationId, jobId])
+  @@index([organizationId, clientId])
+}
+
+model FileStorageSyncEvent {
+  id              String                   @id @default(cuid())
+  organizationId  String
+  organization    Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  connectionId    String?
+  connection      FileStorageConnection?   @relation(fields: [connectionId], references: [id])
+  providerKey     FileStorageProviderKey
+  operation       FileStorageOperationKind
+  status          FileStorageSyncStatus    @default(PLANNED)
+  jobId           String?
+  job             Job?                     @relation(fields: [jobId], references: [id])
+  actorUserId     String?
+  sourcePath      String?
+  destinationPath String?
+  fileCount       Int                      @default(0)
+  errorMessage    String?
+  metadata        Json                     @default("{}")
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+
+  @@index([organizationId, providerKey, status])
+  @@index([organizationId, jobId])
+  @@index([createdAt])
+}
+
+enum AutomationWebhookProviderKey {
+  INTERNAL_MOCK
+  GENERIC_WEBHOOK
+  ZAPIER_WEBHOOK
+  MAKE_WEBHOOK
+  N8N_WEBHOOK
+}
+
+enum AutomationTriggerKey {
+  NEW_PAID_ORDER
+  NEW_IMAGE_UPLOAD
+  JOB_PROCESSING_STARTED
+  JOB_WAITING_FOR_REVIEW
+  JOB_COMPLETED
+  REVISION_REQUESTED
+  DOWNLOAD_READY
+  CREDITS_LOW
+  SUBSCRIPTION_INACTIVE
+  UPSELL_OPPORTUNITY_DETECTED
+}
+
+enum AutomationActionKey {
+  CREATE_JOB
+  SEND_EMAIL
+  CREATE_SLACK_MESSAGE
+  CREATE_TRELLO_CARD
+  CREATE_CLICKUP_TASK
+  CREATE_GOOGLE_DRIVE_FOLDER
+  EXPORT_ZIP
+  UPDATE_CRM
+  NOTIFY_ADMIN
+}
+
+enum AutomationWebhookSubscriptionStatus {
+  DRAFT
+  ENABLED
+  PAUSED
+  FAILED
+  DISABLED
+  REVOKED
+}
+
+enum AutomationWebhookDeliveryStatus {
+  PLANNED
+  QUEUED
+  SENT
+  SKIPPED
+  FAILED
+  DEAD_LETTERED
+}
+
+model AutomationWebhookSubscription {
+  id                String                              @id @default(cuid())
+  organizationId    String
+  organization      Organization                        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  providerKey       AutomationWebhookProviderKey
+  displayName       String
+  status            AutomationWebhookSubscriptionStatus @default(DRAFT)
+  triggerKeys       AutomationTriggerKey[]              @default([])
+  actionKeys        AutomationActionKey[]               @default([])
+  endpointUrl       String?
+  encryptedSecretId String?
+  encryptedSecret   EncryptedSecret?                    @relation(fields: [encryptedSecretId], references: [id])
+  config            Json                                @default("{}")
+  maxRetries        Int                                 @default(3)
+  lastDispatchAt    DateTime?
+  lastError         String?
+  createdByUserId   String?
+  updatedByUserId   String?
+  revokedAt         DateTime?
+  createdAt         DateTime                            @default(now())
+  updatedAt         DateTime                            @updatedAt
+  deliveries        AutomationWebhookDelivery[]
+  deadLetters       AutomationDeadLetter[]
+
+  @@unique([organizationId, providerKey, displayName])
+  @@index([organizationId, providerKey, status])
+}
+
+model AutomationWebhookDelivery {
+  id              String                          @id @default(cuid())
+  organizationId  String
+  organization    Organization                    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  subscriptionId  String?
+  subscription    AutomationWebhookSubscription?  @relation(fields: [subscriptionId], references: [id])
+  providerKey     AutomationWebhookProviderKey
+  triggerKey      AutomationTriggerKey
+  actionKey       AutomationActionKey
+  status          AutomationWebhookDeliveryStatus @default(PLANNED)
+  jobId           String?
+  job             Job?                            @relation(fields: [jobId], references: [id])
+  dedupeKey       String
+  payload         Json                            @default("{}")
+  redactedPayload Json                            @default("{}")
+  responseStatus  Int?
+  responseBody    String?
+  attemptCount    Int                             @default(0)
+  maxRetries      Int                             @default(3)
+  nextRetryAt     DateTime?
+  sentAt          DateTime?
+  failedAt        DateTime?
+  createdAt       DateTime                        @default(now())
+  updatedAt       DateTime                        @updatedAt
+  deadLetters     AutomationDeadLetter[]
+
+  @@unique([organizationId, dedupeKey, actionKey, providerKey])
+  @@index([organizationId, providerKey, status])
+  @@index([organizationId, triggerKey, actionKey])
+  @@index([organizationId, jobId])
+}
+
+model AutomationDeadLetter {
+  id               String                         @id @default(cuid())
+  organizationId   String
+  organization     Organization                   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  subscriptionId   String?
+  subscription     AutomationWebhookSubscription? @relation(fields: [subscriptionId], references: [id])
+  deliveryId       String?
+  delivery         AutomationWebhookDelivery?     @relation(fields: [deliveryId], references: [id])
+  reason           String
+  payload          Json                           @default("{}")
+  replayedAt       DateTime?
+  replayedByUserId String?
+  resolvedAt       DateTime?
+  createdAt        DateTime                       @default(now())
+  updatedAt        DateTime                       @updatedAt
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, resolvedAt])
+}
+
+// Phase 30 — Notifications and Task/Data Exports
+
+enum TaskNotificationProviderKey {
+  INTERNAL_EMAIL
+  SLACK
+  SMTP_EMAIL
+  GOOGLE_SHEETS
+  AIRTABLE
+  TRELLO
+  CLICKUP
+  ASANA
+  NOTION
+}
+
+enum TaskNotificationActionKey {
+  SEND_SLACK_ALERT
+  SEND_EMAIL
+  EXPORT_GOOGLE_SHEET_ROW
+  EXPORT_AIRTABLE_RECORD
+  CREATE_TRELLO_CARD
+  CREATE_CLICKUP_TASK
+  CREATE_ASANA_TASK
+  CREATE_NOTION_PAGE
+  EXPORT_REPORT_DATA
+}
+
+enum TaskNotificationConnectionStatus {
+  DRAFT
+  ENABLED
+  PAUSED
+  FAILED
+  DISABLED
+  REVOKED
+}
+
+enum TaskNotificationDeliveryStatus {
+  PLANNED
+  QUEUED
+  SENT
+  SKIPPED
+  FAILED
+  MANUAL_FALLBACK
+}
+
+enum TaskDataExportStatus {
+  PLANNED
+  EXPORTED
+  FAILED
+  SKIPPED
+}
+
+enum TaskIntegrationTaskStatus {
+  PLANNED
+  CREATED
+  FAILED
+  SKIPPED
+}
+
+model TaskNotificationConnection {
+  id                String                           @id @default(cuid())
+  organizationId    String
+  organization      Organization                     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  providerKey       TaskNotificationProviderKey
+  displayName       String
+  status            TaskNotificationConnectionStatus @default(DRAFT)
+  encryptedSecretId String?
+  encryptedSecret   EncryptedSecret?                 @relation(fields: [encryptedSecretId], references: [id])
+  config            Json                             @default("{}")
+  enabledAt         DateTime?
+  disabledAt        DateTime?
+  lastHealthAt      DateTime?
+  lastHealthMessage String?
+  createdByUserId   String?
+  updatedByUserId   String?
+  createdAt         DateTime                         @default(now())
+  updatedAt         DateTime                         @updatedAt
+  deliveries        TaskNotificationDelivery[]
+  exports           TaskDataExport[]
+  tasks             TaskIntegrationTask[]
+
+  @@unique([organizationId, providerKey, displayName])
+  @@index([organizationId, providerKey, status])
+}
+
+model TaskNotificationDelivery {
+  id              String                         @id @default(cuid())
+  organizationId  String
+  organization    Organization                   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  connectionId    String?
+  connection      TaskNotificationConnection?    @relation(fields: [connectionId], references: [id])
+  providerKey     TaskNotificationProviderKey
+  actionKey       TaskNotificationActionKey
+  status          TaskNotificationDeliveryStatus @default(PLANNED)
+  jobId           String?
+  job             Job?                           @relation(fields: [jobId], references: [id])
+  dedupeKey       String
+  title           String?
+  message         String?
+  payload         Json                           @default("{}")
+  redactedPayload Json                           @default("{}")
+  externalId      String?
+  responseStatus  Int?
+  responseBody    String?
+  errorMessage    String?
+  sentAt          DateTime?
+  createdAt       DateTime                       @default(now())
+  updatedAt       DateTime                       @updatedAt
+
+  @@unique([organizationId, dedupeKey, providerKey, actionKey])
+  @@index([organizationId, providerKey, status])
+  @@index([organizationId, jobId])
+}
+
+model TaskDataExport {
+  id              String                      @id @default(cuid())
+  organizationId  String
+  organization    Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  connectionId    String?
+  connection      TaskNotificationConnection? @relation(fields: [connectionId], references: [id])
+  providerKey     TaskNotificationProviderKey
+  actionKey       TaskNotificationActionKey
+  status          TaskDataExportStatus        @default(PLANNED)
+  exportKind      String
+  rowCount        Int                         @default(0)
+  redactedPayload Json                        @default("{}")
+  externalId      String?
+  errorMessage    String?
+  exportedAt      DateTime?
+  createdAt       DateTime                    @default(now())
+  updatedAt       DateTime                    @updatedAt
+
+  @@index([organizationId, providerKey, status])
+  @@index([organizationId, exportKind])
+}
+
+model TaskIntegrationTask {
+  id             String                      @id @default(cuid())
+  organizationId String
+  organization   Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  connectionId   String?
+  connection     TaskNotificationConnection? @relation(fields: [connectionId], references: [id])
+  providerKey    TaskNotificationProviderKey
+  actionKey      TaskNotificationActionKey
+  status         TaskIntegrationTaskStatus   @default(PLANNED)
+  jobId          String?
+  job            Job?                        @relation(fields: [jobId], references: [id])
+  title          String
+  description    String?
+  dueAt          DateTime?
+  labels         String[]                    @default([])
+  externalId     String?
+  externalUrl    String?
+  errorMessage   String?
+  createdAt      DateTime                    @default(now())
+  updatedAt      DateTime                    @updatedAt
+
+  @@index([organizationId, providerKey, status])
+  @@index([organizationId, jobId])
+}
+
+enum AdvancedImageOperation {
+  AUTO_ENHANCE
+  LIGHTING_BALANCE
+  WHITE_BALANCE
+  SHARPEN
+  DENOISE
+  SOFT_SHADOW
+  REFLECTION_SHADOW
+  BRAND_BACKGROUND
+  HERO_COMPOSITE
+  SOCIAL_VARIATION
+  THUMBNAIL_VARIATION
+  SEQUENCE_RECOMMENDATION
+  QUALITY_REPORT
+}
+
+enum AdvancedImageRunStatus {
+  DRAFT
+  QUEUED
+  PROCESSING
+  WAITING_FOR_REVIEW
+  FLAGGED
+  APPROVED
+  MANUAL_FALLBACK_REQUIRED
+  FAILED
+  CANCELLED
+}
+
+enum AdvancedImageSafetyStatus {
+  ALLOWED
+  NEEDS_MANUAL_REVIEW
+  BLOCKED
+}
+
+model AdvancedImageProcessingRecipe {
+  id                   String                   @id @default(cuid())
+  organizationId       String?
+  organization         Organization?            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  key                  String
+  label                String
+  description          String?
+  operations           AdvancedImageOperation[] @default([])
+  recommendedPackages  String[]                 @default([])
+  defaultOutputFolder  String
+  safeClaim            String
+  enabled              Boolean                  @default(true)
+  requiresApproval     Boolean                  @default(true)
+  sellerReviewRequired Boolean                  @default(true)
+  metadata             Json                     @default("{}")
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+
+  @@unique([organizationId, key])
+  @@index([organizationId, enabled])
+}
+
+model AdvancedImageProcessingRun {
+  id             String                    @id @default(cuid())
+  organizationId String
+  organization   Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobId          String
+  job            Job                       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  recipeKey      String
+  status         AdvancedImageRunStatus    @default(DRAFT)
+  safetyStatus   AdvancedImageSafetyStatus @default(NEEDS_MANUAL_REVIEW)
+  operationPlan  Json                      @default("{}")
+  outputPlan     Json                      @default("{}")
+  reportId       String?
+  queuedByUserId String?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  errorMessage   String?
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+
+  @@index([organizationId, jobId, status])
+  @@index([organizationId, recipeKey])
+}
+
+model AdvancedImageProcessingReport {
+  id                String       @id @default(cuid())
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobId             String
+  job               Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  runId             String?
+  title             String
+  summary           String
+  warnings          String[]     @default([])
+  recommendations   String[]     @default([])
+  sequencePlan      Json         @default("{}")
+  qualityScores     Json         @default("{}")
+  safeClaim         String
+  approvedForClient Boolean      @default(false)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([organizationId, jobId])
+  @@index([organizationId, approvedForClient])
+}
+
+// Phase 32 — Reports and Upsell Engine scaffold.
+// Codex must validate and repair this migration/schema in the target runtime.
+
+enum ReportMetricKind {
+  JOB_COUNT
+  IMAGE_COUNT
+  APPROVED_OUTPUT_COUNT
+  FLAGGED_OUTPUT_COUNT
+  REVISION_COUNT
+  DELIVERY_COUNT
+  DOWNLOAD_COUNT
+  REVENUE_CENTS
+  CREDIT_BALANCE
+  SUBSCRIPTION_STATUS
+  QUALITY_SCORE
+  TURNAROUND_HOURS
+}
+
+enum ReportAudience {
+  ADMIN
+  CLIENT
+  AGENCY
+  WHITE_LABEL
+}
+
+enum UpsellOpportunityType {
+  MORE_IMAGE_PACKS
+  MONTHLY_RETAINER
+  LISTING_SEO
+  PRODUCT_DESCRIPTION_REWRITE
+  AD_CREATIVE_PACK
+  GUMROAD_OFFER_IMAGE_PACK
+  SHOPIFY_PRODUCT_PAGE_IMPROVEMENT
+  TIKTOK_SHOP_CREATIVE_PACK
+  DASHBOARD_ACCESS
+  AGENCY_WHITE_LABEL_LICENSE
+}
+
+enum UpsellOpportunityStatus {
+  DETECTED
+  READY
+  DISMISSED
+  CONVERTED
+  ARCHIVED
+}
+
+enum UpsellOfferChannel {
+  CLIENT_DASHBOARD
+  EMAIL_DRAFT
+  MANUAL_PLATFORM_MESSAGE
+  INTERNAL_TASK
+}
+
+model ReportMetricSnapshot {
+  id             String           @id @default(cuid())
+  organizationId String
+  clientId       String?
+  jobId          String?
+  reportId       String?
+  kind           ReportMetricKind
+  label          String
+  numericValue   Float?
+  textValue      String?
+  trend          String?
+  metadata       Json?
+  capturedAt     DateTime         @default(now())
+  createdAt      DateTime         @default(now())
+
+  @@index([organizationId, kind, capturedAt])
+  @@index([clientId, capturedAt])
+  @@index([jobId, capturedAt])
+  @@index([reportId])
+}
+
+model ReportDeliveryEvent {
+  id             String         @id @default(cuid())
+  organizationId String
+  clientId       String?
+  jobId          String?
+  reportId       String
+  audience       ReportAudience @default(CLIENT)
+  channel        String
+  status         String         @default("DRAFT")
+  recipientHash  String?
+  sentAt         DateTime?
+  error          String?
+  metadata       Json?
+  createdAt      DateTime       @default(now())
+
+  @@index([organizationId, reportId, createdAt])
+  @@index([clientId, createdAt])
+  @@index([jobId, createdAt])
+}
+
+model UpsellOpportunity {
+  id             String                  @id @default(cuid())
+  organizationId String
+  clientId       String?
+  jobId          String?
+  type           UpsellOpportunityType
+  status         UpsellOpportunityStatus @default(DETECTED)
+  priorityScore  Int                     @default(0)
+  reason         String
+  signalPayload  Json?
+  dismissedAt    DateTime?
+  convertedAt    DateTime?
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  @@index([organizationId, status, priorityScore])
+  @@index([clientId, status])
+  @@index([jobId, status])
+}
+
+model UpsellTemplate {
+  id                  String                @id @default(cuid())
+  organizationId      String?
+  type                UpsellOpportunityType
+  channel             UpsellOfferChannel    @default(CLIENT_DASHBOARD)
+  title               String
+  body                String
+  cta                 String
+  suggestedPriceCents Int?
+  currency            String                @default("USD")
+  safeClaim           String
+  active              Boolean               @default(true)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@unique([organizationId, type, channel])
+  @@index([organizationId, active])
+}
+
+model UpsellEvent {
+  id             String             @id @default(cuid())
+  organizationId String
+  clientId       String?
+  jobId          String?
+  upsellOfferId  String?
+  opportunityId  String?
+  channel        UpsellOfferChannel @default(CLIENT_DASHBOARD)
+  eventType      String
+  note           String?
+  metadata       Json?
+  createdAt      DateTime           @default(now())
+
+  @@index([organizationId, eventType, createdAt])
+  @@index([clientId, createdAt])
+  @@index([jobId, createdAt])
+  @@index([upsellOfferId])
+}
+
+enum ClientDashboardEventType {
+  VIEW
+  OPEN_JOB
+  OPEN_UPLOAD
+  OPEN_PREVIEW
+  OPEN_DOWNLOAD
+  OPEN_REVISION
+  OPEN_BILLING
+  OPEN_UPGRADE
+  REQUEST_HELP
+}
+
+enum ClientDashboardWidgetStatus {
+  VISIBLE
+  HIDDEN
+  DISMISSED
+}
+
+model ClientDashboardPreference {
+  id             String                      @id @default(cuid())
+  organizationId String
+  clientId       String
+  userId         String?
+  defaultSection String                      @default("OVERVIEW")
+  hiddenWidgets  String[]                    @default([])
+  widgetStatus   ClientDashboardWidgetStatus @default(VISIBLE)
+  metadata       Json?
+  createdAt      DateTime                    @default(now())
+  updatedAt      DateTime                    @updatedAt
+
+  @@unique([organizationId, clientId, userId])
+  @@index([organizationId, clientId])
+}
+
+model ClientDashboardEvent {
+  id             String                   @id @default(cuid())
+  organizationId String
+  clientId       String?
+  userId         String?
+  jobId          String?
+  section        String
+  eventType      ClientDashboardEventType
+  metadata       Json?
+  createdAt      DateTime                 @default(now())
+
+  @@index([organizationId, clientId, createdAt])
+  @@index([organizationId, jobId, createdAt])
+  @@index([organizationId, eventType, createdAt])
+}
+
+// Phase 34 — Admin Dashboard and Revenue Analytics scaffold.
+// Codex must validate and regenerate the migration SQL in the target runtime.
+
+enum AdminDashboardEventType {
+  VIEW
+  FILTER_JOBS
+  OPEN_JOB
+  OPEN_SOURCE_CHANNEL
+  OPEN_REVENUE_DETAIL
+  OPEN_CONVERSION_CANDIDATE
+  OPEN_RETAINER_ALERT
+  DISMISS_RETAINER_ALERT
+  EXPORT_REVENUE_DRAFT
+  REQUEST_MANUAL_REVIEW
+}
+
+enum AdminDashboardWidgetStatus {
+  VISIBLE
+  HIDDEN
+  DISMISSED
+}
+
+enum RetainerAlertStatus {
+  OPEN
+  DISMISSED
+  CONVERTED
+  ARCHIVED
+}
+
+model AdminDashboardPreference {
+  id             String                     @id @default(cuid())
+  organizationId String
+  userId         String
+  defaultSection String                     @default("OVERVIEW")
+  hiddenWidgets  String[]                   @default([])
+  widgetStatus   AdminDashboardWidgetStatus @default(VISIBLE)
+  metadata       Json?
+  createdAt      DateTime                   @default(now())
+  updatedAt      DateTime                   @updatedAt
+
+  @@unique([organizationId, userId])
+  @@index([organizationId])
+}
+
+model RevenueAnalyticsSnapshot {
+  id                     String    @id @default(cuid())
+  organizationId         String
+  sourceChannelKey       String?
+  sourceChannelName      String?
+  sourceChannelType      String?
+  periodStart            DateTime?
+  periodEnd              DateTime?
+  orderCount             Int       @default(0)
+  jobCount               Int       @default(0)
+  completedJobCount      Int       @default(0)
+  grossRevenueCents      Int       @default(0)
+  refundCents            Int       @default(0)
+  netRevenueCents        Int       @default(0)
+  currency               String    @default("USD")
+  directConversionCount  Int       @default(0)
+  retainerCandidateCount Int       @default(0)
+  metadata               Json?
+  capturedAt             DateTime  @default(now())
+  createdAt              DateTime  @default(now())
+
+  @@index([organizationId, capturedAt])
+  @@index([organizationId, sourceChannelKey])
+}
+
+model MarketplaceDirectConversionSignal {
+  id                    String    @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  marketplaceSource     String
+  directSource          String?
+  marketplaceOrderCount Int       @default(0)
+  directOrderCount      Int       @default(0)
+  grossRevenueCents     Int       @default(0)
+  currency              String    @default("USD")
+  manualReviewRequired  Boolean   @default(true)
+  metadata              Json?
+  lastOrderAt           DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([organizationId, clientId])
+  @@index([organizationId, lastOrderAt])
+}
+
+model RetainerOpportunityAlert {
+  id                   String              @id @default(cuid())
+  organizationId       String
+  clientId             String?
+  sourceChannel        String?
+  completedJobs        Int                 @default(0)
+  deliveredImages      Int                 @default(0)
+  score                Int                 @default(0)
+  priority             String              @default("LOW")
+  status               RetainerAlertStatus @default(OPEN)
+  suggestedAction      String
+  manualReviewRequired Boolean             @default(true)
+  dismissedAt          DateTime?
+  convertedAt          DateTime?
+  metadata             Json?
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  @@index([organizationId, status, score])
+  @@index([organizationId, clientId])
+}
+
+model AdminDashboardEvent {
+  id             String                  @id @default(cuid())
+  organizationId String
+  userId         String?
+  clientId       String?
+  jobId          String?
+  section        String
+  eventType      AdminDashboardEventType
+  sourceChannel  String?
+  metadata       Json?
+  createdAt      DateTime                @default(now())
+
+  @@index([organizationId, eventType, createdAt])
+  @@index([organizationId, jobId, createdAt])
+}
+
+// Phase 35 — Agency White-Label Mode scaffold.
+// Codex must validate and regenerate the migration SQL in the target runtime.
+
+enum AgencyWorkspaceModeStatus {
+  LEAD
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum AgencyBrandingReviewStatus {
+  DRAFT
+  NEEDS_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum AgencyBulkProcessingStatus {
+  PLANNED
+  WAITING_FOR_UPLOADS
+  READY_FOR_PROCESSING
+  PROCESSING
+  WAITING_FOR_REVIEW
+  FLAGGED
+  READY_FOR_DELIVERY
+  DELIVERED
+  BLOCKED
+}
+
+enum AgencyVolumePricingTier {
+  STARTER
+  GROWTH
+  SCALE
+  CUSTOM
+}
+
+enum AgencyWhiteLabelEventType {
+  VIEW
+  OPEN_WORKSPACE
+  CREATE_WORKSPACE_DRAFT
+  UPDATE_BRAND_SETTINGS_DRAFT
+  PREVIEW_BRANDED_DELIVERY
+  PREVIEW_BRANDED_REPORT
+  PLAN_BULK_QUEUE
+  QUOTE_VOLUME_PRICING
+  INVITE_TEAM_MEMBER_DRAFT
+  REQUEST_MANUAL_REVIEW
+}
+
+model AgencyWorkspaceSetting {
+  id                    String                    @id @default(cuid())
+  organizationId        String
+  clientId              String?
+  workspaceName         String
+  status                AgencyWorkspaceModeStatus @default(LEAD)
+  sourceChannels        String[]                  @default([])
+  whiteLabelEnabled     Boolean                   @default(true)
+  brandedReportsEnabled Boolean                   @default(true)
+  monthlyImageVolume    Int                       @default(0)
+  metadata              Json?
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, clientId])
+  @@index([organizationId, whiteLabelEnabled])
+}
+
+model AgencyBrandingReview {
+  id                      String                     @id @default(cuid())
+  organizationId          String
+  clientId                String?
+  portalName              String?
+  logoUrl                 String?
+  primaryColor            String?
+  secondaryColor          String?
+  supportEmail            String?
+  customDomain            String?
+  deliveryFooter          String?
+  hideListingLiftBranding Boolean                    @default(false)
+  reviewStatus            AgencyBrandingReviewStatus @default(DRAFT)
+  reviewedByUserId        String?
+  reviewedAt              DateTime?
+  rejectionReason         String?
+  metadata                Json?
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+
+  @@index([organizationId, reviewStatus])
+  @@index([organizationId, clientId])
+}
+
+model AgencyBrandedDeliveryTemplate {
+  id                   String                     @id @default(cuid())
+  organizationId       String
+  clientId             String?
+  workspaceId          String?
+  templateName         String
+  title                String
+  body                 String
+  footer               String?
+  includeReportLink    Boolean                    @default(true)
+  approvalGateRequired Boolean                    @default(true)
+  tokenGateRequired    Boolean                    @default(true)
+  reviewStatus         AgencyBrandingReviewStatus @default(DRAFT)
+  metadata             Json?
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
+
+  @@index([organizationId, clientId])
+  @@index([organizationId, reviewStatus])
+}
+
+model AgencyBrandedReportTemplate {
+  id                  String                     @id @default(cuid())
+  organizationId      String
+  clientId            String?
+  workspaceId         String?
+  reportType          String
+  templateName        String
+  sections            String[]                   @default([])
+  includeUpsellDrafts Boolean                    @default(false)
+  reviewStatus        AgencyBrandingReviewStatus @default(DRAFT)
+  metadata            Json?
+  createdAt           DateTime                   @default(now())
+  updatedAt           DateTime                   @updatedAt
+
+  @@index([organizationId, clientId])
+  @@index([organizationId, reportType])
+  @@index([organizationId, reviewStatus])
+}
+
+model AgencyBulkProcessingBatch {
+  id                   String                     @id @default(cuid())
+  organizationId       String
+  workspaceId          String?
+  clientId             String?
+  name                 String
+  status               AgencyBulkProcessingStatus @default(PLANNED)
+  priority             JobPriority                @default(NORMAL)
+  totalJobs            Int                        @default(0)
+  totalImages          Int                        @default(0)
+  manualReviewRequired Boolean                    @default(true)
+  metadata             Json?
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, workspaceId])
+  @@index([organizationId, clientId])
+}
+
+model AgencyBulkProcessingItem {
+  id                   String                     @id @default(cuid())
+  organizationId       String
+  batchId              String?
+  workspaceId          String?
+  clientId             String?
+  jobId                String?
+  status               AgencyBulkProcessingStatus @default(PLANNED)
+  imageCount           Int                        @default(0)
+  manualReviewRequired Boolean                    @default(true)
+  metadata             Json?
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
+
+  @@index([organizationId, batchId])
+  @@index([organizationId, status])
+  @@index([organizationId, jobId])
+}
+
+model AgencyVolumePricingQuote {
+  id                    String                  @id @default(cuid())
+  organizationId        String
+  tier                  AgencyVolumePricingTier @default(STARTER)
+  workspaceCount        Int                     @default(0)
+  monthlyImageVolume    Int                     @default(0)
+  includedImages        Int                     @default(0)
+  overageImages         Int                     @default(0)
+  baseMonthlyCents      Int                     @default(0)
+  addOnCents            Int                     @default(0)
+  estimatedMonthlyCents Int                     @default(0)
+  currency              String                  @default("USD")
+  manualReviewRequired  Boolean                 @default(true)
+  approvedByUserId      String?
+  approvedAt            DateTime?
+  metadata              Json?
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, tier])
+}
+
+model AgencyTeamInvite {
+  id                 String    @id @default(cuid())
+  organizationId     String
+  email              String
+  name               String
+  roleKey            RoleKey
+  clientWorkspaceIds String[]  @default([])
+  inviteTokenHash    String
+  expiresAt          DateTime
+  acceptedAt         DateTime?
+  revokedAt          DateTime?
+  createdByUserId    String?
+  metadata           Json?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([organizationId, email])
+  @@index([organizationId, roleKey])
+  @@index([expiresAt])
+}
+
+model AgencyWhiteLabelEvent {
+  id             String                    @id @default(cuid())
+  organizationId String
+  userId         String?
+  clientId       String?
+  workspaceId    String?
+  jobId          String?
+  section        String
+  eventType      AgencyWhiteLabelEventType
+  metadata       Json?
+  createdAt      DateTime                  @default(now())
+
+  @@index([organizationId, eventType, createdAt])
+  @@index([organizationId, clientId])
+  @@index([organizationId, workspaceId])
+}
+
+// Phase 36 — API Access and Advanced Integrations Scaffold.
+// Codex must validate and regenerate the migration SQL in the target runtime.
+
+enum ApiAccessTokenStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+  ROTATED
+}
+
+enum ApiAccessEventType {
+  CREATED
+  TOKEN_SHOWN_ONCE
+  SCOPE_CHECKED
+  TOKEN_REVOKED
+  TOKEN_ROTATED
+  PLAN_GATE_EVALUATED
+  WEBHOOK_MANAGED
+  SHARED_UPLOAD_PORTAL_CREATED
+  API_REQUEST_RECEIVED
+  RATE_LIMITED
+}
+
+enum AdvancedIntegrationProvider {
+  ZAPIER
+  MAKE
+  N8N
+  CUSTOM_API
+  WEBHOOK
+}
+
+enum AdvancedIntegrationConnectionStatus {
+  DRAFT
+  READY
+  DISABLED
+  ERROR
+}
+
+enum ApiWebhookSubscriptionStatus {
+  DRAFT
+  ENABLED
+  PAUSED
+  FAILED
+}
+
+enum SharedUploadPortalStatus {
+  DRAFT
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+model ApiAccessToken {
+  id                 String               @id @default(cuid())
+  organizationId     String
+  clientId           String?
+  agencyWorkspaceId  String?
+  label              String
+  tokenHash          String               @unique
+  tokenPrefix        String
+  scopes             String[]             @default([])
+  status             ApiAccessTokenStatus @default(ACTIVE)
+  planKey            String               @default("AGENCY")
+  createdByUserId    String?
+  shownAt            DateTime?
+  lastUsedAt         DateTime?
+  expiresAt          DateTime?
+  revokedAt          DateTime?
+  rotatedFromTokenId String?
+  metadata           Json?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, clientId])
+  @@index([organizationId, agencyWorkspaceId])
+  @@index([organizationId, planKey])
+  @@index([tokenPrefix])
+  @@index([expiresAt])
+}
+
+model AdvancedIntegrationConnection {
+  id                 String                              @id @default(cuid())
+  organizationId     String
+  provider           AdvancedIntegrationProvider
+  label              String
+  status             AdvancedIntegrationConnectionStatus @default(DRAFT)
+  scopes             String[]                            @default([])
+  callbackUrl        String?
+  encryptedSecretRef String?
+  featureFlagKey     String                              @default("ENABLE_ADVANCED_INTEGRATIONS")
+  disabledByDefault  Boolean                             @default(true)
+  createdByUserId    String?
+  lastHealthCheckAt  DateTime?
+  lastErrorAt        DateTime?
+  metadata           Json?
+  createdAt          DateTime                            @default(now())
+  updatedAt          DateTime                            @updatedAt
+
+  @@index([organizationId, provider])
+  @@index([organizationId, status])
+  @@index([organizationId, featureFlagKey])
+}
+
+model ApiWebhookSubscription {
+  id                 String                       @id @default(cuid())
+  organizationId     String
+  tokenId            String?
+  provider           AdvancedIntegrationProvider  @default(WEBHOOK)
+  targetUrl          String
+  eventTypes         String[]                     @default([])
+  signingSecretHash  String?
+  encryptedSecretRef String?
+  status             ApiWebhookSubscriptionStatus @default(DRAFT)
+  failureCount       Int                          @default(0)
+  lastDeliveredAt    DateTime?
+  lastFailedAt       DateTime?
+  createdByUserId    String?
+  metadata           Json?
+  createdAt          DateTime                     @default(now())
+  updatedAt          DateTime                     @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, tokenId])
+  @@index([organizationId, provider])
+}
+
+model SharedUploadPortalLink {
+  id                   String                   @id @default(cuid())
+  organizationId       String
+  clientId             String?
+  jobId                String?
+  agencyWorkspaceId    String?
+  label                String
+  tokenHash            String                   @unique
+  tokenPrefix          String
+  status               SharedUploadPortalStatus @default(DRAFT)
+  allowedUploadKinds   String[]                 @default([])
+  expiresAt            DateTime
+  maxFiles             Int                      @default(100)
+  usedFileCount        Int                      @default(0)
+  manualReviewRequired Boolean                  @default(true)
+  createdByUserId      String?
+  revokedAt            DateTime?
+  metadata             Json?
+  createdAt            DateTime                 @default(now())
+  updatedAt            DateTime                 @updatedAt
+
+  @@index([organizationId, status])
+  @@index([organizationId, clientId])
+  @@index([organizationId, jobId])
+  @@index([organizationId, agencyWorkspaceId])
+  @@index([expiresAt])
+}
+
+model ApiAccessEvent {
+  id             String             @id @default(cuid())
+  organizationId String
+  userId         String?
+  tokenId        String?
+  scope          String?
+  eventType      ApiAccessEventType
+  route          String?
+  ipHash         String?
+  userAgentHash  String?
+  metadata       Json?
+  createdAt      DateTime           @default(now())
+
+  @@index([organizationId, eventType, createdAt])
+  @@index([organizationId, tokenId, createdAt])
+  @@index([organizationId, scope, createdAt])
+}
+
+// Phase 37 — Security Hardening.
+// Codex must validate and regenerate the migration SQL in the target runtime.
+
+enum SecurityControlArea {
+  SECRET_STORAGE
+  UPLOAD_VALIDATION
+  ZIP_SAFETY
+  TOKEN_LIFECYCLE
+  RATE_LIMITS
+  SECURITY_HEADERS
+  CSRF
+  XSS_OUTPUT
+  WEBHOOK_SIGNATURES
+  AUDIT_COMPLETENESS
+  TENANT_RBAC
+}
+
+enum SecurityControlStatus {
+  NOT_STARTED
+  SCAFFOLDED
+  CODEX_REQUIRED
+  VERIFIED
+  BLOCKED
+}
+
+enum SecurityHardeningEventType {
+  SECRET_REFERENCE_CREATED
+  SECRET_REFERENCE_ROTATED
+  UPLOAD_REJECTED
+  ZIP_ENTRY_REJECTED
+  TOKEN_ISSUED
+  TOKEN_REVOKED
+  RATE_LIMITED
+  SECURITY_HEADER_APPLIED
+  CSRF_TOKEN_CREATED
+  CSRF_TOKEN_VERIFIED
+  XSS_OUTPUT_REJECTED
+  WEBHOOK_REJECTED
+  RBAC_DENIED
+  DELIVERY_DOWNLOAD_ATTEMPTED
+  MANUAL_OVERRIDE
+  SECURITY_CONTROL_VERIFIED
+}
+
+model SecuritySecretReference {
+  id                 String                @id @default(cuid())
+  organizationId     String
+  provider           String
+  secretClass        String
+  label              String
+  encryptedSecretRef String
+  status             SecurityControlStatus @default(SCAFFOLDED)
+  createdByUserId    String?
+  rotatedAt          DateTime?
+  revokedAt          DateTime?
+  metadata           Json?
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+
+  @@index([organizationId, provider])
+  @@index([organizationId, secretClass])
+  @@index([organizationId, status])
+}
+
+model SecurityRateLimitRule {
+  id             String                @id @default(cuid())
+  organizationId String?
+  action         String
+  subject        String
+  limit          Int
+  windowSeconds  Int
+  status         SecurityControlStatus @default(CODEX_REQUIRED)
+  metadata       Json?
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  @@index([organizationId, action])
+  @@index([status])
+}
+
+model SecurityAuditCoverageItem {
+  id                String                @id @default(cuid())
+  organizationId    String?
+  action            String
+  surface           String
+  eventType         String
+  controlArea       SecurityControlArea
+  requiredMetadata  String[]              @default([])
+  forbiddenMetadata String[]              @default([])
+  status            SecurityControlStatus @default(CODEX_REQUIRED)
+  verifiedAt        DateTime?
+  verifiedByUserId  String?
+  metadata          Json?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@index([organizationId, controlArea])
+  @@index([organizationId, status])
+  @@index([action])
+}
+
+model SecurityCsrfToken {
+  id             String    @id @default(cuid())
+  organizationId String
+  sessionHash    String
+  tokenHash      String    @unique
+  expiresAt      DateTime
+  usedAt         DateTime?
+  revokedAt      DateTime?
+  metadata       Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([organizationId, sessionHash])
+  @@index([organizationId, expiresAt])
+}
+
+model SecurityHardeningEvent {
+  id             String                     @id @default(cuid())
+  organizationId String
+  userId         String?
+  eventType      SecurityHardeningEventType
+  controlArea    SecurityControlArea
+  route          String?
+  resourceType   String?
+  resourceId     String?
+  ipHash         String?
+  userAgentHash  String?
+  metadata       Json?
+  createdAt      DateTime                   @default(now())
+
+  @@index([organizationId, eventType, createdAt])
+  @@index([organizationId, controlArea, createdAt])
+  @@index([organizationId, resourceType, resourceId])
+}
+
+// Phase 38 — Full Testing and QA.
+// Codex must validate and regenerate the migration SQL in the target runtime.
+
+enum QaTestLayer {
+  ENVIRONMENT
+  PRISMA
+  SEED
+  TYPECHECK
+  LINT
+  UNIT
+  SECURITY
+  INTEGRATION
+  ADAPTER_CONTRACT
+  E2E
+  BUILD
+  SMOKE
+  BROWSER
+}
+
+enum QaCheckStatus {
+  NOT_RUN
+  SCAFFOLDED
+  CODEX_REQUIRED
+  PASS
+  FAIL
+  BLOCKED
+}
+
+enum QaEvidenceType {
+  COMMAND_OUTPUT
+  SCREENSHOT
+  TRACE
+  LOG
+  DATABASE_RECORD
+  MANUAL_REVIEW_NOTE
+  ARTIFACT
+}
+
+enum QaSeverity {
+  BLOCKER
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model QaRun {
+  id              String        @id @default(cuid())
+  organizationId  String
+  packageVersion  String
+  phase           Int           @default(38)
+  status          QaCheckStatus @default(CODEX_REQUIRED)
+  startedByUserId String?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  summary         String?
+  metadata        Json?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([organizationId, packageVersion])
+  @@index([organizationId, status])
+  @@index([organizationId, phase])
+}
+
+model QaCheckResult {
+  id             String        @id @default(cuid())
+  organizationId String
+  qaRunId        String?
+  packageVersion String
+  phase          Int           @default(38)
+  checkKey       String
+  layer          QaTestLayer
+  status         QaCheckStatus @default(CODEX_REQUIRED)
+  severity       QaSeverity    @default(HIGH)
+  command        String?
+  exitCode       Int?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  evidenceCount  Int           @default(0)
+  blocker        Boolean       @default(true)
+  notes          String?
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([organizationId, packageVersion, phase])
+  @@index([organizationId, layer, status])
+  @@index([organizationId, checkKey])
+}
+
+model QaEvidenceReference {
+  id              String         @id @default(cuid())
+  organizationId  String
+  qaCheckResultId String?
+  evidenceType    QaEvidenceType
+  evidenceRef     String
+  redacted        Boolean        @default(true)
+  note            String?
+  createdByUserId String?
+  createdAt       DateTime       @default(now())
+
+  @@index([organizationId, qaCheckResultId])
+  @@index([organizationId, evidenceType])
+}
+
+model QaSmokeRouteResult {
+  id             String        @id @default(cuid())
+  organizationId String
+  qaRunId        String?
+  routeGroup     String
+  routePath      String
+  status         QaCheckStatus @default(CODEX_REQUIRED)
+  httpStatus     Int?
+  screenshotRef  String?
+  traceRef       String?
+  notes          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([organizationId, routeGroup])
+  @@index([organizationId, status])
+  @@index([organizationId, routePath])
+}
+
+
+
+
+model QaVerificationLedger {
+  id           String   @id @default(cuid())
+  organizationId String
+  packageVersion String
+  phase        Int
+  checkKey     String
+  layer        QaTestLayer
+  status       QaCheckStatus
+  severity     QaSeverity
+  command      String?
+  exitCode     Int?
+  evidenceCount Int
+  notes        String?
+  accepted     Boolean
+  productionReleaseAllowed Boolean
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([organizationId, packageVersion, phase, checkKey])
+}

@@ -1,0 +1,48 @@
+import { NextResponse, type NextRequest } from 'next/server';
+import { AUTH_PROTECTED_PREFIXES, SESSION_COOKIE_NAME } from '@/domain/auth-constants';
+import { applySecurityHeaders } from '@/lib/security-headers';
+
+const BLOCKED_METHODS = ['TRACE', 'CONNECT', 'TRACK'];
+
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // P4-02: Block non-standard methods — return 405 before any processing
+  if (BLOCKED_METHODS.includes(request.method.toUpperCase())) {
+    const response = new NextResponse(null, {
+      status: 405,
+      headers: {
+        Allow: 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS',
+      },
+    });
+    applySecurityHeaders(response.headers, process.env.NODE_ENV === 'production' ? 'production' : 'development');
+    return response;
+  }
+
+  const isProtected = AUTH_PROTECTED_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+  if (!isProtected) {
+    const response = NextResponse.next();
+    applySecurityHeaders(response.headers, process.env.NODE_ENV === 'production' ? 'production' : 'development');
+    return response;
+  }
+
+  const hasSessionCookie = Boolean(request.cookies.get(SESSION_COOKIE_NAME)?.value);
+  const hasDemoSessionHeaders = Boolean(request.headers.get('x-demo-user-id') && request.headers.get('x-demo-organization-id') && request.headers.get('x-demo-role'));
+
+  if (hasSessionCookie || hasDemoSessionHeaders) {
+    const response = NextResponse.next();
+    applySecurityHeaders(response.headers, process.env.NODE_ENV === 'production' ? 'production' : 'development');
+    return response;
+  }
+
+  const loginUrl = request.nextUrl.clone();
+  loginUrl.pathname = '/login';
+  loginUrl.searchParams.set('next', pathname);
+  const response = NextResponse.redirect(loginUrl);
+  applySecurityHeaders(response.headers, process.env.NODE_ENV === 'production' ? 'production' : 'development');
+  return response;
+}
+
+export const config = {
+  matcher: ['/admin/:path*', '/client/:path*', '/agency/:path*', '/api/:path*'],
+};

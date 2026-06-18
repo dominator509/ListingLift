@@ -1,0 +1,208 @@
+{
+  "timestamp": "2026-06-15T15:44:02.552Z",
+  "nodeVersion": "v24.16.0",
+  "delaySteps": [
+    {
+      "delayUs": 50,
+      "rttMeanUs": 6889.3274,
+      "rttMinUs": 6222.987,
+      "rttMaxUs": 7665.585,
+      "rttTimeouts": 0,
+      "jsonSerUs": 17.024579999999997,
+      "jsonParseUs": 13.168684999999993,
+      "cookieSerUs": 1.2763949999999997,
+      "cookieParseUs": 0.40371000000000107,
+      "urlParamsUs": 7.463054999999986,
+      "sha256Us": 4.2797
+    },
+    {
+      "delayUs": 100,
+      "rttMeanUs": 6801.8922,
+      "rttMinUs": 6128.283,
+      "rttMaxUs": 7343.504,
+      "rttTimeouts": 0,
+      "jsonSerUs": 17.389940000000013,
+      "jsonParseUs": 15.320510000000006,
+      "cookieSerUs": 1.2625549999999999,
+      "cookieParseUs": 0.4673700000000003,
+      "urlParamsUs": 7.965415000000005,
+      "sha256Us": 5.510340000000002
+    },
+    {
+      "delayUs": 200,
+      "rttMeanUs": 8038.037200000001,
+      "rttMinUs": 7288.311,
+      "rttMaxUs": 8809.114,
+      "rttTimeouts": 0,
+      "jsonSerUs": 17.097570000000008,
+      "jsonParseUs": 12.269755000000014,
+      "cookieSerUs": 1.4827949999999996,
+      "cookieParseUs": 0.3023099999999996,
+      "urlParamsUs": 4.248835000000001,
+      "sha256Us": 2.5791799999999996
+    },
+    {
+      "delayUs": 500,
+      "rttMeanUs": 8389.697199999999,
+      "rttMinUs": 7733.607,
+      "rttMaxUs": 8725.161,
+      "rttTimeouts": 0,
+      "jsonSerUs": 13.304245000000002,
+      "jsonParseUs": 12.906835000000001,
+      "cookieSerUs": 1.013185000000002,
+      "cookieParseUs": 0.3486099999999999,
+      "urlParamsUs": 4.720315000000003,
+      "sha256Us": 3.3239650000000025
+    },
+    {
+      "delayUs": 1000,
+      "rttMeanUs": 9478.2392,
+      "rttMinUs": 8229.273,
+      "rttMaxUs": 10763.649,
+      "rttTimeouts": 0,
+      "jsonSerUs": 12.057450000000001,
+      "jsonParseUs": 12.971480000000003,
+      "cookieSerUs": 0.6439750000000017,
+      "cookieParseUs": 2.6648850000000044,
+      "urlParamsUs": 3.3653199999999956,
+      "sha256Us": 2.2404200000000003
+    },
+    {
+      "delayUs": 2000,
+      "rttMeanUs": 11621.287,
+      "rttMinUs": 10359.695,
+      "rttMaxUs": 12225.487,
+      "rttTimeouts": 0,
+      "jsonSerUs": 12.239659999999999,
+      "jsonParseUs": 15.082849999999999,
+      "cookieSerUs": 0.6587650000000005,
+      "cookieParseUs": 0.19805499999999943,
+      "urlParamsUs": 3.0048499999999927,
+      "sha256Us": 2.0437099999999995
+    },
+    {
+      "delayUs": 5000,
+      "rttMeanUs": 18475.7968,
+      "rttMinUs": 17503.063,
+      "rttMaxUs": 19291.141,
+      "rttTimeouts": 0,
+      "jsonSerUs": 13.584100000000008,
+      "jsonParseUs": 17.208525,
+      "cookieSerUs": 0.6352800000000003,
+      "cookieParseUs": 0.22261,
+      "urlParamsUs": 3.0723550000000004,
+      "sha256Us": 2.406529999999994
+    },
+    {
+      "delayUs": 10000,
+      "rttMeanUs": 27647.4542,
+      "rttMinUs": 24524.007,
+      "rttMaxUs": 31259.901,
+      "rttTimeouts": 0,
+      "jsonSerUs": 13.389840000000008,
+      "jsonParseUs": 16.492694999999998,
+      "cookieSerUs": 0.9145300000000002,
+      "cookieParseUs": 0.3383099999999999,
+      "urlParamsUs": 3.562420000000001,
+      "sha256Us": 2.3090100000000016
+    },
+    {
+      "delayUs": 25000,
+      "rttMeanUs": 54236.5196,
+      "rttMinUs": 46139.766,
+      "rttMaxUs": 62370.417,
+      "rttTimeouts": 0,
+      "jsonSerUs": 14.303230000000001,
+      "jsonParseUs": 16.698649999999997,
+      "cookieSerUs": 0.777874999999999,
+      "cookieParseUs": 0.2189650000000004,
+      "urlParamsUs": 3.4639199999999954,
+      "sha256Us": 2.3486350000000003
+    },
+    {
+      "delayUs": 50000,
+      "rttMeanUs": 104517.77160000001,
+      "rttMinUs": 94834.637,
+      "rttMaxUs": 115513.526,
+      "rttTimeouts": 0,
+      "jsonSerUs": 13.121990000000004,
+      "jsonParseUs": 17.801540000000017,
+      "cookieSerUs": 0.7709800000000002,
+      "cookieParseUs": 0.21335499999999993,
+      "urlParamsUs": 3.474869999999994,
+      "sha256Us": 2.342130000000001
+    }
+  ],
+  "jitterProfiles": [
+    {
+      "jitterUs": 0,
+      "baseDelayUs": 500,
+      "rttMeanUs": 8450.237,
+      "rttMinUs": 7806.339,
+      "rttMaxUs": 9001.63,
+      "rttTimeouts": 0,
+      "serUs": 12.51724,
+      "timeoutDetected": false
+    },
+    {
+      "jitterUs": 500,
+      "baseDelayUs": 500,
+      "rttMeanUs": 8898.0198,
+      "rttMinUs": 7575.802,
+      "rttMaxUs": 9945.501,
+      "rttTimeouts": 0,
+      "serUs": 10.03512,
+      "timeoutDetected": false
+    },
+    {
+      "jitterUs": 1000,
+      "baseDelayUs": 500,
+      "rttMeanUs": 10060.947199999999,
+      "rttMinUs": 8374.559,
+      "rttMaxUs": 11383.329,
+      "rttTimeouts": 0,
+      "serUs": 6.437619999999999,
+      "timeoutDetected": false
+    },
+    {
+      "jitterUs": 2000,
+      "baseDelayUs": 500,
+      "rttMeanUs": 9022.8382,
+      "rttMinUs": 7438.998,
+      "rttMaxUs": 10939.744,
+      "rttTimeouts": 0,
+      "serUs": 6.37962,
+      "timeoutDetected": false
+    },
+    {
+      "jitterUs": 5000,
+      "baseDelayUs": 500,
+      "rttMeanUs": 17275.4152,
+      "rttMinUs": 7087.676,
+      "rttMaxUs": 25266.981,
+      "rttTimeouts": 0,
+      "serUs": 7.071420000000001,
+      "timeoutDetected": false
+    },
+    {
+      "jitterUs": 10000,
+      "baseDelayUs": 500,
+      "rttMeanUs": 21994.210199999998,
+      "rttMinUs": 17625.457,
+      "rttMaxUs": 26272.644,
+      "rttTimeouts": 0,
+      "serUs": 8.108460000000001,
+      "timeoutDetected": false
+    },
+    {
+      "jitterUs": 20000,
+      "baseDelayUs": 500,
+      "rttMeanUs": 34206.8926,
+      "rttMinUs": 12433.074,
+      "rttMaxUs": 59555.522,
+      "rttTimeouts": 0,
+      "serUs": 9.836319999999999,
+      "timeoutDetected": false
+    }
+  ]
+}

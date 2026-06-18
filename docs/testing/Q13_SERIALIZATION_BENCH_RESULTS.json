@@ -1,0 +1,1026 @@
+{
+  "timestamp": "2026-06-15T15:35:52.715Z",
+  "nodeVersion": "v24.16.0",
+  "results": [
+    {
+      "path": "NextResponse.json (api-response jsonOk)",
+      "category": "json_serialize",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "NextResponse.json (api-response jsonOk)",
+          "payloadSize": "1KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 1.38,
+          "deserializeTimeUs": 1.09,
+          "heapBeforeMb": 10.12,
+          "heapAfterMb": 10.14,
+          "heapDeltaKb": 28.13,
+          "throughputMbps": 507.91,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "NextResponse.json (api-response jsonOk)",
+          "payloadSize": "10KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 8.28,
+          "deserializeTimeUs": 9.35,
+          "heapBeforeMb": 10.15,
+          "heapAfterMb": 10.87,
+          "heapDeltaKb": 742.78,
+          "throughputMbps": 3013.74,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "NextResponse.json (api-response jsonOk)",
+          "payloadSize": "100KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 542.12,
+          "deserializeTimeUs": 970.06,
+          "heapBeforeMb": 10.87,
+          "heapAfterMb": 8.94,
+          "heapDeltaKb": -1979.43,
+          "throughputMbps": 1608.44,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "NextResponse.json (api-response jsonOk)",
+          "payloadSize": "1MB",
+          "category": "json_serialize",
+          "serializeTimeUs": 9064.97,
+          "deserializeTimeUs": 13933.61,
+          "heapBeforeMb": 8.94,
+          "heapAfterMb": 20.03,
+          "heapDeltaKb": 11351.42,
+          "throughputMbps": 1150.42,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "JSON.stringify direct (manually crafted error responses)",
+      "category": "json_serialize",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "JSON.stringify direct (manually crafted error responses)",
+          "payloadSize": "1KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 0.74,
+          "deserializeTimeUs": 1.12,
+          "heapBeforeMb": 20.52,
+          "heapAfterMb": 20.09,
+          "heapDeltaKb": -442.9,
+          "throughputMbps": 944.79,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "JSON.stringify direct (manually crafted error responses)",
+          "payloadSize": "10KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 7.98,
+          "deserializeTimeUs": 12.21,
+          "heapBeforeMb": 20.09,
+          "heapAfterMb": 20.81,
+          "heapDeltaKb": 731.75,
+          "throughputMbps": 3128.57,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "JSON.stringify direct (manually crafted error responses)",
+          "payloadSize": "100KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 624.36,
+          "deserializeTimeUs": 1090.78,
+          "heapBeforeMb": 20.81,
+          "heapAfterMb": 22.31,
+          "heapDeltaKb": 1542.83,
+          "throughputMbps": 1396.59,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "JSON.stringify direct (manually crafted error responses)",
+          "payloadSize": "1MB",
+          "category": "json_serialize",
+          "serializeTimeUs": 10508.48,
+          "deserializeTimeUs": 13858.7,
+          "heapBeforeMb": 22.32,
+          "heapAfterMb": 49.97,
+          "heapDeltaKb": 28317.01,
+          "throughputMbps": 992.39,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "Response.json (guarded helpers)",
+      "category": "json_serialize",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "Response.json (guarded helpers)",
+          "payloadSize": "1KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 0.58,
+          "deserializeTimeUs": 0.66,
+          "heapBeforeMb": 49.98,
+          "heapAfterMb": 50.16,
+          "heapDeltaKb": 181.04,
+          "throughputMbps": 1205.57,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Response.json (guarded helpers)",
+          "payloadSize": "10KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 8.31,
+          "deserializeTimeUs": 8.13,
+          "heapBeforeMb": 50.16,
+          "heapAfterMb": 50.74,
+          "heapDeltaKb": 594.26,
+          "throughputMbps": 3002.94,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Response.json (guarded helpers)",
+          "payloadSize": "100KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 527.53,
+          "deserializeTimeUs": 957.88,
+          "heapBeforeMb": 50.74,
+          "heapAfterMb": 52.25,
+          "heapDeltaKb": 1545.55,
+          "throughputMbps": 1652.92,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Response.json (guarded helpers)",
+          "payloadSize": "1MB",
+          "category": "json_serialize",
+          "serializeTimeUs": 13212.62,
+          "deserializeTimeUs": 13298.85,
+          "heapBeforeMb": 52.25,
+          "heapAfterMb": 54.2,
+          "heapDeltaKb": 1998.37,
+          "throughputMbps": 789.29,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "parseJson helper (route-helpers.ts)",
+      "category": "json_parse",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "parseJson helper (route-helpers.ts)",
+          "payloadSize": "1KB",
+          "category": "json_parse",
+          "serializeTimeUs": 0.56,
+          "deserializeTimeUs": 0.65,
+          "heapBeforeMb": 54.21,
+          "heapAfterMb": 54.43,
+          "heapDeltaKb": 224.09,
+          "throughputMbps": 580.4,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "parseJson helper (route-helpers.ts)",
+          "payloadSize": "10KB",
+          "category": "json_parse",
+          "serializeTimeUs": 5.7,
+          "deserializeTimeUs": 6.01,
+          "heapBeforeMb": 54.43,
+          "heapAfterMb": 54.97,
+          "heapDeltaKb": 553.53,
+          "throughputMbps": 2131.46,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "parseJson helper (route-helpers.ts)",
+          "payloadSize": "100KB",
+          "category": "json_parse",
+          "serializeTimeUs": 502.65,
+          "deserializeTimeUs": 991.51,
+          "heapBeforeMb": 54.97,
+          "heapAfterMb": 56.53,
+          "heapDeltaKb": 1593.09,
+          "throughputMbps": 583.59,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "parseJson helper (route-helpers.ts)",
+          "payloadSize": "1MB",
+          "category": "json_parse",
+          "serializeTimeUs": 12009.71,
+          "deserializeTimeUs": 12122.54,
+          "heapBeforeMb": 56.53,
+          "heapAfterMb": 58.4,
+          "heapDeltaKb": 1914.92,
+          "throughputMbps": 432.14,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "serializeSessionCookie (session-cookie.ts)",
+      "category": "cookie_serialize",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "serializeSessionCookie (session-cookie.ts)",
+          "payloadSize": "1KB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 1.87,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.41,
+          "heapAfterMb": 58.47,
+          "heapDeltaKb": 62.8,
+          "throughputMbps": 375.68,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "serializeSessionCookie (session-cookie.ts)",
+          "payloadSize": "10KB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 0.97,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.47,
+          "heapAfterMb": 58.53,
+          "heapDeltaKb": 61.69,
+          "throughputMbps": 25734.38,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "serializeSessionCookie (session-cookie.ts)",
+          "payloadSize": "100KB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 0.91,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.53,
+          "heapAfterMb": 58.6,
+          "heapDeltaKb": 62.35,
+          "throughputMbps": 957336.86,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "serializeSessionCookie (session-cookie.ts)",
+          "payloadSize": "1MB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 1.19,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.6,
+          "heapAfterMb": 58.66,
+          "heapDeltaKb": 62.35,
+          "throughputMbps": 8729450.48,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "serializeSessionClearCookie (session-cookie.ts)",
+      "category": "cookie_serialize",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "serializeSessionClearCookie (session-cookie.ts)",
+          "payloadSize": "1KB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 0.9,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.67,
+          "heapAfterMb": 58.73,
+          "heapDeltaKb": 61.62,
+          "throughputMbps": 779.51,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "serializeSessionClearCookie (session-cookie.ts)",
+          "payloadSize": "10KB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 1.14,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.73,
+          "heapAfterMb": 58.79,
+          "heapDeltaKb": 61.57,
+          "throughputMbps": 21839.65,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "serializeSessionClearCookie (session-cookie.ts)",
+          "payloadSize": "100KB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 1.16,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.79,
+          "heapAfterMb": 58.85,
+          "heapDeltaKb": 62.35,
+          "throughputMbps": 751161.78,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "serializeSessionClearCookie (session-cookie.ts)",
+          "payloadSize": "1MB",
+          "category": "cookie_serialize",
+          "serializeTimeUs": 1.39,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 58.85,
+          "heapAfterMb": 58.91,
+          "heapDeltaKb": 62.35,
+          "throughputMbps": 7502878.34,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "Cookie header regex parse (readSessionCookie / parseSessionCookie)",
+      "category": "cookie_parse",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "Cookie header regex parse (readSessionCookie / parseSessionCookie)",
+          "payloadSize": "1KB",
+          "category": "cookie_parse",
+          "serializeTimeUs": 0,
+          "deserializeTimeUs": 1.89,
+          "heapBeforeMb": 58.92,
+          "heapAfterMb": 58.95,
+          "heapDeltaKb": 29.43,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Cookie header regex parse (readSessionCookie / parseSessionCookie)",
+          "payloadSize": "10KB",
+          "category": "cookie_parse",
+          "serializeTimeUs": 0,
+          "deserializeTimeUs": 0.27,
+          "heapBeforeMb": 58.95,
+          "heapAfterMb": 58.97,
+          "heapDeltaKb": 23.66,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Cookie header regex parse (readSessionCookie / parseSessionCookie)",
+          "payloadSize": "100KB",
+          "category": "cookie_parse",
+          "serializeTimeUs": 0,
+          "deserializeTimeUs": 0.36,
+          "heapBeforeMb": 58.97,
+          "heapAfterMb": 58.99,
+          "heapDeltaKb": 23.54,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Cookie header regex parse (readSessionCookie / parseSessionCookie)",
+          "payloadSize": "1MB",
+          "category": "cookie_parse",
+          "serializeTimeUs": 0,
+          "deserializeTimeUs": 0.35,
+          "heapBeforeMb": 59,
+          "heapAfterMb": 59.02,
+          "heapDeltaKb": 23.54,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "URLSearchParams (middleware redirect + route helpers)",
+      "category": "url_search_params",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "URLSearchParams (middleware redirect + route helpers)",
+          "payloadSize": "1KB",
+          "category": "url_search_params",
+          "serializeTimeUs": 10.21,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.03,
+          "heapAfterMb": 59.57,
+          "heapDeltaKb": 559.78,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "URLSearchParams (middleware redirect + route helpers)",
+          "payloadSize": "10KB",
+          "category": "url_search_params",
+          "serializeTimeUs": 7.72,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.57,
+          "heapAfterMb": 59.25,
+          "heapDeltaKb": -328.84,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "URLSearchParams (middleware redirect + route helpers)",
+          "payloadSize": "100KB",
+          "category": "url_search_params",
+          "serializeTimeUs": 31.18,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.25,
+          "heapAfterMb": 60.13,
+          "heapDeltaKb": 896.85,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "URLSearchParams (middleware redirect + route helpers)",
+          "payloadSize": "1MB",
+          "category": "url_search_params",
+          "serializeTimeUs": 6.19,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 60.13,
+          "heapAfterMb": 59.46,
+          "heapDeltaKb": -682.98,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "FormData field normalization (upload-intake-service.ts)",
+      "category": "form_data",
+      "edge": false,
+      "core": true,
+      "results": [
+        {
+          "path": "FormData field normalization (upload-intake-service.ts)",
+          "payloadSize": "1KB",
+          "category": "form_data",
+          "serializeTimeUs": 0.6,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.47,
+          "heapAfterMb": 59.49,
+          "heapDeltaKb": 17.81,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "FormData field normalization (upload-intake-service.ts)",
+          "payloadSize": "10KB",
+          "category": "form_data",
+          "serializeTimeUs": 0.39,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.49,
+          "heapAfterMb": 59.51,
+          "heapDeltaKb": 17.97,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "FormData field normalization (upload-intake-service.ts)",
+          "payloadSize": "100KB",
+          "category": "form_data",
+          "serializeTimeUs": 0.39,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.51,
+          "heapAfterMb": 59.53,
+          "heapDeltaKb": 17.84,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "FormData field normalization (upload-intake-service.ts)",
+          "payloadSize": "1MB",
+          "category": "form_data",
+          "serializeTimeUs": 0.26,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 59.53,
+          "heapAfterMb": 59.54,
+          "heapDeltaKb": 17.84,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        }
+      ]
+    },
+    {
+      "path": "CSV import order mapping (sales-channel normalize)",
+      "category": "json_parse",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "CSV import order mapping (sales-channel normalize)",
+          "payloadSize": "1KB",
+          "category": "json_parse",
+          "serializeTimeUs": 0.68,
+          "deserializeTimeUs": 0.97,
+          "heapBeforeMb": 59.55,
+          "heapAfterMb": 59.58,
+          "heapDeltaKb": 24.35,
+          "throughputMbps": 423.43,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "CSV import order mapping (sales-channel normalize)",
+          "payloadSize": "10KB",
+          "category": "json_parse",
+          "serializeTimeUs": 9.74,
+          "deserializeTimeUs": 66.93,
+          "heapBeforeMb": 59.58,
+          "heapAfterMb": 10.64,
+          "heapDeltaKb": -50114.44,
+          "throughputMbps": 325.6,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "CSV import order mapping (sales-channel normalize)",
+          "payloadSize": "100KB",
+          "category": "json_parse",
+          "serializeTimeUs": 537.02,
+          "deserializeTimeUs": 1202.9,
+          "heapBeforeMb": 10.64,
+          "heapAfterMb": 11.29,
+          "heapDeltaKb": 669.24,
+          "throughputMbps": 501.15,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "CSV import order mapping (sales-channel normalize)",
+          "payloadSize": "1MB",
+          "category": "json_parse",
+          "serializeTimeUs": 8138.6,
+          "deserializeTimeUs": 12396.6,
+          "heapBeforeMb": 11.29,
+          "heapAfterMb": 23.72,
+          "heapDeltaKb": 12725.68,
+          "throughputMbps": 507.84,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "Prisma findMany → JSON response (listings route)",
+      "category": "prisma_json",
+      "edge": true,
+      "core": true,
+      "results": [
+        {
+          "path": "Prisma findMany → JSON response (listings route)",
+          "payloadSize": "1KB",
+          "category": "prisma_json",
+          "serializeTimeUs": 0.76,
+          "deserializeTimeUs": 0.6,
+          "heapBeforeMb": 23.73,
+          "heapAfterMb": 23.75,
+          "heapDeltaKb": 24.35,
+          "throughputMbps": 514.8,
+          "edge": true,
+          "core": true
+        },
+        {
+          "path": "Prisma findMany → JSON response (listings route)",
+          "payloadSize": "10KB",
+          "category": "prisma_json",
+          "serializeTimeUs": 5.7,
+          "deserializeTimeUs": 7.5,
+          "heapBeforeMb": 23.75,
+          "heapAfterMb": 24.47,
+          "heapDeltaKb": 732.35,
+          "throughputMbps": 1890.77,
+          "edge": true,
+          "core": true
+        },
+        {
+          "path": "Prisma findMany → JSON response (listings route)",
+          "payloadSize": "100KB",
+          "category": "prisma_json",
+          "serializeTimeUs": 499.4,
+          "deserializeTimeUs": 1046.32,
+          "heapBeforeMb": 24.47,
+          "heapAfterMb": 24.7,
+          "heapDeltaKb": 238.87,
+          "throughputMbps": 564.12,
+          "edge": true,
+          "core": true
+        },
+        {
+          "path": "Prisma findMany → JSON response (listings route)",
+          "payloadSize": "1MB",
+          "category": "prisma_json",
+          "serializeTimeUs": 11472.75,
+          "deserializeTimeUs": 12726.77,
+          "heapBeforeMb": 24.7,
+          "heapAfterMb": 26.35,
+          "heapDeltaKb": 1685.25,
+          "throughputMbps": 430.94,
+          "edge": true,
+          "core": true
+        }
+      ]
+    },
+    {
+      "path": "Prisma JSON field serialization (idempotency resultBody)",
+      "category": "prisma_json",
+      "edge": false,
+      "core": true,
+      "results": [
+        {
+          "path": "Prisma JSON field serialization (idempotency resultBody)",
+          "payloadSize": "1KB",
+          "category": "prisma_json",
+          "serializeTimeUs": 0.81,
+          "deserializeTimeUs": 0.81,
+          "heapBeforeMb": 26.36,
+          "heapAfterMb": 26.38,
+          "heapDeltaKb": 24.35,
+          "throughputMbps": 433.66,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Prisma JSON field serialization (idempotency resultBody)",
+          "payloadSize": "10KB",
+          "category": "prisma_json",
+          "serializeTimeUs": 7.78,
+          "deserializeTimeUs": 7.26,
+          "heapBeforeMb": 26.38,
+          "heapAfterMb": 27.1,
+          "heapDeltaKb": 730.67,
+          "throughputMbps": 1659.66,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Prisma JSON field serialization (idempotency resultBody)",
+          "payloadSize": "100KB",
+          "category": "prisma_json",
+          "serializeTimeUs": 572.72,
+          "deserializeTimeUs": 988.48,
+          "heapBeforeMb": 27.1,
+          "heapAfterMb": 27.23,
+          "heapDeltaKb": 135.76,
+          "throughputMbps": 558.53,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Prisma JSON field serialization (idempotency resultBody)",
+          "payloadSize": "1MB",
+          "category": "prisma_json",
+          "serializeTimeUs": 11148.3,
+          "deserializeTimeUs": 12740.12,
+          "heapBeforeMb": 27.23,
+          "heapAfterMb": 28.85,
+          "heapDeltaKb": 1658.4,
+          "throughputMbps": 436.55,
+          "edge": false,
+          "core": true
+        }
+      ]
+    },
+    {
+      "path": "Stripe webhook body parsing (stripe-billing-orchestrator.ts)",
+      "category": "json_parse",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "Stripe webhook body parsing (stripe-billing-orchestrator.ts)",
+          "payloadSize": "1KB",
+          "category": "json_parse",
+          "serializeTimeUs": 0.59,
+          "deserializeTimeUs": 0.61,
+          "heapBeforeMb": 28.86,
+          "heapAfterMb": 28.88,
+          "heapDeltaKb": 24.34,
+          "throughputMbps": 583.68,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Stripe webhook body parsing (stripe-billing-orchestrator.ts)",
+          "payloadSize": "10KB",
+          "category": "json_parse",
+          "serializeTimeUs": 6.01,
+          "deserializeTimeUs": 6.13,
+          "heapBeforeMb": 28.88,
+          "heapAfterMb": 29.6,
+          "heapDeltaKb": 732.27,
+          "throughputMbps": 2056.36,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Stripe webhook body parsing (stripe-billing-orchestrator.ts)",
+          "payloadSize": "100KB",
+          "category": "json_parse",
+          "serializeTimeUs": 532.67,
+          "deserializeTimeUs": 1012.19,
+          "heapBeforeMb": 29.6,
+          "heapAfterMb": 29.79,
+          "heapDeltaKb": 199.98,
+          "throughputMbps": 564.43,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Stripe webhook body parsing (stripe-billing-orchestrator.ts)",
+          "payloadSize": "1MB",
+          "category": "json_parse",
+          "serializeTimeUs": 11562.13,
+          "deserializeTimeUs": 12565.73,
+          "heapBeforeMb": 29.8,
+          "heapAfterMb": 31.48,
+          "heapDeltaKb": 1724.14,
+          "throughputMbps": 432.22,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "Headers metadata mapping (rate-limiter, middleware, route-helpers)",
+      "category": "string_concat",
+      "edge": true,
+      "core": false,
+      "results": [
+        {
+          "path": "Headers metadata mapping (rate-limiter, middleware, route-helpers)",
+          "payloadSize": "1KB",
+          "category": "string_concat",
+          "serializeTimeUs": 1.21,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.49,
+          "heapAfterMb": 31.5,
+          "heapDeltaKb": 11.57,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Headers metadata mapping (rate-limiter, middleware, route-helpers)",
+          "payloadSize": "10KB",
+          "category": "string_concat",
+          "serializeTimeUs": 0.23,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.5,
+          "heapAfterMb": 31.51,
+          "heapDeltaKb": 11.49,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Headers metadata mapping (rate-limiter, middleware, route-helpers)",
+          "payloadSize": "100KB",
+          "category": "string_concat",
+          "serializeTimeUs": 0.23,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.51,
+          "heapAfterMb": 31.52,
+          "heapDeltaKb": 11.5,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        },
+        {
+          "path": "Headers metadata mapping (rate-limiter, middleware, route-helpers)",
+          "payloadSize": "1MB",
+          "category": "string_concat",
+          "serializeTimeUs": 0.27,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.52,
+          "heapAfterMb": 31.54,
+          "heapDeltaKb": 11.49,
+          "throughputMbps": 0,
+          "edge": true,
+          "core": false
+        }
+      ]
+    },
+    {
+      "path": "SHA-256 token hashing (session-cookie, upload-token, auth-service)",
+      "category": "hash",
+      "edge": false,
+      "core": true,
+      "results": [
+        {
+          "path": "SHA-256 token hashing (session-cookie, upload-token, auth-service)",
+          "payloadSize": "1KB",
+          "category": "hash",
+          "serializeTimeUs": 17.99,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.54,
+          "heapAfterMb": 31.6,
+          "heapDeltaKb": 57.54,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "SHA-256 token hashing (session-cookie, upload-token, auth-service)",
+          "payloadSize": "10KB",
+          "category": "hash",
+          "serializeTimeUs": 3.79,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.6,
+          "heapAfterMb": 31.64,
+          "heapDeltaKb": 37.48,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "SHA-256 token hashing (session-cookie, upload-token, auth-service)",
+          "payloadSize": "100KB",
+          "category": "hash",
+          "serializeTimeUs": 3.65,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.64,
+          "heapAfterMb": 31.67,
+          "heapDeltaKb": 37.26,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "SHA-256 token hashing (session-cookie, upload-token, auth-service)",
+          "payloadSize": "1MB",
+          "category": "hash",
+          "serializeTimeUs": 2.92,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.68,
+          "heapAfterMb": 31.71,
+          "heapDeltaKb": 37.26,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        }
+      ]
+    },
+    {
+      "path": "Buffer.alloc + timingSafeEqual (session-binding.ts)",
+      "category": "buffer_encode",
+      "edge": false,
+      "core": true,
+      "results": [
+        {
+          "path": "Buffer.alloc + timingSafeEqual (session-binding.ts)",
+          "payloadSize": "1KB",
+          "category": "buffer_encode",
+          "serializeTimeUs": 3.42,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.72,
+          "heapAfterMb": 31.73,
+          "heapDeltaKb": 13.57,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Buffer.alloc + timingSafeEqual (session-binding.ts)",
+          "payloadSize": "10KB",
+          "category": "buffer_encode",
+          "serializeTimeUs": 1.21,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.74,
+          "heapAfterMb": 31.75,
+          "heapDeltaKb": 18.35,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Buffer.alloc + timingSafeEqual (session-binding.ts)",
+          "payloadSize": "100KB",
+          "category": "buffer_encode",
+          "serializeTimeUs": 0.73,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.75,
+          "heapAfterMb": 31.77,
+          "heapDeltaKb": 11.61,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Buffer.alloc + timingSafeEqual (session-binding.ts)",
+          "payloadSize": "1MB",
+          "category": "buffer_encode",
+          "serializeTimeUs": 1.42,
+          "deserializeTimeUs": null,
+          "heapBeforeMb": 31.77,
+          "heapAfterMb": 31.78,
+          "heapDeltaKb": 12.3,
+          "throughputMbps": 0,
+          "edge": false,
+          "core": true
+        }
+      ]
+    },
+    {
+      "path": "Audit log metadata JSON (console.log JSON.stringify)",
+      "category": "json_serialize",
+      "edge": false,
+      "core": true,
+      "results": [
+        {
+          "path": "Audit log metadata JSON (console.log JSON.stringify)",
+          "payloadSize": "1KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 0.58,
+          "deserializeTimeUs": 0.63,
+          "heapBeforeMb": 31.79,
+          "heapAfterMb": 31.81,
+          "heapDeltaKb": 25.33,
+          "throughputMbps": 1203.29,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Audit log metadata JSON (console.log JSON.stringify)",
+          "payloadSize": "10KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 7.07,
+          "deserializeTimeUs": 5.84,
+          "heapBeforeMb": 31.81,
+          "heapAfterMb": 32.53,
+          "heapDeltaKb": 731.54,
+          "throughputMbps": 3530.27,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Audit log metadata JSON (console.log JSON.stringify)",
+          "payloadSize": "100KB",
+          "category": "json_serialize",
+          "serializeTimeUs": 469,
+          "deserializeTimeUs": 875.85,
+          "heapBeforeMb": 32.53,
+          "heapAfterMb": 66.05,
+          "heapDeltaKb": 34331.53,
+          "throughputMbps": 1859.21,
+          "edge": false,
+          "core": true
+        },
+        {
+          "path": "Audit log metadata JSON (console.log JSON.stringify)",
+          "payloadSize": "1MB",
+          "category": "json_serialize",
+          "serializeTimeUs": 9184.34,
+          "deserializeTimeUs": 11777.51,
+          "heapBeforeMb": 66.06,
+          "heapAfterMb": 34.08,
+          "heapDeltaKb": -32742.21,
+          "throughputMbps": 1135.47,
+          "edge": false,
+          "core": true
+        }
+      ]
+    }
+  ]
+}

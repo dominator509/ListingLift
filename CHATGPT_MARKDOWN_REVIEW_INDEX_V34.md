@@ -1,0 +1,366 @@
+# CHATGPT_MARKDOWN_REVIEW_INDEX_V34.md
+
+## Review Scope
+
+- Base package unzipped from: `ListingLift_Repo_Seed_v33.zip`
+- Repo Markdown files reviewed: 352
+- Source documents reviewed: 2
+- Total Markdown/source characters read: 2791283
+- Source documents:
+  - `ListingLift.md` — 41460 chars — # ListingLift Service Business — AI-Powered Product Photo Cleanup, Marketplace Image Packs, Ecommerce Visual Optimization, and Multi-Platform Service Sales Engine
+  - `ListingLift_BUILD_ROADMAP.md` — 51724 chars — # BUILD_ROADMAP.md — ListingLift
+
+## Repo Markdown Files Reviewed
+
+- `ADMIN_GUIDE.md` — 7095 chars — # ADMIN_GUIDE.md
+- `AGENTS.md` — 4430 chars — # AGENTS.md — Codex Operating Rules for ListingLift
+- `API.md` — 10632 chars — # API.md
+- `ARCHITECTURE.md` — 41823 chars — # ARCHITECTURE.md — ListingLift Canonical Product/System Authority
+- `BUILD_ROADMAP.md` — 51986 chars — # BUILD_ROADMAP.md — ListingLift Canonical Execution Authority
+- `CHATGPT_MARKDOWN_REVIEW_INDEX.md` — 16015 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V10.md` — 20660 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V10.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V11.md` — 8593 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V11.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V12.md` — 40412 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V12.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V13.md` — 27522 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V13.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V14.md` — 13284 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V14.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V15.md` — 16128 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V15.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V16.md` — 15833 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V16.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V17.md` — 12979 chars — # ChatGPT Markdown Review Index v17
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V18.md` — 10228 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V18.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V19.md` — 40874 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V19.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V20.md` — 23115 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V20.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md` — 24209 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V22.md` — 43209 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V22.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V23.md` — 15254 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V23.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V24.md` — 33225 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V24.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V25.md` — 24098 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V25.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V26.md` — 24498 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V26.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V27.md` — 31540 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V27.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V28.md` — 26744 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V28.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V29.md` — 27585 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V29.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V30.md` — 28534 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V30.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V31.md` — 21357 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V31.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V32.md` — 22019 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V32.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V33.md` — 22616 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V33.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V4.md` — 19159 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V4.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V5.md` — 23073 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V5.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V6.md` — 10753 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V6.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V7.md` — 21285 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V7.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V8.md` — 23235 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V8.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V9.md` — 38542 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V9.md
+- `CODEX_GAPS.md` — 2267 chars — # CODEX_GAPS.md
+- `CODEX_HANDOFF.md` — 8343 chars — # CODEX_HANDOFF.md
+- `CODEX_PHASE_0_ONLY_PROMPT_V2.md` — 2823 chars — # CODEX_PHASE_0_ONLY_PROMPT_V2.md
+- `CODEX_STITCHING_HANDOFF.md` — 2975 chars — # CODEX_STITCHING_HANDOFF.md
+- `DEPLOYMENT.md` — 351 chars — # DEPLOYMENT.md
+- `ENVIRONMENT.md` — 327 chars — # ENVIRONMENT.md
+- `FIRST_CODEX_PROMPT.md` — 1849 chars — # FIRST_CODEX_PROMPT.md
+- `IMPLEMENTATION_SEQUENCE.md` — 2448 chars — # IMPLEMENTATION_SEQUENCE.md
+- `PHASE_0_EXECUTION_RUNBOOK.md` — 8496 chars — # PHASE_0_EXECUTION_RUNBOOK.md
+- `PHASE_0_REPO_SCAFFOLD_SPEC.md` — 4162 chars — # PHASE_0_REPO_SCAFFOLD_SPEC.md
+- `PHASE_0_ROADMAP_STATUS_COMPLETION_TEMPLATE.md` — 2519 chars — # PHASE_0_ROADMAP_STATUS_COMPLETION_TEMPLATE.md
+- `PHASE_0_VERIFICATION_MATRIX.md` — 2933 chars — # PHASE_0_VERIFICATION_MATRIX.md
+- `PHASE_10_EXECUTION_RUNBOOK.md` — 1549 chars — # PHASE_10_EXECUTION_RUNBOOK.md — Image Processing Provider Layer
+- `PHASE_10_IMPLEMENTATION_NOTES.md` — 1837 chars — # PHASE_10_IMPLEMENTATION_NOTES.md — Image Processing Provider Layer
+- `PHASE_10_VERIFICATION_MATRIX.md` — 1514 chars — # PHASE_10_VERIFICATION_MATRIX.md — Image Processing Provider Layer
+- `PHASE_11_EXECUTION_RUNBOOK.md` — 2045 chars — # PHASE_11_EXECUTION_RUNBOOK.md — Core Image Processing Pipeline
+- `PHASE_11_IMPLEMENTATION_NOTES.md` — 2633 chars — # PHASE_11_IMPLEMENTATION_NOTES.md — Core Image Processing Pipeline
+- `PHASE_11_VERIFICATION_MATRIX.md` — 1669 chars — # PHASE_11_VERIFICATION_MATRIX.md — Core Image Processing Pipeline
+- `PHASE_12_EXECUTION_RUNBOOK.md` — 1980 chars — # PHASE_12_EXECUTION_RUNBOOK.md
+- `PHASE_12_IMPLEMENTATION_NOTES.md` — 1703 chars — # PHASE_12_IMPLEMENTATION_NOTES.md — Smart Naming, Folders, Manifest, ZIP
+- `PHASE_12_VERIFICATION_MATRIX.md` — 1167 chars — # PHASE_12_VERIFICATION_MATRIX.md
+- `PHASE_13_EXECUTION_RUNBOOK.md` — 1580 chars — # PHASE_13_EXECUTION_RUNBOOK.md — Preview Gallery and Before/After
+- `PHASE_13_IMPLEMENTATION_NOTES.md` — 1704 chars — # PHASE_13_IMPLEMENTATION_NOTES.md — Preview Gallery and Before/After
+- `PHASE_13_VERIFICATION_MATRIX.md` — 1371 chars — # PHASE_13_VERIFICATION_MATRIX.md — Preview Gallery and Before/After
+- `PHASE_14_EXECUTION_RUNBOOK.md` — 1250 chars — # PHASE_14_EXECUTION_RUNBOOK.md
+- `PHASE_14_IMPLEMENTATION_NOTES.md` — 1053 chars — # PHASE_14_IMPLEMENTATION_NOTES.md
+- `PHASE_14_VERIFICATION_MATRIX.md` — 1169 chars — # PHASE_14_VERIFICATION_MATRIX.md
+- `PHASE_15_EXECUTION_RUNBOOK.md` — 790 chars — # Phase 15 Execution Runbook — Manual Approval and Revision Workflow
+- `PHASE_15_IMPLEMENTATION_NOTES.md` — 976 chars — # Phase 15 Implementation Notes — Manual Approval and Revision Workflow
+- `PHASE_15_VERIFICATION_MATRIX.md` — 818 chars — # Phase 15 Verification Matrix
+- `PHASE_16_EXECUTION_RUNBOOK.md` — 1304 chars — # Phase 16 Execution Runbook — Delivery and Email Notifications
+- `PHASE_16_IMPLEMENTATION_NOTES.md` — 914 chars — # Phase 16 Implementation Notes — Delivery and Email Notifications
+- `PHASE_16_VERIFICATION_MATRIX.md` — 961 chars — # Phase 16 Verification Matrix
+- `PHASE_17_EXECUTION_RUNBOOK.md` — 1229 chars — # PHASE_17_EXECUTION_RUNBOOK.md
+- `PHASE_17_IMPLEMENTATION_NOTES.md` — 1155 chars — # PHASE_17_IMPLEMENTATION_NOTES.md
+- `PHASE_17_VERIFICATION_MATRIX.md` — 950 chars — # PHASE_17_VERIFICATION_MATRIX.md
+- `PHASE_18_EXECUTION_RUNBOOK.md` — 1777 chars — # PHASE_18_EXECUTION_RUNBOOK.md — Gumroad Checkout/Webhook Intake
+- `PHASE_18_IMPLEMENTATION_NOTES.md` — 1869 chars — # PHASE_18_IMPLEMENTATION_NOTES.md — Gumroad Checkout/Webhook Intake
+- `PHASE_18_VERIFICATION_MATRIX.md` — 1214 chars — # PHASE_18_VERIFICATION_MATRIX.md — Gumroad Checkout/Webhook Intake
+- `PHASE_19_EXECUTION_RUNBOOK.md` — 1595 chars — # Phase 19 Execution Runbook — Credits, Subscriptions, Manual Invoices
+- `PHASE_19_IMPLEMENTATION_NOTES.md` — 1458 chars — # Phase 19 Implementation Notes — Credits, Subscriptions, Manual Invoices
+- `PHASE_19_VERIFICATION_MATRIX.md` — 1037 chars — # Phase 19 Verification Matrix
+- `PHASE_1_EXECUTION_RUNBOOK.md` — 1715 chars — # PHASE_1_EXECUTION_RUNBOOK.md
+- `PHASE_1_IMPLEMENTATION_NOTES.md` — 2452 chars — # PHASE_1_IMPLEMENTATION_NOTES.md
+- `PHASE_1_VERIFICATION_MATRIX.md` — 1584 chars — # PHASE_1_VERIFICATION_MATRIX.md
+- `PHASE_20_EXECUTION_RUNBOOK.md` — 1075 chars — # PHASE_20_EXECUTION_RUNBOOK.md — Fiverr Workflow
+- `PHASE_20_IMPLEMENTATION_NOTES.md` — 927 chars — # PHASE_20_IMPLEMENTATION_NOTES.md — Fiverr Workflow
+- `PHASE_20_VERIFICATION_MATRIX.md` — 866 chars — # PHASE_20_VERIFICATION_MATRIX.md — Fiverr Workflow
+- `PHASE_21_EXECUTION_RUNBOOK.md` — 1385 chars — # PHASE_21_EXECUTION_RUNBOOK.md
+- `PHASE_21_IMPLEMENTATION_NOTES.md` — 1526 chars — # PHASE_21_IMPLEMENTATION_NOTES.md
+- `PHASE_21_VERIFICATION_MATRIX.md` — 1254 chars — # PHASE_21_VERIFICATION_MATRIX.md
+- `PHASE_22_EXECUTION_RUNBOOK.md` — 1206 chars — # Phase 22 Execution Runbook — Taskrabbit Workflow
+- `PHASE_22_IMPLEMENTATION_NOTES.md` — 786 chars — # Phase 22 Implementation Notes — Taskrabbit Workflow
+- `PHASE_22_VERIFICATION_MATRIX.md` — 946 chars — # Phase 22 Verification Matrix — Taskrabbit Workflow
+- `PHASE_23_EXECUTION_RUNBOOK.md` — 1179 chars — # Phase 23 Execution Runbook — Other Sales Channel Workflows
+- `PHASE_23_IMPLEMENTATION_NOTES.md` — 971 chars — # Phase 23 Implementation Notes — Other Sales Channel Workflows
+- `PHASE_23_VERIFICATION_MATRIX.md` — 807 chars — # Phase 23 Verification Matrix
+- `PHASE_24_EXECUTION_RUNBOOK.md` — 1230 chars — # PHASE_24_EXECUTION_RUNBOOK.md
+- `PHASE_24_IMPLEMENTATION_NOTES.md` — 1115 chars — # PHASE_24_IMPLEMENTATION_NOTES.md
+- `PHASE_24_VERIFICATION_MATRIX.md` — 1013 chars — # PHASE_24_VERIFICATION_MATRIX.md
+- `PHASE_25_EXECUTION_RUNBOOK.md` — 984 chars — # PHASE_25_EXECUTION_RUNBOOK.md — Shopify Workflow
+- `PHASE_25_IMPLEMENTATION_NOTES.md` — 1354 chars — # PHASE_25_IMPLEMENTATION_NOTES.md — Shopify Workflow
+- `PHASE_25_VERIFICATION_MATRIX.md` — 1011 chars — # PHASE_25_VERIFICATION_MATRIX.md — Shopify Workflow
+- `PHASE_26_EXECUTION_RUNBOOK.md` — 1043 chars — # PHASE_26_EXECUTION_RUNBOOK.md
+- `PHASE_26_IMPLEMENTATION_NOTES.md` — 1316 chars — # PHASE_26_IMPLEMENTATION_NOTES.md
+- `PHASE_26_VERIFICATION_MATRIX.md` — 997 chars — # PHASE_26_VERIFICATION_MATRIX.md
+- `PHASE_27_EXECUTION_RUNBOOK.md` — 980 chars — # Phase 27 Execution Runbook — Codex
+- `PHASE_27_GAP_HANDOFF.md` — 1790 chars — # Phase 27 Gap Handoff — Amazon, eBay, WooCommerce
+- `PHASE_27_IMPLEMENTATION_NOTES.md` — 895 chars — # Phase 27 Implementation Notes — Amazon, eBay, WooCommerce Workflows
+- `PHASE_27_VERIFICATION_MATRIX.md` — 761 chars — # Phase 27 Verification Matrix
+- `PHASE_28_EXECUTION_RUNBOOK.md` — 827 chars — # Phase 28 Execution Runbook
+- `PHASE_28_IMPLEMENTATION_NOTES.md` — 780 chars — # Phase 28 Implementation Notes — File Storage Integrations
+- `PHASE_28_VERIFICATION_MATRIX.md` — 991 chars — # Phase 28 Verification Matrix
+- `PHASE_29_EXECUTION_RUNBOOK.md` — 960 chars — # Phase 29 Execution Runbook — Automation Webhooks
+- `PHASE_29_IMPLEMENTATION_NOTES.md` — 859 chars — # Phase 29 Implementation Notes — Automation Webhooks
+- `PHASE_29_VERIFICATION_MATRIX.md` — 989 chars — # Phase 29 Verification Matrix — Automation Webhooks
+- `PHASE_2_EXECUTION_RUNBOOK.md` — 2180 chars — # PHASE_2_EXECUTION_RUNBOOK.md
+- `PHASE_2_IMPLEMENTATION_NOTES.md` — 2599 chars — # PHASE_2_IMPLEMENTATION_NOTES.md
+- `PHASE_2_VERIFICATION_MATRIX.md` — 1659 chars — # PHASE_2_VERIFICATION_MATRIX.md
+- `PHASE_30_EXECUTION_RUNBOOK.md` — 969 chars — # PHASE_30_EXECUTION_RUNBOOK.md
+- `PHASE_30_IMPLEMENTATION_NOTES.md` — 805 chars — # PHASE_30_IMPLEMENTATION_NOTES.md
+- `PHASE_30_VERIFICATION_MATRIX.md` — 866 chars — # PHASE_30_VERIFICATION_MATRIX.md
+- `PHASE_31_EXECUTION_RUNBOOK.md` — 1180 chars — # Phase 31 Execution Runbook — Advanced Image Processing
+- `PHASE_31_IMPLEMENTATION_NOTES.md` — 790 chars — # Phase 31 Implementation Notes — Advanced Image Processing
+- `PHASE_31_VERIFICATION_MATRIX.md` — 791 chars — # Phase 31 Verification Matrix — Advanced Image Processing
+- `PHASE_3_EXECUTION_RUNBOOK.md` — 2205 chars — # PHASE_3_EXECUTION_RUNBOOK.md
+- `PHASE_3_IMPLEMENTATION_NOTES.md` — 3218 chars — # PHASE_3_IMPLEMENTATION_NOTES.md
+- `PHASE_3_VERIFICATION_MATRIX.md` — 1218 chars — # PHASE_3_VERIFICATION_MATRIX.md
+- `PHASE_4_EXECUTION_RUNBOOK.md` — 2891 chars — # PHASE_4_EXECUTION_RUNBOOK.md
+- `PHASE_4_IMPLEMENTATION_NOTES.md` — 3863 chars — # PHASE_4_IMPLEMENTATION_NOTES.md
+- `PHASE_4_VERIFICATION_MATRIX.md` — 1414 chars — # PHASE_4_VERIFICATION_MATRIX.md
+- `PHASE_5_EXECUTION_RUNBOOK.md` — 2393 chars — # PHASE_5_EXECUTION_RUNBOOK.md
+- `PHASE_5_IMPLEMENTATION_NOTES.md` — 2391 chars — # PHASE_5_IMPLEMENTATION_NOTES.md
+- `PHASE_5_VERIFICATION_MATRIX.md` — 1573 chars — # PHASE_5_VERIFICATION_MATRIX.md
+- `PHASE_6_EXECUTION_RUNBOOK.md` — 1420 chars — # PHASE_6_EXECUTION_RUNBOOK.md
+- `PHASE_6_IMPLEMENTATION_NOTES.md` — 2000 chars — # PHASE_6_IMPLEMENTATION_NOTES.md
+- `PHASE_6_VERIFICATION_MATRIX.md` — 1123 chars — # PHASE_6_VERIFICATION_MATRIX.md
+- `PHASE_7_EXECUTION_RUNBOOK.md` — 2570 chars — # PHASE_7_EXECUTION_RUNBOOK.md — Sales Channel Normalization Layer
+- `PHASE_7_IMPLEMENTATION_NOTES.md` — 4062 chars — # PHASE_7_IMPLEMENTATION_NOTES.md — Sales Channel Normalization Layer
+- `PHASE_7_VERIFICATION_MATRIX.md` — 1986 chars — # PHASE_7_VERIFICATION_MATRIX.md — Sales Channel Normalization Layer
+- `PHASE_8_EXECUTION_RUNBOOK.md` — 2079 chars — # PHASE_8_EXECUTION_RUNBOOK.md — Codex Runtime Plan
+- `PHASE_8_IMPLEMENTATION_NOTES.md` — 2402 chars — # PHASE_8_IMPLEMENTATION_NOTES.md — Direct Upload and File Intake
+- `PHASE_8_VERIFICATION_MATRIX.md` — 1845 chars — # PHASE_8_VERIFICATION_MATRIX.md
+- `PHASE_9_EXECUTION_RUNBOOK.md` — 1374 chars — # PHASE_9_EXECUTION_RUNBOOK.md — Job Creation and Admin Queue
+- `PHASE_9_IMPLEMENTATION_NOTES.md` — 1293 chars — # PHASE_9_IMPLEMENTATION_NOTES.md — Job Creation and Admin Queue
+- `PHASE_9_VERIFICATION_MATRIX.md` — 1408 chars — # PHASE_9_VERIFICATION_MATRIX.md — Job Creation and Admin Queue
+- `README.md` — 1086 chars — # ListingLift
+- `REPO_FILE_MANIFEST.md` — 541 chars — # REPO_FILE_MANIFEST.md
+- `REPO_FILE_MANIFEST_V10.md` — 25049 chars — # REPO_FILE_MANIFEST_V10.md
+- `REPO_FILE_MANIFEST_V11.md` — 27318 chars — # REPO_FILE_MANIFEST_V11.md
+- `REPO_FILE_MANIFEST_V12.md` — 24436 chars — # REPO_FILE_MANIFEST_V12.md
+- `REPO_FILE_MANIFEST_V13.md` — 31772 chars — # REPO_FILE_MANIFEST_V13.md
+- `REPO_FILE_MANIFEST_V14.md` — 51870 chars — # REPO_FILE_MANIFEST_V14.md
+- `REPO_FILE_MANIFEST_V15.md` — 29629 chars — # REPO_FILE_MANIFEST_V15.md
+- `REPO_FILE_MANIFEST_V16.md` — 31779 chars — # REPO_FILE_MANIFEST_V16.md
+- `REPO_FILE_MANIFEST_V17.md` — 33908 chars — # Repo File Manifest v17
+- `REPO_FILE_MANIFEST_V18.md` — 43645 chars — # REPO_FILE_MANIFEST_V18.md
+- `REPO_FILE_MANIFEST_V19.md` — 61142 chars — # REPO_FILE_MANIFEST_V19.md
+- `REPO_FILE_MANIFEST_V2.md` — 10622 chars — # Repo File Manifest v2
+- `REPO_FILE_MANIFEST_V20.md` — 39968 chars — # REPO_FILE_MANIFEST_V20.md
+- `REPO_FILE_MANIFEST_V21.md` — 42158 chars — # REPO_FILE_MANIFEST_V21.md
+- `REPO_FILE_MANIFEST_V22.md` — 44038 chars — # REPO_FILE_MANIFEST_V22.md
+- `REPO_FILE_MANIFEST_V23.md` — 46224 chars — # REPO_FILE_MANIFEST_V23.md
+- `REPO_FILE_MANIFEST_V24.md` — 62235 chars — # REPO_FILE_MANIFEST_V24.md
+- `REPO_FILE_MANIFEST_V25.md` — 50956 chars — # REPO_FILE_MANIFEST_V25.md
+- `REPO_FILE_MANIFEST_V26.md` — 53123 chars — # REPO_FILE_MANIFEST_V26.md
+- `REPO_FILE_MANIFEST_V27.md` — 66214 chars — # REPO_FILE_MANIFEST_V27.md
+- `REPO_FILE_MANIFEST_V28.md` — 96412 chars — # REPO_FILE_MANIFEST_V28.md
+- `REPO_FILE_MANIFEST_V29.md` — 72218 chars — # REPO_FILE_MANIFEST_V29.md
+- `REPO_FILE_MANIFEST_V3.md` — 16977 chars — # REPO_FILE_MANIFEST_V3.md
+- `REPO_FILE_MANIFEST_V30.md` — 75076 chars — # REPO_FILE_MANIFEST_V30.md
+- `REPO_FILE_MANIFEST_V31.md` — 66349 chars — # REPO_FILE_MANIFEST_V31.md
+- `REPO_FILE_MANIFEST_V32.md` — 70078 chars — # REPO_FILE_MANIFEST_V32.md
+- `REPO_FILE_MANIFEST_V33.md` — 72559 chars — # REPO_FILE_MANIFEST_V33.md
+- `REPO_FILE_MANIFEST_V4.md` — 25440 chars — # REPO_FILE_MANIFEST_V4.md
+- `REPO_FILE_MANIFEST_V5.md` — 13724 chars — # REPO_FILE_MANIFEST_V5.md
+- `REPO_FILE_MANIFEST_V6.md` — 15118 chars — # REPO_FILE_MANIFEST_V6.md
+- `REPO_FILE_MANIFEST_V7.md` — 16130 chars — # REPO_FILE_MANIFEST_V7.md
+- `REPO_FILE_MANIFEST_V8.md` — 17206 chars — # REPO_FILE_MANIFEST_V8.md
+- `REPO_FILE_MANIFEST_V9.md` — 18958 chars — # REPO_FILE_MANIFEST_V9.md
+- `ROADMAP_STATUS.md` — 2680 chars — # ROADMAP_STATUS.md
+- `SECURITY.md` — 4861 chars — # SECURITY.md — ListingLift Security Requirements
+- `TESTING.md` — 337 chars — # TESTING.md
+- `USER_GUIDE.md` — 365 chars — # USER_GUIDE.md
+- `WHOLE_REPO_CODEX_HANDOFF.md` — 2862 chars — # WHOLE_REPO_CODEX_HANDOFF.md
+- `WHOLE_REPO_CODEX_HANDOFF_V10_ARCHIVE.md` — 2826 chars — # WHOLE_REPO_CODEX_HANDOFF_V10.md
+- `WHOLE_REPO_CODEX_HANDOFF_V11.md` — 2692 chars — # WHOLE_REPO_CODEX_HANDOFF_V11.md
+- `WHOLE_REPO_CODEX_HANDOFF_V12.md` — 2731 chars — # WHOLE_REPO_CODEX_HANDOFF_V12.md
+- `WHOLE_REPO_CODEX_HANDOFF_V13.md` — 2694 chars — # WHOLE_REPO_CODEX_HANDOFF_V13.md
+- `WHOLE_REPO_CODEX_HANDOFF_V14.md` — 1811 chars — # WHOLE_REPO_CODEX_HANDOFF_V14.md
+- `WHOLE_REPO_CODEX_HANDOFF_V15.md` — 1485 chars — # WHOLE_REPO_CODEX_HANDOFF_V15.md
+- `WHOLE_REPO_CODEX_HANDOFF_V16.md` — 1630 chars — # WHOLE_REPO_CODEX_HANDOFF_V16.md
+- `WHOLE_REPO_CODEX_HANDOFF_V17.md` — 1330 chars — # Whole Repo Codex Handoff v17
+- `WHOLE_REPO_CODEX_HANDOFF_V18.md` — 1428 chars — # Whole Repo Codex Handoff V18 — ListingLift
+- `WHOLE_REPO_CODEX_HANDOFF_V19.md` — 1288 chars — # WHOLE_REPO_CODEX_HANDOFF_V19.md
+- `WHOLE_REPO_CODEX_HANDOFF_V2.md` — 2030 chars — # ListingLift Whole-Repo Codex Handoff v2
+- `WHOLE_REPO_CODEX_HANDOFF_V20.md` — 2086 chars — # WHOLE_REPO_CODEX_HANDOFF_V20.md
+- `WHOLE_REPO_CODEX_HANDOFF_V21.md` — 3078 chars — # WHOLE_REPO_CODEX_HANDOFF_V21.md
+- `WHOLE_REPO_CODEX_HANDOFF_V22.md` — 2847 chars — # WHOLE_REPO_CODEX_HANDOFF_V22.md
+- `WHOLE_REPO_CODEX_HANDOFF_V23.md` — 3042 chars — # WHOLE_REPO_CODEX_HANDOFF_V23.md
+- `WHOLE_REPO_CODEX_HANDOFF_V24.md` — 1078 chars — # Whole Repo Codex Handoff V24 — ListingLift
+- `WHOLE_REPO_CODEX_HANDOFF_V25.md` — 1934 chars — # Whole Repo Codex Handoff v25
+- `WHOLE_REPO_CODEX_HANDOFF_V26.md` — 1926 chars — # WHOLE_REPO_CODEX_HANDOFF_V26.md
+- `WHOLE_REPO_CODEX_HANDOFF_V27.md` — 1195 chars — # WHOLE_REPO_CODEX_HANDOFF_V27.md
+- `WHOLE_REPO_CODEX_HANDOFF_V28.md` — 1182 chars — # WHOLE_REPO_CODEX_HANDOFF_V28.md
+- `WHOLE_REPO_CODEX_HANDOFF_V29.md` — 1415 chars — # Whole Repo Codex Handoff V29 — ListingLift
+- `WHOLE_REPO_CODEX_HANDOFF_V3.md` — 2869 chars — # WHOLE_REPO_CODEX_HANDOFF_V3.md
+- `WHOLE_REPO_CODEX_HANDOFF_V30.md` — 1359 chars — # Whole Repo Codex Handoff V30
+- `WHOLE_REPO_CODEX_HANDOFF_V31.md` — 1319 chars — # Whole Repo Codex Handoff — v31
+- `WHOLE_REPO_CODEX_HANDOFF_V32.md` — 1783 chars — # WHOLE_REPO_CODEX_HANDOFF_V32.md
+- `WHOLE_REPO_CODEX_HANDOFF_V33.md` — 1236 chars — # Whole Repo Codex Handoff v33
+- `WHOLE_REPO_CODEX_HANDOFF_V4.md` — 3337 chars — # WHOLE_REPO_CODEX_HANDOFF_V4.md
+- `WHOLE_REPO_CODEX_HANDOFF_V5.md` — 4012 chars — # WHOLE_REPO_CODEX_HANDOFF_V5.md
+- `WHOLE_REPO_CODEX_HANDOFF_V6.md` — 2910 chars — # WHOLE_REPO_CODEX_HANDOFF_V6.md
+- `WHOLE_REPO_CODEX_HANDOFF_V7.md` — 3920 chars — # WHOLE_REPO_CODEX_HANDOFF_V7.md
+- `WHOLE_REPO_CODEX_HANDOFF_V8.md` — 3742 chars — # WHOLE_REPO_CODEX_HANDOFF_V8.md
+- `WHOLE_REPO_CODEX_HANDOFF_V9.md` — 4317 chars — # WHOLE_REPO_CODEX_HANDOFF_V9.md
+- `docs/README.md` — 236 chars — # ListingLift Docs
+- `docs/advanced-image-processing-phase31-gap-handoff.md` — 1561 chars — # Phase 31 Gap Handoff — Advanced Image Processing
+- `docs/advanced-image-processing.md` — 1402 chars — # Advanced Image Processing
+- `docs/amazon-ebay-woocommerce-workflows.md` — 1590 chars — # Amazon, eBay, and WooCommerce Workflows
+- `docs/automation-integrations.md` — 154 chars — # automation-integrations.md
+- `docs/automation-webhooks-phase29-gap-handoff.md` — 1611 chars — # Phase 29 Gap Handoff — Automation Webhooks
+- `docs/automation-webhooks.md` — 1635 chars — # Automation Webhooks
+- `docs/codex-handoff.md` — 151 chars — # codex-handoff.md
+- `docs/core-image-processing-pipeline.md` — 1849 chars — # Core Image Processing Pipeline
+- `docs/credits-subscriptions-manual-invoices.md` — 1258 chars — # Credits, Subscriptions, and Manual Invoices
+- `docs/delivery-email-notifications.md` — 1382 chars — # Delivery and Email Notifications
+- `docs/delivery-notifications-gap-handoff.md` — 902 chars — # Delivery Notifications Gap Handoff
+- `docs/delivery-packaging.md` — 1141 chars — # Delivery Packaging
+- `docs/deployment.md` — 144 chars — # deployment.md
+- `docs/etsy-phase24-gap-handoff.md` — 885 chars — # docs/etsy-phase24-gap-handoff.md
+- `docs/etsy-workflow.md` — 1178 chars — # docs/etsy-workflow.md
+- `docs/file-storage-integrations.md` — 1699 chars — # File Storage Integrations
+- `docs/file-storage-phase28-gap-handoff.md` — 992 chars — # Phase 28 Gap Handoff
+- `docs/fiverr-phase20-gap-handoff.md` — 1633 chars — # Fiverr Phase 20 Gap Handoff
+- `docs/fiverr-phase20-workflow.md` — 1669 chars — # Fiverr Phase 20 Workflow
+- `docs/fiverr-workflow.md` — 1422 chars — # fiverr-workflow.md
+- `docs/gumroad-checkout-webhook.md` — 1526 chars — # Gumroad Checkout and Webhook Intake
+- `docs/gumroad-integration.md` — 184 chars — # gumroad-integration.md
+- `docs/gumroad-phase18-gap-handoff.md` — 953 chars — # Gumroad Phase 18 Gap Handoff
+- `docs/image-processing.md` — 903 chars — # image-processing.md
+- `docs/image-provider-layer.md` — 1626 chars — # Image Provider Layer
+- `docs/job-admin-queue.md` — 1634 chars — # Job Creation and Admin Queue
+- `docs/licensing.md` — 148 chars — # licensing.md
+- `docs/manual-approval-revisions.md` — 1390 chars — # Manual Approval and Revision Workflow
+- `docs/marketplace-safety.md` — 152 chars — # marketplace-safety.md
+- `docs/other-sales-channels-workflows.md` — 1348 chars — # Other Sales Channel Workflows
+- `docs/packages.md` — 125 chars — # packages.md
+- `docs/phase19-gap-handoff.md` — 1029 chars — # Phase 19 Gap Handoff for Codex
+- `docs/phase23-gap-handoff.md` — 967 chars — # Phase 23 Gap Handoff
+- `docs/phase27-gap-handoff.md` — 1790 chars — # Phase 27 Gap Handoff — Amazon, eBay, WooCommerce
+- `docs/platform-presets.md` — 2794 chars — # docs/platform-presets.md
+- `docs/preview-gallery.md` — 1167 chars — # Preview Gallery and Before/After
+- `docs/qa-checklist.md` — 172 chars — # qa-checklist.md
+- `docs/quality-control.md` — 1738 chars — # docs/quality-control.md — Phase 14 Quality Control and Flagged Outputs
+- `docs/rbac.md` — 1925 chars — # RBAC and Tenant Isolation
+- `docs/repo-stitching-plan.md` — 1019 chars — # Repo Stitching Plan
+- `docs/reports.md` — 152 chars — # reports.md
+- `docs/sales-channels.md` — 2259 chars — # Sales Channels
+- `docs/shopify-phase25-gap-handoff.md` — 1546 chars — # Shopify Phase 25 Gap Handoff
+- `docs/shopify-workflow.md` — 1562 chars — # Shopify Workflow
+- `docs/social-commerce-phase26-gap-handoff.md` — 765 chars — # Social Commerce Phase 26 Gap Handoff
+- `docs/social-commerce-workflows.md` — 1061 chars — # Social Commerce Workflows
+- `docs/source/ListingLift.md` — 41460 chars — # ListingLift Service Business — AI-Powered Product Photo Cleanup, Marketplace Image Packs, Ecommerce Visual Optimization, and Multi-Platform Service Sales Engine
+- `docs/source/ListingLift_BUILD_ROADMAP.md` — 51724 chars — # BUILD_ROADMAP.md — ListingLift
+- `docs/stripe-billing.md` — 137 chars — # stripe-billing.md
+- `docs/stripe-checkout-billing.md` — 969 chars — # Stripe Checkout and Billing
+- `docs/stripe-phase17-gap-handoff.md` — 882 chars — # Stripe Phase 17 Gap Handoff
+- `docs/task-notification-integrations.md` — 922 chars — # Task Notification Integrations
+- `docs/task-notification-phase30-gap-handoff.md` — 432 chars — # Phase 30 Gap Handoff
+- `docs/taskrabbit-phase22-gap-handoff.md` — 1821 chars — # Taskrabbit Phase 22 Gap Handoff
+- `docs/taskrabbit-phase22-workflow.md` — 1243 chars — # Taskrabbit Phase 22 Workflow
+- `docs/taskrabbit-workflow.md` — 1133 chars — # taskrabbit-workflow.md
+- `docs/upload-file-intake.md` — 1193 chars — # Upload and File Intake
+- `docs/upwork-phase21-gap-handoff.md` — 1113 chars — # Upwork Phase 21 Gap Handoff
+- `docs/upwork-phase21-workflow.md` — 856 chars — # Phase 21 — Upwork Workflow
+- `docs/upwork-workflow.md` — 1758 chars — # upwork-workflow.md
+- `prompts/CODEX_BUGFIX_PROMPT.md` — 255 chars — # Codex Bugfix Prompt
+- `prompts/CODEX_PHASE_1_PROMPT.md` — 480 chars — # Codex Phase 1 Prompt — Design System and UI Shell
+- `prompts/CODEX_REPO_STITCH_PROMPT.md` — 1161 chars — # Codex Repo Stitch Prompt
+- `prompts/CODEX_REVIEW_PROMPT.md` — 341 chars — # Codex Review Prompt
+- `prompts/CODEX_SECURITY_AUDIT_PROMPT.md` — 357 chars — # Codex Security Audit Prompt
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V10.md` — 1727 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V10.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V11.md` — 1126 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V12.md` — 1778 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V13.md` — 1466 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V13.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V14.md` — 1314 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V15.md` — 1365 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V15.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V16.md` — 1439 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V17.md` — 1131 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V18.md` — 1568 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V19.md` — 1379 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V2.md` — 1191 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V20.md` — 1693 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V21.md` — 1943 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V21.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V22.md` — 1850 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V23.md` — 1765 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V23.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V24.md` — 1151 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V25.md` — 1093 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V26.md` — 1056 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V26.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V27.md` — 1386 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V27.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V28.md` — 1076 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V28.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V29.md` — 1596 chars — # Codex Whole Repo Stitch Prompt V29
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V3.md` — 1528 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V30.md` — 1473 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V31.md` — 1619 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V32.md` — 1258 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V33.md` — 1209 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V4.md` — 1643 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V5.md` — 1777 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V6.md` — 1592 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V7.md` — 2259 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V7.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V8.md` — 1838 chars — no heading found
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V9.md` — 2820 chars — no heading found
+- `tasks/TASKS_PHASE_0.md` — 660 chars — # TASKS_PHASE_0.md — Repository Initialization
+- `tasks/TASKS_PHASE_1.md` — 1768 chars — # TASKS_PHASE_1.md — Design System and UI Shell
+- `tasks/TASKS_PHASE_10.md` — 1443 chars — # TASKS_PHASE_10.md — Image Processing Provider Layer
+- `tasks/TASKS_PHASE_11.md` — 678 chars — # TASKS_PHASE_11.md — Core Image Processing Pipeline
+- `tasks/TASKS_PHASE_12.md` — 669 chars — # TASKS_PHASE_12.md — Naming Folders Manifest ZIP
+- `tasks/TASKS_PHASE_13.md` — 684 chars — # TASKS_PHASE_13.md — Preview Gallery and Before After
+- `tasks/TASKS_PHASE_14.md` — 693 chars — # TASKS_PHASE_14.md — Quality Control and Flagged Outputs
+- `tasks/TASKS_PHASE_15.md` — 699 chars — # TASKS_PHASE_15.md — Manual Approval and Revision Workflow
+- `tasks/TASKS_PHASE_16.md` — 684 chars — # TASKS_PHASE_16.md — Delivery and Email Notifications
+- `tasks/TASKS_PHASE_17.md` — 669 chars — # TASKS_PHASE_17.md — Stripe Checkout and Billing
+- `tasks/TASKS_PHASE_18.md` — 681 chars — # TASKS_PHASE_18.md — Gumroad Checkout Webhook Intake
+- `tasks/TASKS_PHASE_19.md` — 699 chars — # TASKS_PHASE_19.md — Credits Subscriptions Manual Invoices
+- `tasks/TASKS_PHASE_2.md` — 675 chars — # TASKS_PHASE_2.md — Database Schema and Migrations
+- `tasks/TASKS_PHASE_20.md` — 633 chars — # TASKS_PHASE_20.md — Fiverr Workflow
+- `tasks/TASKS_PHASE_21.md` — 633 chars — # TASKS_PHASE_21.md — Upwork Workflow
+- `tasks/TASKS_PHASE_22.md` — 645 chars — # TASKS_PHASE_22.md — Taskrabbit Workflow
+- `tasks/TASKS_PHASE_23.md` — 648 chars — # TASKS_PHASE_23.md — Other Sales Channels
+- `tasks/TASKS_PHASE_24.md` — 627 chars — # TASKS_PHASE_24.md — Etsy Workflow
+- `tasks/TASKS_PHASE_25.md` — 636 chars — # TASKS_PHASE_25.md — Shopify Workflow
+- `tasks/TASKS_PHASE_26.md` — 663 chars — # TASKS_PHASE_26.md — Social Commerce Workflows
+- `tasks/TASKS_PHASE_27.md` — 687 chars — # TASKS_PHASE_27.md — Amazon eBay WooCommerce Workflows
+- `tasks/TASKS_PHASE_28.md` — 663 chars — # TASKS_PHASE_28.md — File Storage Integrations
+- `tasks/TASKS_PHASE_29.md` — 788 chars — # TASKS_PHASE_29.md — Automation Webhooks
+- `tasks/TASKS_PHASE_3.md` — 666 chars — # TASKS_PHASE_3.md — Authentication and Sessions
+- `tasks/TASKS_PHASE_30.md` — 693 chars — # TASKS_PHASE_30.md — Notifications and Task Data Exports
+- `tasks/TASKS_PHASE_31.md` — 663 chars — # TASKS_PHASE_31.md — Advanced Image Processing
+- `tasks/TASKS_PHASE_32.md` — 663 chars — # TASKS_PHASE_32.md — Reports and Upsell Engine
+- `tasks/TASKS_PHASE_33.md` — 636 chars — # TASKS_PHASE_33.md — Client Dashboard
+- `tasks/TASKS_PHASE_34.md` — 699 chars — # TASKS_PHASE_34.md — Admin Dashboard and Revenue Analytics
+- `tasks/TASKS_PHASE_35.md` — 657 chars — # TASKS_PHASE_35.md — Agency White-Label Mode
+- `tasks/TASKS_PHASE_36.md` — 684 chars — # TASKS_PHASE_36.md — API Access and Advanced Scaffold
+- `tasks/TASKS_PHASE_37.md` — 642 chars — # TASKS_PHASE_37.md — Security Hardening
+- `tasks/TASKS_PHASE_38.md` — 645 chars — # TASKS_PHASE_38.md — Full Testing and QA
+- `tasks/TASKS_PHASE_39.md` — 651 chars — # TASKS_PHASE_39.md — Production Deployment
+- `tasks/TASKS_PHASE_4.md` — 690 chars — # TASKS_PHASE_4.md — Tenant Client RBAC and Agency Model
+- `tasks/TASKS_PHASE_40.md` — 645 chars — # TASKS_PHASE_40.md — Post-Launch Backlog
+- `tasks/TASKS_PHASE_5.md` — 645 chars — # TASKS_PHASE_5.md — Packages and Pricing
+- `tasks/TASKS_PHASE_6.md` — 651 chars — # TASKS_PHASE_6.md — Platform Preset System
+- `tasks/TASKS_PHASE_7.md` — 684 chars — # TASKS_PHASE_7.md — Sales Channel Normalization Layer
+- `tasks/TASKS_PHASE_8.md` — 672 chars — # TASKS_PHASE_8.md — Direct Upload and File Intake
+- `tasks/TASKS_PHASE_9.md` — 669 chars — # TASKS_PHASE_9.md — Job Creation and Admin Queue

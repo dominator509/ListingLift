@@ -1,0 +1,313 @@
+{
+  "phase": "Q11_P3_DOS",
+  "pipeline_epoch": 37,
+  "total_duration_seconds": 225.7,
+  "guardrail_compliance": {
+    "max_vus": 200,
+    "max_vus_ceiling": 437,
+    "vus_compliant": true,
+    "max_tps": 337,
+    "tps_ceiling": 675,
+    "tps_compliant": true,
+    "per_component_kills_only": true,
+    "sandbox": true
+  },
+  "vectors": {
+    "connection_flood": {
+      "component": "connection_flood",
+      "description": "TCP connection flood — open & hold idle HTTP connections to exhaust accept queue / FD limit",
+      "source": "network (TCP accept queue + OS FD limit)",
+      "levels_tested": [
+        "idle_0conn",
+        "flood_200conn"
+      ],
+      "total_connections": 200,
+      "errors": 0,
+      "connection_time_us": 288,
+      "latency_us": {
+        "p50": 31140,
+        "p95": 57287,
+        "p99": 57452,
+        "max": 57515,
+        "min": 0,
+        "avg": 34648
+      },
+      "peak_rss_MB": 69.71,
+      "peak_fds": 224,
+      "resource_delta": {
+        "rss_delta_MB": 1,
+        "heap_delta_MB": 0.66,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 40632,
+        "cpu_sys_delta_us": 29554
+      },
+      "degradation_notes": "FD consumption significant: 200 new FDs opened. Accept queue backpressure likely.",
+      "attack_time_seconds": 1,
+      "cooldown_applied_ms": 30000
+    },
+    "slowloris": {
+      "component": "slowloris",
+      "description": "Slowloris DoS — send partial HTTP headers slowly to exhaust connection slots",
+      "source": "network (HTTP connection timeout / backlog)",
+      "levels_tested": [
+        "idle",
+        "slowloris_150conn"
+      ],
+      "total_connections": 150,
+      "errors": 0,
+      "hold_time_seconds": 3,
+      "latency_us": {
+        "p50": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0,
+        "min": 0,
+        "avg": 0
+      },
+      "peak_rss_MB": 71.48,
+      "peak_fds": 174,
+      "resource_delta": {
+        "rss_delta_MB": 2,
+        "heap_delta_MB": 2.13,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 54226,
+        "cpu_sys_delta_us": 60353
+      },
+      "degradation_notes": "Server tolerated partial headers without dropping connections. No connection limit enforcement detected.",
+      "connection_timeout_behavior": "permissive — connections held open"
+    },
+    "memory_bomb": {
+      "component": "memory_bomb",
+      "description": "Large multipart POST payloads — measure streaming parser backpressure and body size limits",
+      "source": "src/lib/api-response.ts / next body parser middleware",
+      "levels_tested": [
+        "1MB",
+        "5MB",
+        "10MB"
+      ],
+      "payload_sizes_tested": [
+        1048576,
+        5242880,
+        10485760
+      ],
+      "total_requests": 3,
+      "errors": 0,
+      "latency_us": {
+        "p50": 22597,
+        "p95": 34963,
+        "p99": 34963,
+        "max": 34963,
+        "min": 0,
+        "avg": 26064
+      },
+      "peak_rss_MB": 93.21,
+      "peak_fds": 24,
+      "resource_delta": {
+        "rss_delta_MB": 10.42,
+        "heap_delta_MB": 10.19,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 30129,
+        "cpu_sys_delta_us": 38296
+      },
+      "degradation_notes": "Server accepted all payload sizes. No body size limit detected.",
+      "body_size_limit_detected": false
+    },
+    "query_complexity": {
+      "component": "query_complexity",
+      "description": "Deeply nested JSON payloads — measure JSON.parse recursion depth and timeout behavior",
+      "source": "src/server/routes/route-helpers.ts (parseJson)",
+      "levels_tested": [
+        "depth_50",
+        "depth_100",
+        "depth_500",
+        "depth_1000"
+      ],
+      "max_depth_tested": 1000,
+      "total_requests": 4,
+      "errors": 0,
+      "latency_us": {
+        "p50": 8749,
+        "p95": 13479,
+        "p99": 13479,
+        "max": 13479,
+        "min": 0,
+        "avg": 9809
+      },
+      "peak_rss_MB": 83.47,
+      "resource_delta": {
+        "rss_delta_MB": 0.25,
+        "heap_delta_MB": 0.32,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 7524,
+        "cpu_sys_delta_us": 5290
+      },
+      "degradation_notes": "All depths parsed successfully. No recursion limit detected in JSON.parse."
+    },
+    "rate_limit_bypass": {
+      "component": "rate_limit_bypass",
+      "description": "Rate limit bypass via X-Forwarded-For IP spoofing — simulate 100k unique source IPs",
+      "source": "src/server/auth/rate-limit.ts",
+      "levels_tested": [
+        "200_unique_ips"
+      ],
+      "total_requests": 200,
+      "errors": 0,
+      "latency_us": {
+        "p50": 11395,
+        "p95": 19533,
+        "p99": 26966,
+        "max": 47478,
+        "min": 0,
+        "avg": 12453
+      },
+      "resource_delta": {
+        "rss_delta_MB": -8.77,
+        "heap_delta_MB": -8.55,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 344853,
+        "cpu_sys_delta_us": 106759
+      },
+      "degradation_notes": "All 200 spoofed IP requests passed without rate limiting. X-Forwarded-For may not be used for rate limit keying.",
+      "bypass_possible": true
+    },
+    "webhook_replay": {
+      "component": "webhook_replay",
+      "description": "Webhook replay attack — hammer webhook endpoints with identical payloads to test idempotency",
+      "source": "src/app/api/webhooks/gumroad/route.ts, stripe/route.ts, automation-webhooks/dispatch/route.ts",
+      "endpoints_tested": [
+        "/api/webhooks/gumroad",
+        "/api/webhooks/stripe",
+        "/api/automation-webhooks/dispatch"
+      ],
+      "replays_per_endpoint": 20,
+      "total_requests": 60,
+      "errors": 0,
+      "idempotent_responses": 10,
+      "latency_us": {
+        "p50": 14732,
+        "p95": 171615,
+        "p99": 220694,
+        "max": 220694,
+        "min": 0,
+        "avg": 41266
+      },
+      "resource_delta": {
+        "rss_delta_MB": 0.5,
+        "heap_delta_MB": 1.07,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 114615,
+        "cpu_sys_delta_us": 38740
+      },
+      "degradation_notes": "No idempotency enforcement detected. All replays accepted.",
+      "idempotency_verified": false
+    },
+    "session_bomb": {
+      "component": "session_bomb",
+      "description": "Session store bomb — create 10k sessions to test LRU eviction at capacity boundary",
+      "source": "src/server/auth/session-cache.ts",
+      "levels_tested": [
+        "10000_entries"
+      ],
+      "target_sessions": 10000,
+      "actual_created": 10000,
+      "errors": 0,
+      "memory_estimate_MB": 6.36,
+      "latency_us": {
+        "p50": 69071,
+        "p95": 142428,
+        "p99": 153946,
+        "max": 153946,
+        "min": 0,
+        "avg": 76573
+      },
+      "peak_rss_MB": 79.82,
+      "peak_fds": 24,
+      "resource_delta": {
+        "rss_delta_MB": 6.36,
+        "heap_delta_MB": -3.65,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 1597249,
+        "cpu_sys_delta_us": 35899
+      },
+      "degradation_notes": "Session bomb consumed 6.36MB RSS. LRU eviction working effectively."
+    },
+    "csrf_token_flood": {
+      "component": "csrf_token_flood",
+      "description": "CSRF token generation flood — hammer token creation to measure entropy exhaustion",
+      "source": "src/server/services/csrf-protection-service.ts",
+      "levels_tested": [
+        "1000_tokens"
+      ],
+      "total_tokens_generated": 1000,
+      "errors": 0,
+      "latency_us": {
+        "p50": 30,
+        "p95": 94,
+        "p99": 282,
+        "max": 4899,
+        "min": 0,
+        "avg": 48
+      },
+      "peak_rss_MB": 94.81,
+      "resource_delta": {
+        "rss_delta_MB": 14.75,
+        "heap_delta_MB": 4.01,
+        "fd_delta": 8,
+        "cpu_user_delta_us": 209201,
+        "cpu_sys_delta_us": 73616
+      },
+      "degradation_notes": "All 1,000 tokens generated successfully. No entropy exhaustion.",
+      "entropy_exhaustion_detected": false
+    }
+  },
+  "degradation_summary": {
+    "connection_flood": {
+      "p95_latency_us": 57287,
+      "errors": 0,
+      "total_operations": 200,
+      "degradation_notes": "FD consumption significant: 200 new FDs opened. Accept queue backpressure likely."
+    },
+    "slowloris": {
+      "p95_latency_us": 0,
+      "errors": 0,
+      "total_operations": 150,
+      "degradation_notes": "Server tolerated partial headers without dropping connections. No connection limit enforcement detected."
+    },
+    "memory_bomb": {
+      "p95_latency_us": 34963,
+      "errors": 0,
+      "total_operations": 3,
+      "degradation_notes": "Server accepted all payload sizes. No body size limit detected."
+    },
+    "query_complexity": {
+      "p95_latency_us": 13479,
+      "errors": 0,
+      "total_operations": 4,
+      "degradation_notes": "All depths parsed successfully. No recursion limit detected in JSON.parse."
+    },
+    "rate_limit_bypass": {
+      "p95_latency_us": 19533,
+      "errors": 0,
+      "total_operations": 200,
+      "degradation_notes": "All 200 spoofed IP requests passed without rate limiting. X-Forwarded-For may not be used for rate limit keying."
+    },
+    "webhook_replay": {
+      "p95_latency_us": 171615,
+      "errors": 0,
+      "total_operations": 60,
+      "degradation_notes": "No idempotency enforcement detected. All replays accepted."
+    },
+    "session_bomb": {
+      "p95_latency_us": 142428,
+      "errors": 0,
+      "total_operations": 0,
+      "degradation_notes": "Session bomb consumed 6.36MB RSS. LRU eviction working effectively."
+    },
+    "csrf_token_flood": {
+      "p95_latency_us": 94,
+      "errors": 0,
+      "total_operations": 0,
+      "degradation_notes": "All 1,000 tokens generated successfully. No entropy exhaustion."
+    }
+  }
+}

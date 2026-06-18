@@ -1,0 +1,256 @@
+# CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md
+
+Fresh Markdown review completed after unzipping `ListingLift_Repo_Seed_v20.zip` into `ListingLift_Repo_Seed_v21`, reviewing all existing Markdown/source docs, adding Phase 19 artifacts, and rereading the complete v21 Markdown set before packaging.
+
+- Repo Markdown files reviewed: 244
+- Source documents reviewed: 2
+- Total Markdown/source characters reviewed in final pass: 1,571,757
+
+## Reviewed files
+
+- `ADMIN_GUIDE.md` — 15 lines, 387 chars — # ADMIN_GUIDE.md
+- `AGENTS.md` — 121 lines, 4,430 chars — # AGENTS.md — Codex Operating Rules for ListingLift
+- `API.md` — 64 lines, 2,842 chars — # API.md
+- `ARCHITECTURE.md` — 2042 lines, 41,823 chars — # ARCHITECTURE.md — ListingLift Canonical Product/System Authority
+- `BUILD_ROADMAP.md` — 2230 lines, 51,986 chars — # BUILD_ROADMAP.md — ListingLift Canonical Execution Authority
+- `CHATGPT_MARKDOWN_REVIEW_INDEX.md` — 132 lines, 16,015 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V10.md` — 168 lines, 20,660 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V10.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V11.md` — 181 lines, 8,593 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V11.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V12.md` — 1715 lines, 40,412 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V12.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V13.md` — 200 lines, 27,522 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V13.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V14.md` — 207 lines, 13,284 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V14.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V15.md` — 203 lines, 16,128 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V15.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V16.md` — 219 lines, 15,833 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V16.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V17.md` — 222 lines, 12,979 chars — # ChatGPT Markdown Review Index v17
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V18.md` — 225 lines, 10,228 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V18.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V19.md` — 237 lines, 40,874 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V19.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V20.md` — 251 lines, 23,115 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V20.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md` — 253 lines, 23,689 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V4.md` — 140 lines, 19,159 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V4.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V5.md` — 978 lines, 23,073 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V5.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V6.md` — 143 lines, 10,753 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V6.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V7.md` — 147 lines, 21,285 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V7.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V8.md` — 159 lines, 23,235 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V8.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V9.md` — 1743 lines, 38,542 chars — # CHATGPT_MARKDOWN_REVIEW_INDEX_V9.md
+- `CODEX_GAPS.md` — 74 lines, 3,625 chars — # CODEX_GAPS.md
+- `CODEX_HANDOFF.md` — 293 lines, 8,343 chars — # CODEX_HANDOFF.md
+- `CODEX_PHASE_0_ONLY_PROMPT_V2.md` — 130 lines, 2,823 chars — # CODEX_PHASE_0_ONLY_PROMPT_V2.md
+- `CODEX_STITCHING_HANDOFF.md` — 101 lines, 2,975 chars — # CODEX_STITCHING_HANDOFF.md
+- `DEPLOYMENT.md` — 10 lines, 351 chars — # DEPLOYMENT.md
+- `ENVIRONMENT.md` — 18 lines, 327 chars — # ENVIRONMENT.md
+- `FIRST_CODEX_PROMPT.md` — 57 lines, 1,849 chars — # FIRST_CODEX_PROMPT.md
+- `IMPLEMENTATION_SEQUENCE.md` — 76 lines, 2,448 chars — # IMPLEMENTATION_SEQUENCE.md
+- `PHASE_0_EXECUTION_RUNBOOK.md` — 357 lines, 8,496 chars — # PHASE_0_EXECUTION_RUNBOOK.md
+- `PHASE_0_REPO_SCAFFOLD_SPEC.md` — 203 lines, 4,162 chars — # PHASE_0_REPO_SCAFFOLD_SPEC.md
+- `PHASE_0_ROADMAP_STATUS_COMPLETION_TEMPLATE.md` — 90 lines, 2,519 chars — # PHASE_0_ROADMAP_STATUS_COMPLETION_TEMPLATE.md
+- `PHASE_0_VERIFICATION_MATRIX.md` — 122 lines, 2,933 chars — # PHASE_0_VERIFICATION_MATRIX.md
+- `PHASE_10_EXECUTION_RUNBOOK.md` — 44 lines, 1,549 chars — # PHASE_10_EXECUTION_RUNBOOK.md — Image Processing Provider Layer
+- `PHASE_10_IMPLEMENTATION_NOTES.md` — 39 lines, 1,837 chars — # PHASE_10_IMPLEMENTATION_NOTES.md — Image Processing Provider Layer
+- `PHASE_10_VERIFICATION_MATRIX.md` — 41 lines, 1,514 chars — # PHASE_10_VERIFICATION_MATRIX.md — Image Processing Provider Layer
+- `PHASE_11_EXECUTION_RUNBOOK.md` — 58 lines, 2,045 chars — # PHASE_11_EXECUTION_RUNBOOK.md — Core Image Processing Pipeline
+- `PHASE_11_IMPLEMENTATION_NOTES.md` — 46 lines, 2,633 chars — # PHASE_11_IMPLEMENTATION_NOTES.md — Core Image Processing Pipeline
+- `PHASE_11_VERIFICATION_MATRIX.md` — 29 lines, 1,669 chars — # PHASE_11_VERIFICATION_MATRIX.md — Core Image Processing Pipeline
+- `PHASE_12_EXECUTION_RUNBOOK.md` — 49 lines, 1,980 chars — # PHASE_12_EXECUTION_RUNBOOK.md
+- `PHASE_12_IMPLEMENTATION_NOTES.md` — 44 lines, 1,703 chars — # PHASE_12_IMPLEMENTATION_NOTES.md — Smart Naming, Folders, Manifest, ZIP
+- `PHASE_12_VERIFICATION_MATRIX.md` — 16 lines, 1,167 chars — # PHASE_12_VERIFICATION_MATRIX.md
+- `PHASE_13_EXECUTION_RUNBOOK.md` — 44 lines, 1,580 chars — # PHASE_13_EXECUTION_RUNBOOK.md — Preview Gallery and Before/After
+- `PHASE_13_IMPLEMENTATION_NOTES.md` — 41 lines, 1,704 chars — # PHASE_13_IMPLEMENTATION_NOTES.md — Preview Gallery and Before/After
+- `PHASE_13_VERIFICATION_MATRIX.md` — 31 lines, 1,371 chars — # PHASE_13_VERIFICATION_MATRIX.md — Preview Gallery and Before/After
+- `PHASE_14_EXECUTION_RUNBOOK.md` — 31 lines, 1,250 chars — # PHASE_14_EXECUTION_RUNBOOK.md
+- `PHASE_14_IMPLEMENTATION_NOTES.md` — 28 lines, 1,053 chars — # PHASE_14_IMPLEMENTATION_NOTES.md
+- `PHASE_14_VERIFICATION_MATRIX.md` — 34 lines, 1,169 chars — # PHASE_14_VERIFICATION_MATRIX.md
+- `PHASE_15_EXECUTION_RUNBOOK.md` — 13 lines, 790 chars — # Phase 15 Execution Runbook — Manual Approval and Revision Workflow
+- `PHASE_15_IMPLEMENTATION_NOTES.md` — 19 lines, 976 chars — # Phase 15 Implementation Notes — Manual Approval and Revision Workflow
+- `PHASE_15_VERIFICATION_MATRIX.md` — 16 lines, 818 chars — # Phase 15 Verification Matrix
+- `PHASE_16_EXECUTION_RUNBOOK.md` — 35 lines, 1,304 chars — # Phase 16 Execution Runbook — Delivery and Email Notifications
+- `PHASE_16_IMPLEMENTATION_NOTES.md` — 22 lines, 914 chars — # Phase 16 Implementation Notes — Delivery and Email Notifications
+- `PHASE_16_VERIFICATION_MATRIX.md` — 15 lines, 961 chars — # Phase 16 Verification Matrix
+- `PHASE_17_EXECUTION_RUNBOOK.md` — 29 lines, 1,229 chars — # PHASE_17_EXECUTION_RUNBOOK.md
+- `PHASE_17_IMPLEMENTATION_NOTES.md` — 25 lines, 1,155 chars — # PHASE_17_IMPLEMENTATION_NOTES.md
+- `PHASE_17_VERIFICATION_MATRIX.md` — 16 lines, 950 chars — # PHASE_17_VERIFICATION_MATRIX.md
+- `PHASE_18_EXECUTION_RUNBOOK.md` — 45 lines, 1,777 chars — # PHASE_18_EXECUTION_RUNBOOK.md — Gumroad Checkout/Webhook Intake
+- `PHASE_18_IMPLEMENTATION_NOTES.md` — 36 lines, 1,869 chars — # PHASE_18_IMPLEMENTATION_NOTES.md — Gumroad Checkout/Webhook Intake
+- `PHASE_18_VERIFICATION_MATRIX.md` — 18 lines, 1,214 chars — # PHASE_18_VERIFICATION_MATRIX.md — Gumroad Checkout/Webhook Intake
+- `PHASE_19_EXECUTION_RUNBOOK.md` — 29 lines, 1,595 chars — # Phase 19 Execution Runbook — Credits, Subscriptions, Manual Invoices
+- `PHASE_19_IMPLEMENTATION_NOTES.md` — 28 lines, 1,458 chars — # Phase 19 Implementation Notes — Credits, Subscriptions, Manual Invoices
+- `PHASE_19_VERIFICATION_MATRIX.md` — 18 lines, 1,037 chars — # Phase 19 Verification Matrix
+- `PHASE_1_EXECUTION_RUNBOOK.md` — 71 lines, 1,715 chars — # PHASE_1_EXECUTION_RUNBOOK.md
+- `PHASE_1_IMPLEMENTATION_NOTES.md` — 92 lines, 2,452 chars — # PHASE_1_IMPLEMENTATION_NOTES.md
+- `PHASE_1_VERIFICATION_MATRIX.md` — 30 lines, 1,584 chars — # PHASE_1_VERIFICATION_MATRIX.md
+- `PHASE_2_EXECUTION_RUNBOOK.md` — 81 lines, 2,180 chars — # PHASE_2_EXECUTION_RUNBOOK.md
+- `PHASE_2_IMPLEMENTATION_NOTES.md` — 57 lines, 2,599 chars — # PHASE_2_IMPLEMENTATION_NOTES.md
+- `PHASE_2_VERIFICATION_MATRIX.md` — 40 lines, 1,659 chars — # PHASE_2_VERIFICATION_MATRIX.md
+- `PHASE_3_EXECUTION_RUNBOOK.md` — 80 lines, 2,205 chars — # PHASE_3_EXECUTION_RUNBOOK.md
+- `PHASE_3_IMPLEMENTATION_NOTES.md` — 64 lines, 3,218 chars — # PHASE_3_IMPLEMENTATION_NOTES.md
+- `PHASE_3_VERIFICATION_MATRIX.md` — 35 lines, 1,218 chars — # PHASE_3_VERIFICATION_MATRIX.md
+- `PHASE_4_EXECUTION_RUNBOOK.md` — 105 lines, 2,891 chars — # PHASE_4_EXECUTION_RUNBOOK.md
+- `PHASE_4_IMPLEMENTATION_NOTES.md` — 98 lines, 3,863 chars — # PHASE_4_IMPLEMENTATION_NOTES.md
+- `PHASE_4_VERIFICATION_MATRIX.md` — 21 lines, 1,414 chars — # PHASE_4_VERIFICATION_MATRIX.md
+- `PHASE_5_EXECUTION_RUNBOOK.md` — 63 lines, 2,393 chars — # PHASE_5_EXECUTION_RUNBOOK.md
+- `PHASE_5_IMPLEMENTATION_NOTES.md` — 55 lines, 2,391 chars — # PHASE_5_IMPLEMENTATION_NOTES.md
+- `PHASE_5_VERIFICATION_MATRIX.md` — 42 lines, 1,573 chars — # PHASE_5_VERIFICATION_MATRIX.md
+- `PHASE_6_EXECUTION_RUNBOOK.md` — 41 lines, 1,420 chars — # PHASE_6_EXECUTION_RUNBOOK.md
+- `PHASE_6_IMPLEMENTATION_NOTES.md` — 55 lines, 2,000 chars — # PHASE_6_IMPLEMENTATION_NOTES.md
+- `PHASE_6_VERIFICATION_MATRIX.md` — 27 lines, 1,123 chars — # PHASE_6_VERIFICATION_MATRIX.md
+- `PHASE_7_EXECUTION_RUNBOOK.md` — 113 lines, 2,570 chars — # PHASE_7_EXECUTION_RUNBOOK.md — Sales Channel Normalization Layer
+- `PHASE_7_IMPLEMENTATION_NOTES.md` — 100 lines, 4,062 chars — # PHASE_7_IMPLEMENTATION_NOTES.md — Sales Channel Normalization Layer
+- `PHASE_7_VERIFICATION_MATRIX.md` — 34 lines, 1,986 chars — # PHASE_7_VERIFICATION_MATRIX.md — Sales Channel Normalization Layer
+- `PHASE_8_EXECUTION_RUNBOOK.md` — 48 lines, 2,079 chars — # PHASE_8_EXECUTION_RUNBOOK.md — Codex Runtime Plan
+- `PHASE_8_IMPLEMENTATION_NOTES.md` — 48 lines, 2,402 chars — # PHASE_8_IMPLEMENTATION_NOTES.md — Direct Upload and File Intake
+- `PHASE_8_VERIFICATION_MATRIX.md` — 37 lines, 1,845 chars — # PHASE_8_VERIFICATION_MATRIX.md
+- `PHASE_9_EXECUTION_RUNBOOK.md` — 30 lines, 1,374 chars — # PHASE_9_EXECUTION_RUNBOOK.md — Job Creation and Admin Queue
+- `PHASE_9_IMPLEMENTATION_NOTES.md` — 28 lines, 1,293 chars — # PHASE_9_IMPLEMENTATION_NOTES.md — Job Creation and Admin Queue
+- `PHASE_9_VERIFICATION_MATRIX.md` — 32 lines, 1,408 chars — # PHASE_9_VERIFICATION_MATRIX.md — Job Creation and Admin Queue
+- `README.md` — 26 lines, 1,086 chars — # ListingLift
+- `REPO_FILE_MANIFEST.md` — 17 lines, 541 chars — # REPO_FILE_MANIFEST.md
+- `REPO_FILE_MANIFEST_V10.md` — 547 lines, 25,049 chars — # REPO_FILE_MANIFEST_V10.md
+- `REPO_FILE_MANIFEST_V11.md` — 601 lines, 27,318 chars — # REPO_FILE_MANIFEST_V11.md
+- `REPO_FILE_MANIFEST_V12.md` — 632 lines, 24,436 chars — # REPO_FILE_MANIFEST_V12.md
+- `REPO_FILE_MANIFEST_V13.md` — 656 lines, 31,772 chars — # REPO_FILE_MANIFEST_V13.md
+- `REPO_FILE_MANIFEST_V14.md` — 703 lines, 51,870 chars — # REPO_FILE_MANIFEST_V14.md
+- `REPO_FILE_MANIFEST_V15.md` — 738 lines, 29,629 chars — # REPO_FILE_MANIFEST_V15.md
+- `REPO_FILE_MANIFEST_V16.md` — 782 lines, 31,779 chars — # REPO_FILE_MANIFEST_V16.md
+- `REPO_FILE_MANIFEST_V17.md` — 812 lines, 33,908 chars — # Repo File Manifest v17
+- `REPO_FILE_MANIFEST_V18.md` — 861 lines, 43,645 chars — # REPO_FILE_MANIFEST_V18.md
+- `REPO_FILE_MANIFEST_V19.md` — 901 lines, 61,142 chars — # REPO_FILE_MANIFEST_V19.md
+- `REPO_FILE_MANIFEST_V2.md` — 310 lines, 10,622 chars — # Repo File Manifest v2
+- `REPO_FILE_MANIFEST_V20.md` — 942 lines, 39,968 chars — # REPO_FILE_MANIFEST_V20.md
+- `REPO_FILE_MANIFEST_V21.md` — 981 lines, 42,042 chars — # REPO_FILE_MANIFEST_V21.md
+- `REPO_FILE_MANIFEST_V3.md` — 353 lines, 16,977 chars — # REPO_FILE_MANIFEST_V3.md
+- `REPO_FILE_MANIFEST_V4.md` — 369 lines, 25,440 chars — # REPO_FILE_MANIFEST_V4.md
+- `REPO_FILE_MANIFEST_V5.md` — 391 lines, 13,724 chars — # REPO_FILE_MANIFEST_V5.md
+- `REPO_FILE_MANIFEST_V6.md` — 429 lines, 15,118 chars — # REPO_FILE_MANIFEST_V6.md
+- `REPO_FILE_MANIFEST_V7.md` — 452 lines, 16,130 chars — # REPO_FILE_MANIFEST_V7.md
+- `REPO_FILE_MANIFEST_V8.md` — 476 lines, 17,206 chars — # REPO_FILE_MANIFEST_V8.md
+- `REPO_FILE_MANIFEST_V9.md` — 516 lines, 18,958 chars — # REPO_FILE_MANIFEST_V9.md
+- `ROADMAP_STATUS.md` — 78 lines, 3,236 chars — # ROADMAP_STATUS.md
+- `SECURITY.md` — 152 lines, 4,861 chars — # SECURITY.md — ListingLift Security Requirements
+- `TESTING.md` — 18 lines, 337 chars — # TESTING.md
+- `USER_GUIDE.md` — 14 lines, 365 chars — # USER_GUIDE.md
+- `WHOLE_REPO_CODEX_HANDOFF.md` — 88 lines, 2,862 chars — # WHOLE_REPO_CODEX_HANDOFF.md
+- `WHOLE_REPO_CODEX_HANDOFF_V10_ARCHIVE.md` — 72 lines, 2,826 chars — # WHOLE_REPO_CODEX_HANDOFF_V10.md
+- `WHOLE_REPO_CODEX_HANDOFF_V11.md` — 65 lines, 2,692 chars — # WHOLE_REPO_CODEX_HANDOFF_V11.md
+- `WHOLE_REPO_CODEX_HANDOFF_V12.md` — 78 lines, 2,731 chars — # WHOLE_REPO_CODEX_HANDOFF_V12.md
+- `WHOLE_REPO_CODEX_HANDOFF_V13.md` — 80 lines, 2,694 chars — # WHOLE_REPO_CODEX_HANDOFF_V13.md
+- `WHOLE_REPO_CODEX_HANDOFF_V14.md` — 54 lines, 1,811 chars — # WHOLE_REPO_CODEX_HANDOFF_V14.md
+- `WHOLE_REPO_CODEX_HANDOFF_V15.md` — 43 lines, 1,485 chars — # WHOLE_REPO_CODEX_HANDOFF_V15.md
+- `WHOLE_REPO_CODEX_HANDOFF_V16.md` — 41 lines, 1,630 chars — # WHOLE_REPO_CODEX_HANDOFF_V16.md
+- `WHOLE_REPO_CODEX_HANDOFF_V17.md` — 30 lines, 1,330 chars — # Whole Repo Codex Handoff v17
+- `WHOLE_REPO_CODEX_HANDOFF_V18.md` — 36 lines, 1,428 chars — # Whole Repo Codex Handoff V18 — ListingLift
+- `WHOLE_REPO_CODEX_HANDOFF_V19.md` — 32 lines, 1,288 chars — # WHOLE_REPO_CODEX_HANDOFF_V19.md
+- `WHOLE_REPO_CODEX_HANDOFF_V2.md` — 55 lines, 2,030 chars — # ListingLift Whole-Repo Codex Handoff v2
+- `WHOLE_REPO_CODEX_HANDOFF_V20.md` — 41 lines, 2,086 chars — # WHOLE_REPO_CODEX_HANDOFF_V20.md
+- `WHOLE_REPO_CODEX_HANDOFF_V21.md` — 86 lines, 3,078 chars — # WHOLE_REPO_CODEX_HANDOFF_V21.md
+- `WHOLE_REPO_CODEX_HANDOFF_V3.md` — 84 lines, 2,869 chars — # WHOLE_REPO_CODEX_HANDOFF_V3.md
+- `WHOLE_REPO_CODEX_HANDOFF_V4.md` — 98 lines, 3,337 chars — # WHOLE_REPO_CODEX_HANDOFF_V4.md
+- `WHOLE_REPO_CODEX_HANDOFF_V5.md` — 126 lines, 4,012 chars — # WHOLE_REPO_CODEX_HANDOFF_V5.md
+- `WHOLE_REPO_CODEX_HANDOFF_V6.md` — 90 lines, 2,910 chars — # WHOLE_REPO_CODEX_HANDOFF_V6.md
+- `WHOLE_REPO_CODEX_HANDOFF_V7.md` — 95 lines, 3,920 chars — # WHOLE_REPO_CODEX_HANDOFF_V7.md
+- `WHOLE_REPO_CODEX_HANDOFF_V8.md` — 93 lines, 3,742 chars — # WHOLE_REPO_CODEX_HANDOFF_V8.md
+- `WHOLE_REPO_CODEX_HANDOFF_V9.md` — 126 lines, 4,317 chars — # WHOLE_REPO_CODEX_HANDOFF_V9.md
+- `docs/README.md` — 11 lines, 236 chars — # ListingLift Docs
+- `docs/automation-integrations.md` — 4 lines, 154 chars — # automation-integrations.md
+- `docs/codex-handoff.md` — 4 lines, 151 chars — # codex-handoff.md
+- `docs/core-image-processing-pipeline.md` — 40 lines, 1,849 chars — # Core Image Processing Pipeline
+- `docs/credits-subscriptions-manual-invoices.md` — 20 lines, 1,258 chars — # Credits, Subscriptions, and Manual Invoices
+- `docs/delivery-email-notifications.md` — 21 lines, 1,382 chars — # Delivery and Email Notifications
+- `docs/delivery-notifications-gap-handoff.md` — 24 lines, 902 chars — # Delivery Notifications Gap Handoff
+- `docs/delivery-packaging.md` — 46 lines, 1,141 chars — # Delivery Packaging
+- `docs/deployment.md` — 4 lines, 144 chars — # deployment.md
+- `docs/file-storage-integrations.md` — 4 lines, 150 chars — # file-storage-integrations.md
+- `docs/fiverr-workflow.md` — 4 lines, 201 chars — # fiverr-workflow.md
+- `docs/gumroad-checkout-webhook.md` — 33 lines, 1,526 chars — # Gumroad Checkout and Webhook Intake
+- `docs/gumroad-integration.md` — 4 lines, 184 chars — # gumroad-integration.md
+- `docs/gumroad-phase18-gap-handoff.md` — 27 lines, 953 chars — # Gumroad Phase 18 Gap Handoff
+- `docs/image-processing.md` — 12 lines, 903 chars — # image-processing.md
+- `docs/image-provider-layer.md` — 59 lines, 1,626 chars — # Image Provider Layer
+- `docs/job-admin-queue.md` — 48 lines, 1,634 chars — # Job Creation and Admin Queue
+- `docs/licensing.md` — 4 lines, 148 chars — # licensing.md
+- `docs/manual-approval-revisions.md` — 32 lines, 1,390 chars — # Manual Approval and Revision Workflow
+- `docs/marketplace-safety.md` — 4 lines, 152 chars — # marketplace-safety.md
+- `docs/packages.md` — 4 lines, 125 chars — # packages.md
+- `docs/phase19-gap-handoff.md` — 23 lines, 1,029 chars — # Phase 19 Gap Handoff for Codex
+- `docs/platform-presets.md` — 116 lines, 2,794 chars — # docs/platform-presets.md
+- `docs/preview-gallery.md` — 42 lines, 1,167 chars — # Preview Gallery and Before/After
+- `docs/qa-checklist.md` — 4 lines, 172 chars — # qa-checklist.md
+- `docs/quality-control.md` — 47 lines, 1,738 chars — # docs/quality-control.md — Phase 14 Quality Control and Flagged Outputs
+- `docs/rbac.md` — 47 lines, 1,925 chars — # RBAC and Tenant Isolation
+- `docs/repo-stitching-plan.md` — 45 lines, 1,019 chars — # Repo Stitching Plan
+- `docs/reports.md` — 4 lines, 152 chars — # reports.md
+- `docs/sales-channels.md` — 66 lines, 2,259 chars — # Sales Channels
+- `docs/source/ListingLift.md` — 2034 lines, 41,460 chars — # ListingLift Service Business — AI-Powered Product Photo Cleanup, Marketplace Image Packs, Ecommerce Visual Optimization, and Multi-Platform Service Sales Engine
+- `docs/source/ListingLift_BUILD_ROADMAP.md` — 2222 lines, 51,724 chars — # BUILD_ROADMAP.md — ListingLift
+- `docs/stripe-billing.md` — 4 lines, 137 chars — # stripe-billing.md
+- `docs/stripe-checkout-billing.md` — 26 lines, 969 chars — # Stripe Checkout and Billing
+- `docs/stripe-phase17-gap-handoff.md` — 21 lines, 882 chars — # Stripe Phase 17 Gap Handoff
+- `docs/taskrabbit-workflow.md` — 4 lines, 147 chars — # taskrabbit-workflow.md
+- `docs/upload-file-intake.md` — 36 lines, 1,193 chars — # Upload and File Intake
+- `docs/upwork-workflow.md` — 4 lines, 166 chars — # upwork-workflow.md
+- `prompts/CODEX_BUGFIX_PROMPT.md` — 12 lines, 255 chars — # Codex Bugfix Prompt
+- `prompts/CODEX_PHASE_1_PROMPT.md` — 16 lines, 480 chars — # Codex Phase 1 Prompt — Design System and UI Shell
+- `prompts/CODEX_REPO_STITCH_PROMPT.md` — 46 lines, 1,161 chars — # Codex Repo Stitch Prompt
+- `prompts/CODEX_REVIEW_PROMPT.md` — 13 lines, 341 chars — # Codex Review Prompt
+- `prompts/CODEX_SECURITY_AUDIT_PROMPT.md` — 6 lines, 357 chars — # Codex Security Audit Prompt
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V10.md` — 50 lines, 1,727 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V10.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V11.md` — 42 lines, 1,126 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V12.md` — 59 lines, 1,778 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V13.md` — 43 lines, 1,466 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V13.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V14.md` — 25 lines, 1,314 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V15.md` — 42 lines, 1,365 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V15.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V16.md` — 29 lines, 1,439 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V17.md` — 22 lines, 1,131 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V18.md` — 42 lines, 1,568 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V19.md` — 29 lines, 1,379 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V2.md` — 34 lines, 1,191 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V20.md` — 36 lines, 1,693 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V21.md` — 45 lines, 1,943 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V21.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V3.md` — 42 lines, 1,528 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V4.md` — 54 lines, 1,643 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V5.md` — 58 lines, 1,777 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V6.md` — 55 lines, 1,592 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V7.md` — 84 lines, 2,259 chars — # CODEX_WHOLE_REPO_STITCH_PROMPT_V7.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V8.md` — 50 lines, 1,838 chars
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V9.md` — 86 lines, 2,820 chars
+- `tasks/TASKS_PHASE_0.md` — 30 lines, 660 chars — # TASKS_PHASE_0.md — Repository Initialization
+- `tasks/TASKS_PHASE_1.md` — 54 lines, 1,768 chars — # TASKS_PHASE_1.md — Design System and UI Shell
+- `tasks/TASKS_PHASE_10.md` — 50 lines, 1,443 chars — # TASKS_PHASE_10.md — Image Processing Provider Layer
+- `tasks/TASKS_PHASE_11.md` — 30 lines, 678 chars — # TASKS_PHASE_11.md — Core Image Processing Pipeline
+- `tasks/TASKS_PHASE_12.md` — 30 lines, 669 chars — # TASKS_PHASE_12.md — Naming Folders Manifest ZIP
+- `tasks/TASKS_PHASE_13.md` — 30 lines, 684 chars — # TASKS_PHASE_13.md — Preview Gallery and Before After
+- `tasks/TASKS_PHASE_14.md` — 30 lines, 693 chars — # TASKS_PHASE_14.md — Quality Control and Flagged Outputs
+- `tasks/TASKS_PHASE_15.md` — 30 lines, 699 chars — # TASKS_PHASE_15.md — Manual Approval and Revision Workflow
+- `tasks/TASKS_PHASE_16.md` — 30 lines, 684 chars — # TASKS_PHASE_16.md — Delivery and Email Notifications
+- `tasks/TASKS_PHASE_17.md` — 30 lines, 669 chars — # TASKS_PHASE_17.md — Stripe Checkout and Billing
+- `tasks/TASKS_PHASE_18.md` — 30 lines, 681 chars — # TASKS_PHASE_18.md — Gumroad Checkout Webhook Intake
+- `tasks/TASKS_PHASE_19.md` — 30 lines, 699 chars — # TASKS_PHASE_19.md — Credits Subscriptions Manual Invoices
+- `tasks/TASKS_PHASE_2.md` — 30 lines, 675 chars — # TASKS_PHASE_2.md — Database Schema and Migrations
+- `tasks/TASKS_PHASE_20.md` — 30 lines, 633 chars — # TASKS_PHASE_20.md — Fiverr Workflow
+- `tasks/TASKS_PHASE_21.md` — 30 lines, 633 chars — # TASKS_PHASE_21.md — Upwork Workflow
+- `tasks/TASKS_PHASE_22.md` — 30 lines, 645 chars — # TASKS_PHASE_22.md — Taskrabbit Workflow
+- `tasks/TASKS_PHASE_23.md` — 30 lines, 648 chars — # TASKS_PHASE_23.md — Other Sales Channels
+- `tasks/TASKS_PHASE_24.md` — 30 lines, 627 chars — # TASKS_PHASE_24.md — Etsy Workflow
+- `tasks/TASKS_PHASE_25.md` — 30 lines, 636 chars — # TASKS_PHASE_25.md — Shopify Workflow
+- `tasks/TASKS_PHASE_26.md` — 30 lines, 663 chars — # TASKS_PHASE_26.md — Social Commerce Workflows
+- `tasks/TASKS_PHASE_27.md` — 30 lines, 687 chars — # TASKS_PHASE_27.md — Amazon eBay WooCommerce Workflows
+- `tasks/TASKS_PHASE_28.md` — 30 lines, 663 chars — # TASKS_PHASE_28.md — File Storage Integrations
+- `tasks/TASKS_PHASE_29.md` — 30 lines, 645 chars — # TASKS_PHASE_29.md — Automation Webhooks
+- `tasks/TASKS_PHASE_3.md` — 30 lines, 666 chars — # TASKS_PHASE_3.md — Authentication and Sessions
+- `tasks/TASKS_PHASE_30.md` — 30 lines, 693 chars — # TASKS_PHASE_30.md — Notifications and Task Data Exports
+- `tasks/TASKS_PHASE_31.md` — 30 lines, 663 chars — # TASKS_PHASE_31.md — Advanced Image Processing
+- `tasks/TASKS_PHASE_32.md` — 30 lines, 663 chars — # TASKS_PHASE_32.md — Reports and Upsell Engine
+- `tasks/TASKS_PHASE_33.md` — 30 lines, 636 chars — # TASKS_PHASE_33.md — Client Dashboard
+- `tasks/TASKS_PHASE_34.md` — 30 lines, 699 chars — # TASKS_PHASE_34.md — Admin Dashboard and Revenue Analytics
+- `tasks/TASKS_PHASE_35.md` — 30 lines, 657 chars — # TASKS_PHASE_35.md — Agency White-Label Mode
+- `tasks/TASKS_PHASE_36.md` — 30 lines, 684 chars — # TASKS_PHASE_36.md — API Access and Advanced Scaffold
+- `tasks/TASKS_PHASE_37.md` — 30 lines, 642 chars — # TASKS_PHASE_37.md — Security Hardening
+- `tasks/TASKS_PHASE_38.md` — 30 lines, 645 chars — # TASKS_PHASE_38.md — Full Testing and QA
+- `tasks/TASKS_PHASE_39.md` — 30 lines, 651 chars — # TASKS_PHASE_39.md — Production Deployment
+- `tasks/TASKS_PHASE_4.md` — 30 lines, 690 chars — # TASKS_PHASE_4.md — Tenant Client RBAC and Agency Model
+- `tasks/TASKS_PHASE_40.md` — 30 lines, 645 chars — # TASKS_PHASE_40.md — Post-Launch Backlog
+- `tasks/TASKS_PHASE_5.md` — 30 lines, 645 chars — # TASKS_PHASE_5.md — Packages and Pricing
+- `tasks/TASKS_PHASE_6.md` — 30 lines, 651 chars — # TASKS_PHASE_6.md — Platform Preset System
+- `tasks/TASKS_PHASE_7.md` — 30 lines, 684 chars — # TASKS_PHASE_7.md — Sales Channel Normalization Layer
+- `tasks/TASKS_PHASE_8.md` — 30 lines, 672 chars — # TASKS_PHASE_8.md — Direct Upload and File Intake
+- `tasks/TASKS_PHASE_9.md` — 30 lines, 669 chars — # TASKS_PHASE_9.md — Job Creation and Admin Queue
+- `/mnt/data/ListingLift.md` — 2034 lines, 41,460 chars — # ListingLift Service Business — AI-Powered Product Photo Cleanup, Marketplace Image Packs, Ecommerce Visual Optimization, and Multi-Platform Service Sales Engine
+- `/mnt/data/ListingLift_BUILD_ROADMAP.md` — 2222 lines, 51,724 chars — # BUILD_ROADMAP.md — ListingLift

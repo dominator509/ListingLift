@@ -1,0 +1,3 @@
+export function ApprovalActionPanel() {
+  return <section className="rounded-2xl border bg-white p-6 shadow-sm"><h2 className="text-xl font-semibold text-slate-950">Manual approval actions</h2><p className="mt-2 text-sm text-slate-600">Approve the job only after QC blockers are resolved. Approval does not send delivery or expose downloads.</p><div className="mt-5 flex flex-wrap gap-3"><button className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-medium text-white">Approve job draft</button><button className="rounded-xl border px-4 py-2 text-sm font-medium text-slate-700">Request revision</button><button className="rounded-xl border border-red-200 px-4 py-2 text-sm font-medium text-red-700">Reject job</button></div></section>;
+}

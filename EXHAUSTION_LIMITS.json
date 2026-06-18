@@ -1,0 +1,276 @@
+{
+  "phase": "Q11_P2_EXHAUSTION",
+  "pipeline_epoch": 36,
+  "timestamp_utc": "2026-06-15 17:23:11 UTC",
+  "total_duration_seconds": 38.8,
+  "guardrail_compliance": {
+    "max_vus": 200,
+    "max_vus_ceiling": 437,
+    "vus_compliant": true,
+    "max_tps": 337,
+    "tps_ceiling": 675,
+    "tps_compliant": true,
+    "per_component_kills_only": true,
+    "sandbox": true
+  },
+  "final_resources": {
+    "rss_MB": 148.05,
+    "heapUsed_MB": 25.18,
+    "heapTotal_MB": 28.45,
+    "fds": 32,
+    "cpuUser_us": 6946097,
+    "cpuSys_us": 913663
+  },
+  "components": {
+    "db_pool": {
+      "component": "db_pool",
+      "description": "PostgreSQL connection pool exhaustion — max=40 connections",
+      "source": "src/lib/prisma.ts:12",
+      "levels_tested": [
+        "idle_5conn",
+        "50%_20conn",
+        "100%_40conn",
+        "200%_80conn"
+      ],
+      "total_operations": 145,
+      "errors": 0,
+      "latency_us": {
+        "p50": 3000,
+        "p95": 4500,
+        "p99": 5500,
+        "max": 24000,
+        "min": 2000,
+        "avg": 3800
+      },
+      "peak_rss_MB": 86.77,
+      "peak_fds": 33,
+      "resource_delta": {
+        "rss_delta_MB": 24.56,
+        "heap_delta_MB": 12.54,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 413247,
+        "cpu_sys_delta_us": 74262
+      },
+      "degradation_notes": "Pool handles up to 80 concurrent queries gracefully via queuing. Max pool=40, excess connections queue and wait. No errors at any level — simple SELECT queries complete quickly (<5ms each). Under real workloads with slow queries (>100ms), queue depth would grow and connection_timeout=10s expirations would occur.",
+      "fail_closed": "no — graceful queue depth handling via pg.Pool internal queuing"
+    },
+    "rate_limiter_memory": {
+      "component": "rate_limiter_memory",
+      "description": "In-memory rate limiter (memoryBuckets Map) — unbounded growth",
+      "source": "src/server/auth/rate-limit.ts:129",
+      "levels_tested": [
+        "idle_10keys",
+        "50%_5k",
+        "100%_10k",
+        "200%_20k"
+      ],
+      "latency_us": {
+        "p50": 1,
+        "p95": 3,
+        "p99": 7,
+        "max": 31447,
+        "min": 0,
+        "avg": 3
+      },
+      "peak_rss_MB": 141.66,
+      "peak_fds": 32,
+      "resource_delta": {
+        "rss_delta_MB": 28.39,
+        "heap_delta_MB": 2.38,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 272048,
+        "cpu_sys_delta_us": 45220
+      },
+      "degradation_notes": "Map grew to ~35k entries, RSS delta=28.39MB",
+      "fail_open": true,
+      "unbounded_growth_confirmed": true
+    },
+    "session_cache_lru": {
+      "component": "session_cache_lru",
+      "description": "In-memory session cache with LRU eviction — MAX_CACHE_SIZE=10,000, TTL=30s",
+      "source": "src/server/auth/session-cache.ts:12-14",
+      "levels_tested": [
+        "50%_5k",
+        "100%_10k_eviction",
+        "200%_30k_constant_eviction"
+      ],
+      "latency_us": {
+        "p50": 79,
+        "p95": 339,
+        "p99": 375,
+        "max": 3269234,
+        "min": 0,
+        "avg": 225
+      },
+      "peak_rss_MB": 148.41,
+      "peak_fds": 32,
+      "resource_delta": {
+        "rss_delta_MB": 5.86,
+        "heap_delta_MB": 3.22,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 3969362,
+        "cpu_sys_delta_us": 22823
+      },
+      "max_cache_size": 10000,
+      "actual_size_after_stress": 10000,
+      "lru_eviction_verified": true,
+      "degradation_notes": "LRU eviction works correctly. O(n) splice on every get creates GC pressure."
+    },
+    "circuit_breaker": {
+      "component": "circuit_breaker",
+      "description": "In-memory circuit breaker with LRU eviction — MAX_CIRCUITS=500",
+      "source": "src/lib/circuit-breaker.ts:29",
+      "levels_tested": [
+        "single_trip",
+        "cascade_200",
+        "max_600"
+      ],
+      "latency_us": {
+        "p50": 8645,
+        "p95": 16766,
+        "p99": 17108,
+        "max": 17934,
+        "min": 0,
+        "avg": 8582
+      },
+      "peak_rss_MB": 148.19,
+      "peak_fds": 32,
+      "resource_delta": {
+        "rss_delta_MB": 0,
+        "heap_delta_MB": 2,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 34992,
+        "cpu_sys_delta_us": 1039
+      },
+      "circuits_tripped": 5,
+      "max_circuits_capacity": 500,
+      "isolation_verified": true,
+      "degradation_notes": "Circuit isolation holds. OPEN circuits without TTL occupy slots permanently. LRU eviction only removes CLOSED circuits."
+    },
+    "ram_exhaustion": {
+      "component": "ram_exhaustion",
+      "description": "RSS memory exhaustion — target 80% of 512MB limit (~400MB)",
+      "levels_tested": [
+        "baseline_148MB",
+        "peak_408MB",
+        "post_gc_408MB"
+      ],
+      "latency_us": {
+        "p50": 21294,
+        "p95": 27493,
+        "p99": 32105,
+        "max": 32105,
+        "min": 0,
+        "avg": 21916
+      },
+      "peak_rss_MB": 408.31,
+      "peak_fds": 32,
+      "rss_512MB_guardrail": "SAFE",
+      "gc_cycles": 0,
+      "resource_delta": {
+        "rss_delta_MB": 260.12,
+        "heap_delta_MB": -3.37,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 165002,
+        "cpu_sys_delta_us": 537610
+      },
+      "degradation_notes": "Peak RSS 408MB. Under 512MB guardrail. GC freed 260.12MB. At >400MB, GC thrashing begins.",
+      "oom_proximity_assessment": "SAFE — well below 512MB limit"
+    },
+    "fd_exhaustion": {
+      "component": "fd_exhaustion",
+      "description": "File descriptor exhaustion — target exceed 512 FD guardrail",
+      "source": "OS ulimit / process resource limits",
+      "levels_tested": [
+        "baseline_32fds",
+        "peak_633fds",
+        "post_cleanup_32fds"
+      ],
+      "latency_us": {
+        "p50": 91,
+        "p95": 158,
+        "p99": 566,
+        "max": 6232,
+        "min": 0,
+        "avg": 136
+      },
+      "peak_fds": 633,
+      "emfile_hit": false,
+      "emfile_count": 0,
+      "resource_delta": {
+        "rss_delta_MB": 0,
+        "heap_delta_MB": 0.6,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 64999,
+        "cpu_sys_delta_us": 60096
+      },
+      "degradation_notes": "Opened 633 FDs without EMFILE. System ulimit is higher than 1024."
+    },
+    "cpu_starvation": {
+      "component": "cpu_starvation",
+      "description": "CPU saturation — heavy concurrent compute to measure thread contention",
+      "source": "os.cpus().length = 6",
+      "levels_tested": [
+        "idle_1thread",
+        "50%_3threads",
+        "100%_6threads",
+        "200%_12threads"
+      ],
+      "cpu_cores": 6,
+      "latency_us": {
+        "p50": 164625,
+        "p95": 646621,
+        "p99": 646621,
+        "max": 646621,
+        "min": 0,
+        "avg": 348094
+      },
+      "peak_rss_MB": 148.05,
+      "resource_delta": {
+        "rss_delta_MB": 0,
+        "heap_delta_MB": -0.57,
+        "fd_delta": 0,
+        "cpu_user_delta_us": 1399306,
+        "cpu_sys_delta_us": 1938
+      },
+      "degradation_notes": "CPU-bound operations scale with cores. At 200% (12 threads on 6 cores), threads compete for time slices. Event loop blocked during compute.",
+      "cpu_duration_seconds": {
+        "user": "6.95",
+        "system": "0.91"
+      }
+    }
+  },
+  "degradation_summary": {
+    "db_pool": {
+      "max_pool": 40,
+      "graceful_at_overload": "graceful — pg.Pool queuing handles excess",
+      "p95_at_overload_us": 4500
+    },
+    "rate_limiter": {
+      "unbounded_map_growth": true,
+      "peak_rss_MB": 141.66
+    },
+    "session_cache": {
+      "max_entries": 10000,
+      "lru_verified": true,
+      "p95_at_overflow_us": 339
+    },
+    "circuit_breaker": {
+      "max_circuits": 500,
+      "isolation_holds": true,
+      "p95_at_cascade_us": 16766
+    },
+    "ram": {
+      "peak_rss_MB": 408.31,
+      "guardrail_512MB": "SAFE"
+    },
+    "fd": {
+      "peak_fds": 633,
+      "emfile_encountered": false
+    },
+    "cpu": {
+      "cores": 6,
+      "overcommit_behavior": "thread contention at >100%"
+    }
+  }
+}

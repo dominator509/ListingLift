@@ -1,0 +1,285 @@
+# CHATGPT_MARKDOWN_REVIEW_INDEX_V24.md
+
+Fresh review performed for v24. Every Markdown file in the unzipped v23 seed was opened/read, and both source project documents were opened/read for roadmap and architecture context before Phase 22 coding.
+
+- Repo Markdown files reviewed: 269
+- Source documents reviewed: 2
+- Repo Markdown characters reviewed: 1,673,033
+- Source document characters reviewed: 93,184
+
+## Source Documents
+
+- `ListingLift.md` — 2033 lines, 41,460 chars, sha256:3e014a508bdbc3d2
+- `ListingLift_BUILD_ROADMAP.md` — 2221 lines, 51,724 chars, sha256:2c77d74981017462
+
+## Repo Markdown Files
+
+- `ADMIN_GUIDE.md` — 57 lines, 2,903 chars, sha256:e55506088e1b0244 — # ADMIN_GUIDE.md
+- `AGENTS.md` — 120 lines, 4,430 chars, sha256:4fc26c6d13caaa9f — # AGENTS.md — Codex Operating Rules for ListingLift
+- `API.md` — 108 lines, 5,449 chars, sha256:7e18199de75069fe — # API.md
+- `ARCHITECTURE.md` — 2041 lines, 41,823 chars, sha256:82c2faf540d51069 — # ARCHITECTURE.md — ListingLift Canonical Product/System Authority
+- `BUILD_ROADMAP.md` — 2229 lines, 51,986 chars, sha256:d321e371c9ec2eb0 — # BUILD_ROADMAP.md — ListingLift Canonical Execution Authority
+- `CHATGPT_MARKDOWN_REVIEW_INDEX.md` — 131 lines, 16,015 chars, sha256:267cac3cad37e1a1 — # CHATGPT_MARKDOWN_REVIEW_INDEX.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V10.md` — 167 lines, 20,660 chars, sha256:8785cdd4c44784fc — # CHATGPT_MARKDOWN_REVIEW_INDEX_V10.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V11.md` — 180 lines, 8,593 chars, sha256:f093901451ea131f — # CHATGPT_MARKDOWN_REVIEW_INDEX_V11.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V12.md` — 1714 lines, 40,412 chars, sha256:28d7e9691c0e6c7a — # CHATGPT_MARKDOWN_REVIEW_INDEX_V12.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V13.md` — 199 lines, 27,522 chars, sha256:c1e101cb3b47ad28 — # CHATGPT_MARKDOWN_REVIEW_INDEX_V13.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V14.md` — 206 lines, 13,284 chars, sha256:f59655e682aa0a1a — # CHATGPT_MARKDOWN_REVIEW_INDEX_V14.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V15.md` — 202 lines, 16,128 chars, sha256:d40d65c0bb1dc66c — # CHATGPT_MARKDOWN_REVIEW_INDEX_V15.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V16.md` — 218 lines, 15,833 chars, sha256:79fb3a6790290866 — # CHATGPT_MARKDOWN_REVIEW_INDEX_V16.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V17.md` — 221 lines, 12,979 chars, sha256:e0ea107a5628aea6 — # ChatGPT Markdown Review Index v17
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V18.md` — 224 lines, 10,228 chars, sha256:5a0509c973986edd — # CHATGPT_MARKDOWN_REVIEW_INDEX_V18.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V19.md` — 237 lines, 40,874 chars, sha256:0ea040197bf94053 — # CHATGPT_MARKDOWN_REVIEW_INDEX_V19.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V20.md` — 250 lines, 23,115 chars, sha256:6eee4482dfddbd28 — # CHATGPT_MARKDOWN_REVIEW_INDEX_V20.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md` — 256 lines, 24,209 chars, sha256:c1d24eabd422053b — # CHATGPT_MARKDOWN_REVIEW_INDEX_V21.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V22.md` — 268 lines, 43,209 chars, sha256:a1006ef4297b7e4d — # CHATGPT_MARKDOWN_REVIEW_INDEX_V22.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V23.md` — 275 lines, 15,254 chars, sha256:c4acaebede5887fd — # CHATGPT_MARKDOWN_REVIEW_INDEX_V23.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V4.md` — 139 lines, 19,159 chars, sha256:6e235dbc918db38a — # CHATGPT_MARKDOWN_REVIEW_INDEX_V4.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V5.md` — 978 lines, 23,073 chars, sha256:fa1355ca9b7e96fe — # CHATGPT_MARKDOWN_REVIEW_INDEX_V5.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V6.md` — 142 lines, 10,753 chars, sha256:d5af4e80dc0ee20a — # CHATGPT_MARKDOWN_REVIEW_INDEX_V6.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V7.md` — 146 lines, 21,285 chars, sha256:7c31f1600beb74ff — # CHATGPT_MARKDOWN_REVIEW_INDEX_V7.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V8.md` — 158 lines, 23,235 chars, sha256:e926b6a484dbc4b2 — # CHATGPT_MARKDOWN_REVIEW_INDEX_V8.md
+- `CHATGPT_MARKDOWN_REVIEW_INDEX_V9.md` — 1742 lines, 38,542 chars, sha256:9802d693596932a3 — # CHATGPT_MARKDOWN_REVIEW_INDEX_V9.md
+- `CODEX_GAPS.md` — 158 lines, 10,545 chars, sha256:ffd6a62ad0d0fe32 — # CODEX_GAPS.md
+- `CODEX_HANDOFF.md` — 292 lines, 8,343 chars, sha256:654f08551eabefa1 — # CODEX_HANDOFF.md
+- `CODEX_PHASE_0_ONLY_PROMPT_V2.md` — 129 lines, 2,823 chars, sha256:745bce8c26660a65 — # CODEX_PHASE_0_ONLY_PROMPT_V2.md
+- `CODEX_STITCHING_HANDOFF.md` — 100 lines, 2,975 chars, sha256:beef34f10148c60f — # CODEX_STITCHING_HANDOFF.md
+- `DEPLOYMENT.md` — 9 lines, 351 chars, sha256:0138e27a98a10be9 — # DEPLOYMENT.md
+- `ENVIRONMENT.md` — 17 lines, 327 chars, sha256:80694ec18e11b4de — # ENVIRONMENT.md
+- `FIRST_CODEX_PROMPT.md` — 56 lines, 1,849 chars, sha256:6332d909ec01ab8b — # FIRST_CODEX_PROMPT.md
+- `IMPLEMENTATION_SEQUENCE.md` — 75 lines, 2,448 chars, sha256:18aa8f8421f3e647 — # IMPLEMENTATION_SEQUENCE.md
+- `PHASE_0_EXECUTION_RUNBOOK.md` — 356 lines, 8,496 chars, sha256:29d00712a0f18f5c — # PHASE_0_EXECUTION_RUNBOOK.md
+- `PHASE_0_REPO_SCAFFOLD_SPEC.md` — 202 lines, 4,162 chars, sha256:913f85a9d633a2c0 — # PHASE_0_REPO_SCAFFOLD_SPEC.md
+- `PHASE_0_ROADMAP_STATUS_COMPLETION_TEMPLATE.md` — 89 lines, 2,519 chars, sha256:7a5f3123656cf549 — # PHASE_0_ROADMAP_STATUS_COMPLETION_TEMPLATE.md
+- `PHASE_0_VERIFICATION_MATRIX.md` — 121 lines, 2,933 chars, sha256:b7986aaa2cb2f9c3 — # PHASE_0_VERIFICATION_MATRIX.md
+- `PHASE_10_EXECUTION_RUNBOOK.md` — 43 lines, 1,549 chars, sha256:c6d230c518ae595e — # PHASE_10_EXECUTION_RUNBOOK.md — Image Processing Provider Layer
+- `PHASE_10_IMPLEMENTATION_NOTES.md` — 38 lines, 1,837 chars, sha256:a01a25f0b381ce54 — # PHASE_10_IMPLEMENTATION_NOTES.md — Image Processing Provider Layer
+- `PHASE_10_VERIFICATION_MATRIX.md` — 40 lines, 1,514 chars, sha256:8bee6ed637da3897 — # PHASE_10_VERIFICATION_MATRIX.md — Image Processing Provider Layer
+- `PHASE_11_EXECUTION_RUNBOOK.md` — 57 lines, 2,045 chars, sha256:633f66b0e178e4da — # PHASE_11_EXECUTION_RUNBOOK.md — Core Image Processing Pipeline
+- `PHASE_11_IMPLEMENTATION_NOTES.md` — 45 lines, 2,633 chars, sha256:89ff6415a1794785 — # PHASE_11_IMPLEMENTATION_NOTES.md — Core Image Processing Pipeline
+- `PHASE_11_VERIFICATION_MATRIX.md` — 28 lines, 1,669 chars, sha256:48ad436964f6b761 — # PHASE_11_VERIFICATION_MATRIX.md — Core Image Processing Pipeline
+- `PHASE_12_EXECUTION_RUNBOOK.md` — 48 lines, 1,980 chars, sha256:89cac96482a2dfe7 — # PHASE_12_EXECUTION_RUNBOOK.md
+- `PHASE_12_IMPLEMENTATION_NOTES.md` — 43 lines, 1,703 chars, sha256:3568d4b5d34d69e1 — # PHASE_12_IMPLEMENTATION_NOTES.md — Smart Naming, Folders, Manifest, ZIP
+- `PHASE_12_VERIFICATION_MATRIX.md` — 15 lines, 1,167 chars, sha256:680022d7f69d9b96 — # PHASE_12_VERIFICATION_MATRIX.md
+- `PHASE_13_EXECUTION_RUNBOOK.md` — 43 lines, 1,580 chars, sha256:d3123d820ab6bcec — # PHASE_13_EXECUTION_RUNBOOK.md — Preview Gallery and Before/After
+- `PHASE_13_IMPLEMENTATION_NOTES.md` — 40 lines, 1,704 chars, sha256:89a87781fe498fd0 — # PHASE_13_IMPLEMENTATION_NOTES.md — Preview Gallery and Before/After
+- `PHASE_13_VERIFICATION_MATRIX.md` — 30 lines, 1,371 chars, sha256:9f25e08237a68de9 — # PHASE_13_VERIFICATION_MATRIX.md — Preview Gallery and Before/After
+- `PHASE_14_EXECUTION_RUNBOOK.md` — 30 lines, 1,250 chars, sha256:d97a0f3aa4d22ce8 — # PHASE_14_EXECUTION_RUNBOOK.md
+- `PHASE_14_IMPLEMENTATION_NOTES.md` — 27 lines, 1,053 chars, sha256:cbcded28f23ebb17 — # PHASE_14_IMPLEMENTATION_NOTES.md
+- `PHASE_14_VERIFICATION_MATRIX.md` — 33 lines, 1,169 chars, sha256:2d2d5b191063b24d — # PHASE_14_VERIFICATION_MATRIX.md
+- `PHASE_15_EXECUTION_RUNBOOK.md` — 12 lines, 790 chars, sha256:8de7d14f2f1f5722 — # Phase 15 Execution Runbook — Manual Approval and Revision Workflow
+- `PHASE_15_IMPLEMENTATION_NOTES.md` — 18 lines, 976 chars, sha256:8010f8bb39b6febe — # Phase 15 Implementation Notes — Manual Approval and Revision Workflow
+- `PHASE_15_VERIFICATION_MATRIX.md` — 15 lines, 818 chars, sha256:4c9e124a8aefb2c0 — # Phase 15 Verification Matrix
+- `PHASE_16_EXECUTION_RUNBOOK.md` — 34 lines, 1,304 chars, sha256:10fda761e164436e — # Phase 16 Execution Runbook — Delivery and Email Notifications
+- `PHASE_16_IMPLEMENTATION_NOTES.md` — 21 lines, 914 chars, sha256:5d8dd9defdf79c52 — # Phase 16 Implementation Notes — Delivery and Email Notifications
+- `PHASE_16_VERIFICATION_MATRIX.md` — 14 lines, 961 chars, sha256:eee2897caf40f407 — # Phase 16 Verification Matrix
+- `PHASE_17_EXECUTION_RUNBOOK.md` — 28 lines, 1,229 chars, sha256:84d9812e24a653e8 — # PHASE_17_EXECUTION_RUNBOOK.md
+- `PHASE_17_IMPLEMENTATION_NOTES.md` — 24 lines, 1,155 chars, sha256:b0fb8892603c0420 — # PHASE_17_IMPLEMENTATION_NOTES.md
+- `PHASE_17_VERIFICATION_MATRIX.md` — 15 lines, 950 chars, sha256:b7bc5bc629a6af95 — # PHASE_17_VERIFICATION_MATRIX.md
+- `PHASE_18_EXECUTION_RUNBOOK.md` — 44 lines, 1,777 chars, sha256:9ee8ff1ca1ba9084 — # PHASE_18_EXECUTION_RUNBOOK.md — Gumroad Checkout/Webhook Intake
+- `PHASE_18_IMPLEMENTATION_NOTES.md` — 35 lines, 1,869 chars, sha256:387ca22ce9fef1fc — # PHASE_18_IMPLEMENTATION_NOTES.md — Gumroad Checkout/Webhook Intake
+- `PHASE_18_VERIFICATION_MATRIX.md` — 17 lines, 1,214 chars, sha256:e2e45f0603a08b3f — # PHASE_18_VERIFICATION_MATRIX.md — Gumroad Checkout/Webhook Intake
+- `PHASE_19_EXECUTION_RUNBOOK.md` — 28 lines, 1,595 chars, sha256:efc4376b56493ca9 — # Phase 19 Execution Runbook — Credits, Subscriptions, Manual Invoices
+- `PHASE_19_IMPLEMENTATION_NOTES.md` — 27 lines, 1,458 chars, sha256:c2f7bf3bbff28784 — # Phase 19 Implementation Notes — Credits, Subscriptions, Manual Invoices
+- `PHASE_19_VERIFICATION_MATRIX.md` — 17 lines, 1,037 chars, sha256:8b834a308e389ae3 — # Phase 19 Verification Matrix
+- `PHASE_1_EXECUTION_RUNBOOK.md` — 70 lines, 1,715 chars, sha256:a9384d4f44ef1c28 — # PHASE_1_EXECUTION_RUNBOOK.md
+- `PHASE_1_IMPLEMENTATION_NOTES.md` — 91 lines, 2,452 chars, sha256:1c04692eb132ffa7 — # PHASE_1_IMPLEMENTATION_NOTES.md
+- `PHASE_1_VERIFICATION_MATRIX.md` — 29 lines, 1,584 chars, sha256:4a7245126289dba3 — # PHASE_1_VERIFICATION_MATRIX.md
+- `PHASE_20_EXECUTION_RUNBOOK.md` — 35 lines, 1,075 chars, sha256:9ddb05ad643cf4c6 — # PHASE_20_EXECUTION_RUNBOOK.md — Fiverr Workflow
+- `PHASE_20_IMPLEMENTATION_NOTES.md` — 28 lines, 927 chars, sha256:b0d75b8b43601e8e — # PHASE_20_IMPLEMENTATION_NOTES.md — Fiverr Workflow
+- `PHASE_20_VERIFICATION_MATRIX.md` — 14 lines, 866 chars, sha256:5677511bfea81388 — # PHASE_20_VERIFICATION_MATRIX.md — Fiverr Workflow
+- `PHASE_21_EXECUTION_RUNBOOK.md` — 31 lines, 1,385 chars, sha256:263aad8e478fc3b0 — # PHASE_21_EXECUTION_RUNBOOK.md
+- `PHASE_21_IMPLEMENTATION_NOTES.md` — 31 lines, 1,526 chars, sha256:186cf2b938df2fa3 — # PHASE_21_IMPLEMENTATION_NOTES.md
+- `PHASE_21_VERIFICATION_MATRIX.md` — 17 lines, 1,254 chars, sha256:6ef317e72aca2cfd — # PHASE_21_VERIFICATION_MATRIX.md
+- `PHASE_22_EXECUTION_RUNBOOK.md` — 28 lines, 1,206 chars, sha256:b54e053e5504a529 — # Phase 22 Execution Runbook — Taskrabbit Workflow
+- `PHASE_22_IMPLEMENTATION_NOTES.md` — 20 lines, 786 chars, sha256:b1427503a8209765 — # Phase 22 Implementation Notes — Taskrabbit Workflow
+- `PHASE_22_VERIFICATION_MATRIX.md` — 16 lines, 946 chars, sha256:07451fcca671c6aa — # Phase 22 Verification Matrix — Taskrabbit Workflow
+- `PHASE_2_EXECUTION_RUNBOOK.md` — 80 lines, 2,180 chars, sha256:a8d39d118367dcc8 — # PHASE_2_EXECUTION_RUNBOOK.md
+- `PHASE_2_IMPLEMENTATION_NOTES.md` — 56 lines, 2,599 chars, sha256:cfd07a5951b8dbd1 — # PHASE_2_IMPLEMENTATION_NOTES.md
+- `PHASE_2_VERIFICATION_MATRIX.md` — 39 lines, 1,659 chars, sha256:238b1690e93869d2 — # PHASE_2_VERIFICATION_MATRIX.md
+- `PHASE_3_EXECUTION_RUNBOOK.md` — 79 lines, 2,205 chars, sha256:815cdb66b2ecdd71 — # PHASE_3_EXECUTION_RUNBOOK.md
+- `PHASE_3_IMPLEMENTATION_NOTES.md` — 63 lines, 3,218 chars, sha256:8860dd61fb61e2e1 — # PHASE_3_IMPLEMENTATION_NOTES.md
+- `PHASE_3_VERIFICATION_MATRIX.md` — 34 lines, 1,218 chars, sha256:30ce82081a264103 — # PHASE_3_VERIFICATION_MATRIX.md
+- `PHASE_4_EXECUTION_RUNBOOK.md` — 104 lines, 2,891 chars, sha256:ea343a67ebe36f93 — # PHASE_4_EXECUTION_RUNBOOK.md
+- `PHASE_4_IMPLEMENTATION_NOTES.md` — 97 lines, 3,863 chars, sha256:9069578fd02b9dde — # PHASE_4_IMPLEMENTATION_NOTES.md
+- `PHASE_4_VERIFICATION_MATRIX.md` — 20 lines, 1,414 chars, sha256:ebf87273f826101d — # PHASE_4_VERIFICATION_MATRIX.md
+- `PHASE_5_EXECUTION_RUNBOOK.md` — 62 lines, 2,393 chars, sha256:6ad6a1970cd0c42c — # PHASE_5_EXECUTION_RUNBOOK.md
+- `PHASE_5_IMPLEMENTATION_NOTES.md` — 54 lines, 2,391 chars, sha256:b02257307c59d357 — # PHASE_5_IMPLEMENTATION_NOTES.md
+- `PHASE_5_VERIFICATION_MATRIX.md` — 41 lines, 1,573 chars, sha256:f8b18cefaa30c30c — # PHASE_5_VERIFICATION_MATRIX.md
+- `PHASE_6_EXECUTION_RUNBOOK.md` — 40 lines, 1,420 chars, sha256:3b8a4a410cea7d30 — # PHASE_6_EXECUTION_RUNBOOK.md
+- `PHASE_6_IMPLEMENTATION_NOTES.md` — 54 lines, 2,000 chars, sha256:5135fd1e7304c979 — # PHASE_6_IMPLEMENTATION_NOTES.md
+- `PHASE_6_VERIFICATION_MATRIX.md` — 26 lines, 1,123 chars, sha256:d83482d48f4ba61a — # PHASE_6_VERIFICATION_MATRIX.md
+- `PHASE_7_EXECUTION_RUNBOOK.md` — 112 lines, 2,570 chars, sha256:e5ebe78a934c0035 — # PHASE_7_EXECUTION_RUNBOOK.md — Sales Channel Normalization Layer
+- `PHASE_7_IMPLEMENTATION_NOTES.md` — 99 lines, 4,062 chars, sha256:0b0dfa0180045fc3 — # PHASE_7_IMPLEMENTATION_NOTES.md — Sales Channel Normalization Layer
+- `PHASE_7_VERIFICATION_MATRIX.md` — 33 lines, 1,986 chars, sha256:3600c48d17ce9ab4 — # PHASE_7_VERIFICATION_MATRIX.md — Sales Channel Normalization Layer
+- `PHASE_8_EXECUTION_RUNBOOK.md` — 47 lines, 2,079 chars, sha256:51f58cf0019f6dab — # PHASE_8_EXECUTION_RUNBOOK.md — Codex Runtime Plan
+- `PHASE_8_IMPLEMENTATION_NOTES.md` — 47 lines, 2,402 chars, sha256:efeb06d1ce1fda2b — # PHASE_8_IMPLEMENTATION_NOTES.md — Direct Upload and File Intake
+- `PHASE_8_VERIFICATION_MATRIX.md` — 36 lines, 1,845 chars, sha256:1c261b737109d7c1 — # PHASE_8_VERIFICATION_MATRIX.md
+- `PHASE_9_EXECUTION_RUNBOOK.md` — 29 lines, 1,374 chars, sha256:2eaaf64bbbc94e62 — # PHASE_9_EXECUTION_RUNBOOK.md — Job Creation and Admin Queue
+- `PHASE_9_IMPLEMENTATION_NOTES.md` — 27 lines, 1,293 chars, sha256:8ae9bf9080447ad1 — # PHASE_9_IMPLEMENTATION_NOTES.md — Job Creation and Admin Queue
+- `PHASE_9_VERIFICATION_MATRIX.md` — 31 lines, 1,408 chars, sha256:ce438b5c618b5f33 — # PHASE_9_VERIFICATION_MATRIX.md — Job Creation and Admin Queue
+- `README.md` — 25 lines, 1,086 chars, sha256:2f2750fb4332d835 — # ListingLift
+- `REPO_FILE_MANIFEST.md` — 16 lines, 541 chars, sha256:b2f74a6bb58c92d0 — # REPO_FILE_MANIFEST.md
+- `REPO_FILE_MANIFEST_V10.md` — 546 lines, 25,049 chars, sha256:5bc2028749077e47 — # REPO_FILE_MANIFEST_V10.md
+- `REPO_FILE_MANIFEST_V11.md` — 600 lines, 27,318 chars, sha256:fa085f76f6d31862 — # REPO_FILE_MANIFEST_V11.md
+- `REPO_FILE_MANIFEST_V12.md` — 631 lines, 24,436 chars, sha256:e91398b93d81b143 — # REPO_FILE_MANIFEST_V12.md
+- `REPO_FILE_MANIFEST_V13.md` — 655 lines, 31,772 chars, sha256:ad5623d02faf59e2 — # REPO_FILE_MANIFEST_V13.md
+- `REPO_FILE_MANIFEST_V14.md` — 702 lines, 51,870 chars, sha256:578578fdea2cc89f — # REPO_FILE_MANIFEST_V14.md
+- `REPO_FILE_MANIFEST_V15.md` — 737 lines, 29,629 chars, sha256:7b44431686fca061 — # REPO_FILE_MANIFEST_V15.md
+- `REPO_FILE_MANIFEST_V16.md` — 781 lines, 31,779 chars, sha256:59ab72c86657ea2d — # REPO_FILE_MANIFEST_V16.md
+- `REPO_FILE_MANIFEST_V17.md` — 811 lines, 33,908 chars, sha256:6c7e25a3a37aa343 — # Repo File Manifest v17
+- `REPO_FILE_MANIFEST_V18.md` — 860 lines, 43,645 chars, sha256:faf3319636dfc561 — # REPO_FILE_MANIFEST_V18.md
+- `REPO_FILE_MANIFEST_V19.md` — 900 lines, 61,142 chars, sha256:0de89e05b9dbf4be — # REPO_FILE_MANIFEST_V19.md
+- `REPO_FILE_MANIFEST_V2.md` — 309 lines, 10,622 chars, sha256:549de47a44e259b1 — # Repo File Manifest v2
+- `REPO_FILE_MANIFEST_V20.md` — 941 lines, 39,968 chars, sha256:6429a1a719b85b84 — # REPO_FILE_MANIFEST_V20.md
+- `REPO_FILE_MANIFEST_V21.md` — 983 lines, 42,158 chars, sha256:db838165de55e567 — # REPO_FILE_MANIFEST_V21.md
+- `REPO_FILE_MANIFEST_V22.md` — 1025 lines, 44,038 chars, sha256:bb841168a62bf771 — # REPO_FILE_MANIFEST_V22.md
+- `REPO_FILE_MANIFEST_V23.md` — 1065 lines, 46,224 chars, sha256:0e83e825a5879c6b — # REPO_FILE_MANIFEST_V23.md
+- `REPO_FILE_MANIFEST_V3.md` — 352 lines, 16,977 chars, sha256:7592eae8ef5ebba6 — # REPO_FILE_MANIFEST_V3.md
+- `REPO_FILE_MANIFEST_V4.md` — 368 lines, 25,440 chars, sha256:a3096a80fa99797f — # REPO_FILE_MANIFEST_V4.md
+- `REPO_FILE_MANIFEST_V5.md` — 391 lines, 13,724 chars, sha256:0bb37da010e39f73 — # REPO_FILE_MANIFEST_V5.md
+- `REPO_FILE_MANIFEST_V6.md` — 428 lines, 15,118 chars, sha256:1c186c93cacb5868 — # REPO_FILE_MANIFEST_V6.md
+- `REPO_FILE_MANIFEST_V7.md` — 451 lines, 16,130 chars, sha256:90970cfa81631afa — # REPO_FILE_MANIFEST_V7.md
+- `REPO_FILE_MANIFEST_V8.md` — 475 lines, 17,206 chars, sha256:7893f161c585ba86 — # REPO_FILE_MANIFEST_V8.md
+- `REPO_FILE_MANIFEST_V9.md` — 515 lines, 18,958 chars, sha256:4b8a21e282e177f0 — # REPO_FILE_MANIFEST_V9.md
+- `ROADMAP_STATUS.md` — 75 lines, 2,454 chars, sha256:b5a8296440e34cb8 — # ROADMAP_STATUS.md
+- `SECURITY.md` — 151 lines, 4,861 chars, sha256:4a77e703c66ac6fb — # SECURITY.md — ListingLift Security Requirements
+- `TESTING.md` — 17 lines, 337 chars, sha256:616e8b14177afeb7 — # TESTING.md
+- `USER_GUIDE.md` — 13 lines, 365 chars, sha256:11a841cf925de354 — # USER_GUIDE.md
+- `WHOLE_REPO_CODEX_HANDOFF.md` — 87 lines, 2,862 chars, sha256:3242cefc3bccdaf8 — # WHOLE_REPO_CODEX_HANDOFF.md
+- `WHOLE_REPO_CODEX_HANDOFF_V10_ARCHIVE.md` — 71 lines, 2,826 chars, sha256:d5591407c0a89731 — # WHOLE_REPO_CODEX_HANDOFF_V10.md
+- `WHOLE_REPO_CODEX_HANDOFF_V11.md` — 64 lines, 2,692 chars, sha256:5b0c1770c14de0f6 — # WHOLE_REPO_CODEX_HANDOFF_V11.md
+- `WHOLE_REPO_CODEX_HANDOFF_V12.md` — 77 lines, 2,731 chars, sha256:8137acfdffda962b — # WHOLE_REPO_CODEX_HANDOFF_V12.md
+- `WHOLE_REPO_CODEX_HANDOFF_V13.md` — 79 lines, 2,694 chars, sha256:85b6474b13671bf0 — # WHOLE_REPO_CODEX_HANDOFF_V13.md
+- `WHOLE_REPO_CODEX_HANDOFF_V14.md` — 53 lines, 1,811 chars, sha256:a9421e77fa37b2f1 — # WHOLE_REPO_CODEX_HANDOFF_V14.md
+- `WHOLE_REPO_CODEX_HANDOFF_V15.md` — 42 lines, 1,485 chars, sha256:63f703c4f4891878 — # WHOLE_REPO_CODEX_HANDOFF_V15.md
+- `WHOLE_REPO_CODEX_HANDOFF_V16.md` — 40 lines, 1,630 chars, sha256:6c15d60ab8bce384 — # WHOLE_REPO_CODEX_HANDOFF_V16.md
+- `WHOLE_REPO_CODEX_HANDOFF_V17.md` — 29 lines, 1,330 chars, sha256:262d4e010faa0ad6 — # Whole Repo Codex Handoff v17
+- `WHOLE_REPO_CODEX_HANDOFF_V18.md` — 35 lines, 1,428 chars, sha256:35bebb681cc1f4fa — # Whole Repo Codex Handoff V18 — ListingLift
+- `WHOLE_REPO_CODEX_HANDOFF_V19.md` — 31 lines, 1,288 chars, sha256:227060acfd664790 — # WHOLE_REPO_CODEX_HANDOFF_V19.md
+- `WHOLE_REPO_CODEX_HANDOFF_V2.md` — 54 lines, 2,030 chars, sha256:d49f7f12a3647fe0 — # ListingLift Whole-Repo Codex Handoff v2
+- `WHOLE_REPO_CODEX_HANDOFF_V20.md` — 40 lines, 2,086 chars, sha256:17b58c2f4158aa6e — # WHOLE_REPO_CODEX_HANDOFF_V20.md
+- `WHOLE_REPO_CODEX_HANDOFF_V21.md` — 85 lines, 3,078 chars, sha256:a49f1aebc3a1c2c8 — # WHOLE_REPO_CODEX_HANDOFF_V21.md
+- `WHOLE_REPO_CODEX_HANDOFF_V22.md` — 84 lines, 2,847 chars, sha256:f18332b7b07e36ae — # WHOLE_REPO_CODEX_HANDOFF_V22.md
+- `WHOLE_REPO_CODEX_HANDOFF_V23.md` — 84 lines, 3,042 chars, sha256:33877fe7f1dd9292 — # WHOLE_REPO_CODEX_HANDOFF_V23.md
+- `WHOLE_REPO_CODEX_HANDOFF_V24.md` — 32 lines, 1,078 chars, sha256:60b854cc5964ad65 — # Whole Repo Codex Handoff V24 — ListingLift
+- `WHOLE_REPO_CODEX_HANDOFF_V3.md` — 83 lines, 2,869 chars, sha256:5a10dd8a7a4c08ca — # WHOLE_REPO_CODEX_HANDOFF_V3.md
+- `WHOLE_REPO_CODEX_HANDOFF_V4.md` — 97 lines, 3,337 chars, sha256:5742512ec40683d1 — # WHOLE_REPO_CODEX_HANDOFF_V4.md
+- `WHOLE_REPO_CODEX_HANDOFF_V5.md` — 125 lines, 4,012 chars, sha256:1fb719549512b2f0 — # WHOLE_REPO_CODEX_HANDOFF_V5.md
+- `WHOLE_REPO_CODEX_HANDOFF_V6.md` — 89 lines, 2,910 chars, sha256:9bbef2d5a913f625 — # WHOLE_REPO_CODEX_HANDOFF_V6.md
+- `WHOLE_REPO_CODEX_HANDOFF_V7.md` — 94 lines, 3,920 chars, sha256:51b282bf55f8813a — # WHOLE_REPO_CODEX_HANDOFF_V7.md
+- `WHOLE_REPO_CODEX_HANDOFF_V8.md` — 92 lines, 3,742 chars, sha256:edc38371345f6a53 — # WHOLE_REPO_CODEX_HANDOFF_V8.md
+- `WHOLE_REPO_CODEX_HANDOFF_V9.md` — 125 lines, 4,317 chars, sha256:c2b975573326bd97 — # WHOLE_REPO_CODEX_HANDOFF_V9.md
+- `docs/README.md` — 10 lines, 236 chars, sha256:ddaa679d72b83de2 — # ListingLift Docs
+- `docs/automation-integrations.md` — 3 lines, 154 chars, sha256:bc364fb881352093 — # automation-integrations.md
+- `docs/codex-handoff.md` — 3 lines, 151 chars, sha256:2c2956457d026d7a — # codex-handoff.md
+- `docs/core-image-processing-pipeline.md` — 39 lines, 1,849 chars, sha256:5c22de896d71dc98 — # Core Image Processing Pipeline
+- `docs/credits-subscriptions-manual-invoices.md` — 19 lines, 1,258 chars, sha256:a5d409be92ab51cf — # Credits, Subscriptions, and Manual Invoices
+- `docs/delivery-email-notifications.md` — 20 lines, 1,382 chars, sha256:7a5883029d86b158 — # Delivery and Email Notifications
+- `docs/delivery-notifications-gap-handoff.md` — 23 lines, 902 chars, sha256:c191b7703bef9e5e — # Delivery Notifications Gap Handoff
+- `docs/delivery-packaging.md` — 45 lines, 1,141 chars, sha256:db240640260f6a85 — # Delivery Packaging
+- `docs/deployment.md` — 3 lines, 144 chars, sha256:11fa3c4c2129d8e5 — # deployment.md
+- `docs/file-storage-integrations.md` — 3 lines, 150 chars, sha256:772d3b44077e42e8 — # file-storage-integrations.md
+- `docs/fiverr-phase20-gap-handoff.md` — 28 lines, 1,633 chars, sha256:b555d256aca700d7 — # Fiverr Phase 20 Gap Handoff
+- `docs/fiverr-phase20-workflow.md` — 45 lines, 1,669 chars, sha256:7f21af324ba1006a — # Fiverr Phase 20 Workflow
+- `docs/fiverr-workflow.md` — 35 lines, 1,422 chars, sha256:5daf0627289887c9 — # fiverr-workflow.md
+- `docs/gumroad-checkout-webhook.md` — 32 lines, 1,526 chars, sha256:4c828ae34655eccb — # Gumroad Checkout and Webhook Intake
+- `docs/gumroad-integration.md` — 3 lines, 184 chars, sha256:42949023318c1f47 — # gumroad-integration.md
+- `docs/gumroad-phase18-gap-handoff.md` — 26 lines, 953 chars, sha256:e148ac69716e27c4 — # Gumroad Phase 18 Gap Handoff
+- `docs/image-processing.md` — 11 lines, 903 chars, sha256:8c32bb5f9d453442 — # image-processing.md
+- `docs/image-provider-layer.md` — 58 lines, 1,626 chars, sha256:d397a97e979fdd4c — # Image Provider Layer
+- `docs/job-admin-queue.md` — 47 lines, 1,634 chars, sha256:11293bc6816a4470 — # Job Creation and Admin Queue
+- `docs/licensing.md` — 3 lines, 148 chars, sha256:f845caf2d79fe546 — # licensing.md
+- `docs/manual-approval-revisions.md` — 31 lines, 1,390 chars, sha256:d2760ed93adea0b6 — # Manual Approval and Revision Workflow
+- `docs/marketplace-safety.md` — 3 lines, 152 chars, sha256:112b25777f409887 — # marketplace-safety.md
+- `docs/packages.md` — 3 lines, 125 chars, sha256:9850d69e1fde7215 — # packages.md
+- `docs/phase19-gap-handoff.md` — 22 lines, 1,029 chars, sha256:847d6bb395b09ddf — # Phase 19 Gap Handoff for Codex
+- `docs/platform-presets.md` — 115 lines, 2,794 chars, sha256:77cfb6b1c3e4fadb — # docs/platform-presets.md
+- `docs/preview-gallery.md` — 41 lines, 1,167 chars, sha256:4345a8d8dcd6fae7 — # Preview Gallery and Before/After
+- `docs/qa-checklist.md` — 3 lines, 172 chars, sha256:1dd37110b70e2b72 — # qa-checklist.md
+- `docs/quality-control.md` — 46 lines, 1,738 chars, sha256:72b16d6ca1ecc055 — # docs/quality-control.md — Phase 14 Quality Control and Flagged Outputs
+- `docs/rbac.md` — 46 lines, 1,925 chars, sha256:b639e373b17a5004 — # RBAC and Tenant Isolation
+- `docs/repo-stitching-plan.md` — 44 lines, 1,019 chars, sha256:2ba4f344a3b81ea9 — # Repo Stitching Plan
+- `docs/reports.md` — 3 lines, 152 chars, sha256:cd843ed27c3ee500 — # reports.md
+- `docs/sales-channels.md` — 65 lines, 2,259 chars, sha256:8beadbda399f2048 — # Sales Channels
+- `docs/source/ListingLift.md` — 2033 lines, 41,460 chars, sha256:3e014a508bdbc3d2 — # ListingLift Service Business — AI-Powered Product Photo Cleanup, Marketplace Image Packs, Ecommerce Visual Optimizatio
+- `docs/source/ListingLift_BUILD_ROADMAP.md` — 2221 lines, 51,724 chars, sha256:2c77d74981017462 — # BUILD_ROADMAP.md — ListingLift
+- `docs/stripe-billing.md` — 3 lines, 137 chars, sha256:2d964db76e24b01c — # stripe-billing.md
+- `docs/stripe-checkout-billing.md` — 25 lines, 969 chars, sha256:f2e9e6344c97c249 — # Stripe Checkout and Billing
+- `docs/stripe-phase17-gap-handoff.md` — 20 lines, 882 chars, sha256:3e3af62c750c40e2 — # Stripe Phase 17 Gap Handoff
+- `docs/taskrabbit-phase22-gap-handoff.md` — 25 lines, 1,821 chars, sha256:9369090af5ddabd1 — # Taskrabbit Phase 22 Gap Handoff
+- `docs/taskrabbit-phase22-workflow.md` — 32 lines, 1,243 chars, sha256:f49bd2a91cecd91a — # Taskrabbit Phase 22 Workflow
+- `docs/taskrabbit-workflow.md` — 31 lines, 1,133 chars, sha256:798c338a6ea11a08 — # taskrabbit-workflow.md
+- `docs/upload-file-intake.md` — 35 lines, 1,193 chars, sha256:ee9c6b061e3bf066 — # Upload and File Intake
+- `docs/upwork-phase21-gap-handoff.md` — 19 lines, 1,113 chars, sha256:84710c44424bc8d5 — # Upwork Phase 21 Gap Handoff
+- `docs/upwork-phase21-workflow.md` — 33 lines, 856 chars, sha256:bc6ceed04caf04c7 — # Phase 21 — Upwork Workflow
+- `docs/upwork-workflow.md` — 33 lines, 1,758 chars, sha256:0b75a49da073ba9b — # upwork-workflow.md
+- `prompts/CODEX_BUGFIX_PROMPT.md` — 11 lines, 255 chars, sha256:2cea76c8e08c5b44 — # Codex Bugfix Prompt
+- `prompts/CODEX_PHASE_1_PROMPT.md` — 15 lines, 480 chars, sha256:5905e8278a6906b1 — # Codex Phase 1 Prompt — Design System and UI Shell
+- `prompts/CODEX_REPO_STITCH_PROMPT.md` — 45 lines, 1,161 chars, sha256:87448094d6c3429f — # Codex Repo Stitch Prompt
+- `prompts/CODEX_REVIEW_PROMPT.md` — 12 lines, 341 chars, sha256:65528d9fdbe87ecb — # Codex Review Prompt
+- `prompts/CODEX_SECURITY_AUDIT_PROMPT.md` — 5 lines, 357 chars, sha256:afbbb40f0b526a03 — # Codex Security Audit Prompt
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V10.md` — 49 lines, 1,727 chars, sha256:c9ba9f6c13dafff3 — # CODEX_WHOLE_REPO_STITCH_PROMPT_V10.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V11.md` — 41 lines, 1,126 chars, sha256:f53a26698db2027e
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V12.md` — 58 lines, 1,778 chars, sha256:b20ee66e7b599487
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V13.md` — 42 lines, 1,466 chars, sha256:0b825b63821e65f3 — # CODEX_WHOLE_REPO_STITCH_PROMPT_V13.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V14.md` — 24 lines, 1,314 chars, sha256:b3857c5dc977565f
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V15.md` — 41 lines, 1,365 chars, sha256:9600d93cdb6911a7 — # CODEX_WHOLE_REPO_STITCH_PROMPT_V15.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V16.md` — 28 lines, 1,439 chars, sha256:3d737b9dc2d1b7ca
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V17.md` — 21 lines, 1,131 chars, sha256:cdfadbf6ff931910
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V18.md` — 41 lines, 1,568 chars, sha256:e9409c1a011ea0e0
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V19.md` — 28 lines, 1,379 chars, sha256:e3ddca8b531ae62e
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V2.md` — 33 lines, 1,191 chars, sha256:04f487fe0e1ebba4
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V20.md` — 35 lines, 1,693 chars, sha256:8adb9dd6937eda3b
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V21.md` — 44 lines, 1,943 chars, sha256:7f176e3c4e3b7e9b — # CODEX_WHOLE_REPO_STITCH_PROMPT_V21.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V22.md` — 42 lines, 1,850 chars, sha256:e6520f61cc161a22
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V23.md` — 34 lines, 1,765 chars, sha256:6eae0876b63fac11 — # CODEX_WHOLE_REPO_STITCH_PROMPT_V23.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V24.md` — 18 lines, 1,151 chars, sha256:fba34bc6aff09faa
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V3.md` — 41 lines, 1,528 chars, sha256:1f482cb9db99239b
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V4.md` — 53 lines, 1,643 chars, sha256:9ec0d5ee2a2344b1
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V5.md` — 57 lines, 1,777 chars, sha256:b0580fe275fb5de6
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V6.md` — 54 lines, 1,592 chars, sha256:b77e4cf003681964
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V7.md` — 83 lines, 2,259 chars, sha256:1b835346ac392019 — # CODEX_WHOLE_REPO_STITCH_PROMPT_V7.md
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V8.md` — 49 lines, 1,838 chars, sha256:0f695dadb1a38e34
+- `prompts/CODEX_WHOLE_REPO_STITCH_PROMPT_V9.md` — 85 lines, 2,820 chars, sha256:9b637f9ef8da9731
+- `tasks/TASKS_PHASE_0.md` — 29 lines, 660 chars, sha256:55119bb487c9566b — # TASKS_PHASE_0.md — Repository Initialization
+- `tasks/TASKS_PHASE_1.md` — 53 lines, 1,768 chars, sha256:dec5a5da90f4dd95 — # TASKS_PHASE_1.md — Design System and UI Shell
+- `tasks/TASKS_PHASE_10.md` — 49 lines, 1,443 chars, sha256:5eba1e2cff5a5025 — # TASKS_PHASE_10.md — Image Processing Provider Layer
+- `tasks/TASKS_PHASE_11.md` — 29 lines, 678 chars, sha256:2c2345f2dd986d77 — # TASKS_PHASE_11.md — Core Image Processing Pipeline
+- `tasks/TASKS_PHASE_12.md` — 29 lines, 669 chars, sha256:5c5ceeb87c6a1f2d — # TASKS_PHASE_12.md — Naming Folders Manifest ZIP
+- `tasks/TASKS_PHASE_13.md` — 29 lines, 684 chars, sha256:7d18cd105a07b4b1 — # TASKS_PHASE_13.md — Preview Gallery and Before After
+- `tasks/TASKS_PHASE_14.md` — 29 lines, 693 chars, sha256:8ad14b1c07dba8a6 — # TASKS_PHASE_14.md — Quality Control and Flagged Outputs
+- `tasks/TASKS_PHASE_15.md` — 29 lines, 699 chars, sha256:67660f6ca6fcf4dd — # TASKS_PHASE_15.md — Manual Approval and Revision Workflow
+- `tasks/TASKS_PHASE_16.md` — 29 lines, 684 chars, sha256:fe7d0d33ecbccd38 — # TASKS_PHASE_16.md — Delivery and Email Notifications
+- `tasks/TASKS_PHASE_17.md` — 29 lines, 669 chars, sha256:9d37236a63c0df44 — # TASKS_PHASE_17.md — Stripe Checkout and Billing
+- `tasks/TASKS_PHASE_18.md` — 29 lines, 681 chars, sha256:98891e36d464d0dd — # TASKS_PHASE_18.md — Gumroad Checkout Webhook Intake
+- `tasks/TASKS_PHASE_19.md` — 29 lines, 699 chars, sha256:21d3f1f9e8f522be — # TASKS_PHASE_19.md — Credits Subscriptions Manual Invoices
+- `tasks/TASKS_PHASE_2.md` — 29 lines, 675 chars, sha256:061e7c45feb8baab — # TASKS_PHASE_2.md — Database Schema and Migrations
+- `tasks/TASKS_PHASE_20.md` — 29 lines, 633 chars, sha256:3a3559206940eb99 — # TASKS_PHASE_20.md — Fiverr Workflow
+- `tasks/TASKS_PHASE_21.md` — 29 lines, 633 chars, sha256:26b73738de0aecbb — # TASKS_PHASE_21.md — Upwork Workflow
+- `tasks/TASKS_PHASE_22.md` — 29 lines, 645 chars, sha256:d66a0df3bf226011 — # TASKS_PHASE_22.md — Taskrabbit Workflow
+- `tasks/TASKS_PHASE_23.md` — 29 lines, 648 chars, sha256:59a6bf902dbd5ec2 — # TASKS_PHASE_23.md — Other Sales Channels
+- `tasks/TASKS_PHASE_24.md` — 29 lines, 627 chars, sha256:bd680478705b3694 — # TASKS_PHASE_24.md — Etsy Workflow
+- `tasks/TASKS_PHASE_25.md` — 29 lines, 636 chars, sha256:a7c6ac1840d7c8bc — # TASKS_PHASE_25.md — Shopify Workflow
+- `tasks/TASKS_PHASE_26.md` — 29 lines, 663 chars, sha256:051c1a21eced3368 — # TASKS_PHASE_26.md — Social Commerce Workflows
+- `tasks/TASKS_PHASE_27.md` — 29 lines, 687 chars, sha256:fd17d8907a626e26 — # TASKS_PHASE_27.md — Amazon eBay WooCommerce Workflows
+- `tasks/TASKS_PHASE_28.md` — 29 lines, 663 chars, sha256:c904f7224952f836 — # TASKS_PHASE_28.md — File Storage Integrations
+- `tasks/TASKS_PHASE_29.md` — 29 lines, 645 chars, sha256:ca507fbea97a73a6 — # TASKS_PHASE_29.md — Automation Webhooks
+- `tasks/TASKS_PHASE_3.md` — 29 lines, 666 chars, sha256:854b633b7d6a382c — # TASKS_PHASE_3.md — Authentication and Sessions
+- `tasks/TASKS_PHASE_30.md` — 29 lines, 693 chars, sha256:b32609e5e4bc44b3 — # TASKS_PHASE_30.md — Notifications and Task Data Exports
+- `tasks/TASKS_PHASE_31.md` — 29 lines, 663 chars, sha256:1f2c4e79a11cb14e — # TASKS_PHASE_31.md — Advanced Image Processing
+- `tasks/TASKS_PHASE_32.md` — 29 lines, 663 chars, sha256:e00b76054540638e — # TASKS_PHASE_32.md — Reports and Upsell Engine
+- `tasks/TASKS_PHASE_33.md` — 29 lines, 636 chars, sha256:82d30c2f138a651f — # TASKS_PHASE_33.md — Client Dashboard
+- `tasks/TASKS_PHASE_34.md` — 29 lines, 699 chars, sha256:2138dd534dc06bc2 — # TASKS_PHASE_34.md — Admin Dashboard and Revenue Analytics
+- `tasks/TASKS_PHASE_35.md` — 29 lines, 657 chars, sha256:23c4c79c453a2b58 — # TASKS_PHASE_35.md — Agency White-Label Mode
+- `tasks/TASKS_PHASE_36.md` — 29 lines, 684 chars, sha256:9c8c9bd21530feb0 — # TASKS_PHASE_36.md — API Access and Advanced Scaffold
+- `tasks/TASKS_PHASE_37.md` — 29 lines, 642 chars, sha256:e4b3143166b2d793 — # TASKS_PHASE_37.md — Security Hardening
+- `tasks/TASKS_PHASE_38.md` — 29 lines, 645 chars, sha256:5761482df3a5a6ce — # TASKS_PHASE_38.md — Full Testing and QA
+- `tasks/TASKS_PHASE_39.md` — 29 lines, 651 chars, sha256:1a13fe49b1e515a9 — # TASKS_PHASE_39.md — Production Deployment
+- `tasks/TASKS_PHASE_4.md` — 29 lines, 690 chars, sha256:d710223182c2870a — # TASKS_PHASE_4.md — Tenant Client RBAC and Agency Model
+- `tasks/TASKS_PHASE_40.md` — 29 lines, 645 chars, sha256:e9539a2b2c3e2cc0 — # TASKS_PHASE_40.md — Post-Launch Backlog
+- `tasks/TASKS_PHASE_5.md` — 29 lines, 645 chars, sha256:e5d9e7e7d3c6a9e0 — # TASKS_PHASE_5.md — Packages and Pricing
+- `tasks/TASKS_PHASE_6.md` — 29 lines, 651 chars, sha256:c31b032b596a590a — # TASKS_PHASE_6.md — Platform Preset System
+- `tasks/TASKS_PHASE_7.md` — 29 lines, 684 chars, sha256:c5c2168caab1eaa4 — # TASKS_PHASE_7.md — Sales Channel Normalization Layer
+- `tasks/TASKS_PHASE_8.md` — 29 lines, 672 chars, sha256:a308c5c6938e04cd — # TASKS_PHASE_8.md — Direct Upload and File Intake
+- `tasks/TASKS_PHASE_9.md` — 29 lines, 669 chars, sha256:a22638e0d15b46b4 — # TASKS_PHASE_9.md — Job Creation and Admin Queue

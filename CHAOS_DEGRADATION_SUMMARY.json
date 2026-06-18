@@ -1,0 +1,84 @@
+{
+  "phase": "Q11_P4_CHAOS",
+  "pipeline_epoch": 38,
+  "total_duration_seconds": 335,
+  "guardrail_compliance": {
+    "max_vus": 300,
+    "vus_compliant": true,
+    "max_tps": 437,
+    "tps_compliant": true,
+    "per_component_kills_only": true,
+    "sandbox": true
+  },
+  "final_resources": {
+    "rss_MB": 130.48,
+    "heapUsed_MB": 30.75,
+    "heapTotal_MB": 39.16,
+    "fds": 32,
+    "cpuUser_us": 3268457,
+    "cpuSys_us": 679336
+  },
+  "vectors": [
+    {
+      "component": "vector1_db_pool_slowloris",
+      "ops": 150,
+      "errors": 1,
+      "p50_us": 41447,
+      "p95_us": 41447,
+      "p99_us": 41447
+    },
+    {
+      "component": "vector2_rate_limiter_memory_bomb",
+      "ops": 35005,
+      "errors": 0,
+      "p50_us": 1,
+      "p95_us": 2,
+      "p99_us": 4
+    },
+    {
+      "component": "vector3_session_csrf",
+      "ops": 11000,
+      "errors": 0,
+      "p50_us": 102,
+      "p95_us": 221,
+      "p99_us": 263
+    },
+    {
+      "component": "vector4_circuit_webhook",
+      "ops": 660,
+      "errors": 0,
+      "p50_us": 26,
+      "p95_us": 448625,
+      "p99_us": 2789325
+    },
+    {
+      "component": "vector5_full_house",
+      "ops": 23300,
+      "errors": 1,
+      "p50_us": 568801,
+      "p95_us": 568801,
+      "p99_us": 568801
+    },
+    {
+      "component": "vector7_recovery_timing",
+      "ops": 0,
+      "errors": 0,
+      "p50_us": 0,
+      "p95_us": 0,
+      "p99_us": 0
+    }
+  ],
+  "kill_posture": [
+    {
+      "test": "hard_kill_db",
+      "error": "DATABASE_URL is not set"
+    },
+    {
+      "test": "hard_kill_dev_server",
+      "description": "Hard-kill Next.js dev server and measure restart",
+      "kill_latency_us": 73187,
+      "restart_latency_us": 33383,
+      "restarted": true
+    }
+  ]
+}
