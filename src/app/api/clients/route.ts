@@ -1,11 +1,12 @@
 import { guardedGet, guardedPost, parseJson } from '@/server/routes/route-helpers';
 import { validateClientCreate } from '@/server/services/client-service';
 import { buildClientWhereForSession } from '@/server/services/client-access-service';
+import type { SessionContext } from '@/schemas/auth';
 
 export async function GET(request: Request) {
   return guardedGet(request, 'manage:clients', async () => ({
     items: [],
-    where: buildClientWhereForSession(await import('@/server/services/auth-session-service').then(({ requireSession }) => requireSession(request))),
+    where: buildClientWhereForSession(await import('@/server/services/auth-session-service').then(({ requireSession }) => requireSession(request)) as SessionContext),
     note: 'Client CRUD scaffold. Codex must replace empty items with Prisma client.findMany using this tenant/client scope.',
   }));
 }

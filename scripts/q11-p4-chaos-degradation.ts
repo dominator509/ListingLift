@@ -852,6 +852,8 @@ async function compound_KillPosture(): Promise<any> {
 
   await gcAndLog('killposture_end');
   const delta = resourceDelta(baseline, sampleResources());
+  const dbRecoverySummary = dbRecoveryTimer.toSummary();
+  const serverRecoverySummary = serverRecoveryTimer.toSummary();
 
   return {
     compound_vector: 6,
@@ -859,17 +861,17 @@ async function compound_KillPosture(): Promise<any> {
     description: 'Hard-kill DB during test (pool disconnect ×3) and hard-kill dev server (module cache clear ×3). Measure P50/P95/P99 recovery latency for each component.',
     duration_seconds: 10,
     db_kills: dbKills,
-    db_recovery_latency_us: dbRecoveryTimer.toSummary(),
+    db_recovery_latency_us: dbRecoverySummary,
     server_kills: serverKills,
-    server_recovery_latency_us: serverRecoveryTimer.toSummary(),
+    server_recovery_latency_us: serverRecoverySummary,
     total_errors: errors,
     peak_rss_MB: Math.max(baseline.rss_MB, sampleResources().rss_MB),
     resource_delta: delta,
     degradation_notes: errors > 0
       ? `${errors} recovery errors encountered. DB auto-reconnect or module reload may require retry logic.`
       : 'All hard-kill scenarios recovered successfully. Auto-reconnect and module reload paths operational.',
-    db_auto_reconnect_verified: dbRecoveryTimer.count > 0,
-    server_restart_verified: serverRecoveryTimer.count > 0,
+    db_auto_reconnect_verified: dbRecoverySummary.count > 0,
+    server_restart_verified: serverRecoverySummary.count > 0,
   };
 }
 

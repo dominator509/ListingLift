@@ -6,7 +6,7 @@ Phase 38 — Full Testing and QA
 
 ## Current Task
 
-Seed full testing and QA contracts for unit, security, integration, adapter-contract, E2E, build, smoke, browser-rendering, Prisma, seed, and no-fake-results verification across ListingLift. Add QA domain rules, Zod schemas, services, admin dashboard UI shells, admin API route contracts, QA command scripts, Prisma/migration scaffolds, tests, docs, and Codex handoff updates.
+Repair Phase 38 local end-to-end validation gates: restore upload page build dependencies, align TypeScript/auth/test contracts with hardened runtime behavior, document the safe local PostgreSQL test path, remove stale readiness claims, and capture live verification evidence.
 
 ## Previous Completed Phase
 
@@ -54,11 +54,14 @@ Phase 39 — Replit Production Deployment
 - ChatGPT Project Mode generated v40 seed artifacts for Phase 38.
 - No runtime install, typecheck, lint, build, Prisma validation, migration application, seed, Vitest, Playwright, browser rendering, provider/API, storage, webhook, or real security checks were run in this environment.
 - **Stage 1 (Environment & Dependencies) completed by IpMan on 2026-06-14 05:51 UTC.** npm install succeeded (515 packages), verify-env passed with safe placeholders, Node.js v24.16.0 compatible (engines field added >=18.17.0), lockfile healthy (lockfileVersion 3).
+- **Phase 38 repair pass (2026-06-23 local)** restored `COMM_BUFFER.md`, added presentational upload-token components, documented `.env.test`/Docker PostgreSQL setup, removed unsupported `.npmrc` config, aligned route/session/schema/test contracts with the current hardened auth policy, fixed TypeScript drift, and updated Nodemailer to `9.0.1` to clear the high-severity audit advisory.
+- Local DB container startup succeeded with `docker compose up -d postgres`, but `npm run db:migrate` (`prisma migrate dev`) hung without output and could not be interrupted by this execution backend. The container was stopped with `docker compose stop postgres`; DB migration, seed idempotency, integration tests, and E2E tests remain blocked pending a non-interactive migration path or manual cleanup of the hung wrapper.
 
 ## Files Changed
 
 - See `REPO_FILE_MANIFEST_V40.md`.
 - Stage 1 additions: `package.json` (added engines field), `.nvmrc`, `.env` (safe placeholders), `src/schemas/env.ts` (reverted), `scripts/verify-env.ts` (reverted debug lines).
+- Phase 38 repair additions/updates include `COMM_BUFFER.md`, `.env.test.example`, `docker-compose.yml`, `TESTING.md`, `src/components/uploads/index.tsx`, auth/session/security/upload/Stripe schema and route helpers, upload/auth/package/payment tests, script type fixes, and `package.json`/`package-lock.json` for Nodemailer `9.0.1`.
 
 ## Tests/Checks Run
 
@@ -68,6 +71,18 @@ Phase 39 — Replit Production Deployment
 - Stage 1 (IpMan): `npm install` — 515 packages, lockfile healthy, no resolution errors.
 - Stage 1 (IpMan): `npm run verify-env` — passed cleanly, safe placeholders, no secrets exposed.
 - Stage 1 (IpMan): `node --version` — v24.16.0, engines field set to >=18.17.0.
+- Phase 38 repair: `npm run verify-env` — passed with safe inline local test env.
+- Phase 38 repair: `npm run db:validate` — passed.
+- Phase 38 repair: `npm run db:generate` — passed.
+- Phase 38 repair: `npm run typecheck` — passed.
+- Phase 38 repair: `npm run lint` — passed with 12 warnings, 0 errors.
+- Phase 38 repair: `npm run test:unit` — passed, 101 files / 451 tests.
+- Phase 38 repair: `npm run test:security` — passed, 54 files passed / 1 skipped, 102 tests passed / 7 skipped.
+- Phase 38 repair: `npm run test:adapter-contract` — passed, 4 files / 7 tests.
+- Phase 38 repair: `npm run build` — passed, 361 static pages generated; warning only for deprecated Next middleware convention.
+- Phase 38 repair: `npm run smoke` — passed.
+- Phase 38 repair: `npm audit --audit-level=high` — passed after Nodemailer `9.0.1`; 5 moderate advisories remain with force/breaking fixes only.
+- Phase 38 repair: `docker compose up -d postgres` — passed; `npm run db:migrate` hung without output.
 
 ## Test Results
 
@@ -77,15 +92,16 @@ Phase 39 — Replit Production Deployment
 - **`npm install`** — PASSED (515 packages, lockfile lockfileVersion 3, healthy).
 - **`npm run verify-env`** — PASSED (8 env vars loaded, validation clean, no real integrations enabled).
 - **Node.js compatibility** — PASSED (v24.16.0 meets engines >=18.17.0 requirement).
-- npm install/typecheck/lint/build/tests/migrations/seed/browser rendering/security-check/test-all: not run in ChatGPT environment.
+- `npm run typecheck`, `npm run lint`, `npm run test:unit`, `npm run test:security`, `npm run test:adapter-contract`, `npm run build`, `npm run smoke`, and high-level npm audit now have local passing evidence from 2026-06-23.
+- `npm run db:migrate`, `npm run db:seed` twice, `npm run test:integration`, and `npm run test:e2e` are not yet verified because `prisma migrate dev` hung against the local Docker PostgreSQL container.
 
 ## Known Issues
 
-- Prisma migration is scaffold-only and must be regenerated by Codex.
+- Prisma migration application remains unverified because `npm run db:migrate` hung locally after Docker PostgreSQL startup.
 - QA route contracts return dry-run payloads until Codex wires Prisma/session/RBAC/audit/rate limiting and evidence persistence.
 - QA ledger rejects fake PASS claims as a scaffold but is not persisted.
-- `test-all` was added but not run.
-- No browser pages are verified.
+- `test-all` was not run end-to-end because the migration/seed/integration/E2E segment is blocked.
+- No browser pages are verified in this repair pass.
 - Prior phase runtime/database/security gaps remain unresolved until Codex work.
 - Zod `booleanString` transform bypassed by `.default()` — explicitly setting REAL flags in `.env` works around it.
 
@@ -95,8 +111,9 @@ Phase 39 — Replit Production Deployment
 
 ## Production Readiness Progress
 
-✅ **PRODUCTION-READY** — Phase 38 stitch complete (2026-06-14). All 8 stages verified: Environment/DB → Static Checks → Unit/Security → Integration/Adapters → E2E/Browser → Build/Smoke → Evidence/Docs. 372/372 tests passing (192 files). All credentials resolved (DB + SMTP + Stripe).
+Not production-ready. Local non-DB gates now pass through typecheck, lint, unit, security, adapter-contract, build, smoke, and high-level audit, but DB migration/seed idempotency, integration tests, E2E tests, and browser rendering remain unverified.
 
 ## Commit-Style History
 
 - `phase-38: full testing qa scaffold`
+- `phase-38: repair local validation gates`

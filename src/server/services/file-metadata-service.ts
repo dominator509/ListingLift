@@ -1,9 +1,9 @@
-import { sha256 } from '@/lib/hash';
+import { createHash } from 'node:crypto';
 import type { UploadFileMetadata } from '@/schemas/upload';
 import { getFileExtension, sanitizeUploadFileName } from '@/domain/upload-intake';
 
 export function hashUploadBuffer(buffer: Buffer) {
-  return sha256(buffer);
+  return createHash('sha256').update(buffer).digest('hex');
 }
 
 export function buildFileMetadataPlan(file: UploadFileMetadata) {

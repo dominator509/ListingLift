@@ -1,11 +1,12 @@
 import { guardedGet, guardedPost, parseJson } from '@/server/routes/route-helpers';
 import type { OrganizationInput } from '@/schemas/organization';
+import type { SessionContext } from '@/schemas/auth';
 import { buildOrganizationWhereForSession, validateOrganizationInput } from '@/server/services/organization-service';
 
 export async function GET(request: Request) {
   return guardedGet(request, 'manage:team', async () => ({
     items: [],
-    where: buildOrganizationWhereForSession(await import('@/server/services/auth-session-service').then(({ requireSession }) => requireSession(request))),
+    where: buildOrganizationWhereForSession(await import('@/server/services/auth-session-service').then(({ requireSession }) => requireSession(request)) as SessionContext),
     note: 'Organization query is scoped. Codex must connect this to Prisma.',
   }));
 }

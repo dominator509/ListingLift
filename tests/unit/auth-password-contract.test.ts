@@ -7,9 +7,9 @@ describe('phase 3 auth password contract', () => {
   });
 
   it('requires a minimally useful password policy', () => {
-    expect(() => assertPasswordPolicy('short')).toThrow('at least 8');
-    expect(() => assertPasswordPolicy('onlyletters')).toThrow('one letter and one number');
-    expect(() => assertPasswordPolicy('Password123')).not.toThrow();
+    expect(() => assertPasswordPolicy('short')).toThrow('at least 12');
+    expect(() => assertPasswordPolicy('onlylettersonly')).toThrow('at least 3 of');
+    expect(() => assertPasswordPolicy('Password123!')).not.toThrow();
   });
 
   it('redacts passwordHash from returned user objects', () => {

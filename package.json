@@ -52,7 +52,7 @@
     "jszip": "latest",
     "nanoid": "latest",
     "next": "latest",
-    "nodemailer": "latest",
+    "nodemailer": "^9.0.1",
     "pg-protocol": "^1.14.0",
     "react": "latest",
     "react-dom": "latest",

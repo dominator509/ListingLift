@@ -15,6 +15,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import type { z } from 'zod';
 
 // ---------------------------------------------------------------------------
 // Zod schemas (proper Zod)
@@ -243,7 +244,7 @@ function testFuzzClass(
 
 // Helper to build valid base payloads for each schema
 const VALID = {
-  signup: { email: 'test@example.com', password: 'securePass1', name: 'Test', organizationName: 'TestOrg' },
+  signup: { email: 'test@example.com', password: 'SecurePass123!', name: 'Test', organizationName: 'TestOrg' },
   login: { email: 'test@example.com', password: 'anypass' },
   accountSettings: { name: 'Updated Name' },
   qualityOutput: { id: 'qo-1', outputFileName: 'output.jpg', outputType: 'jpeg', width: 800, height: 600, qualityScore: 85, status: 'COMPLETE' },

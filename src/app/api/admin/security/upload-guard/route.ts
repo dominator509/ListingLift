@@ -8,8 +8,11 @@ export async function POST(request: Request) {
   return guardedSession(request, async (session) => {
     assertPermission(session, PERMISSIONS.manageSecurity);
     const body = await parseJson(request, {});
+    const bodyObject = typeof body === 'object' && body !== null ? body as Record<string, unknown> : {};
     const parsed = securityUploadProbeSchema.parse(body);
-    const zipEntries = body.zipEntries ? (body.zipEntries as Array<unknown>).map((e: unknown) => securityZipEntryProbeSchema.parse(e)) : undefined;
+    const zipEntries = Array.isArray(bodyObject.zipEntries)
+      ? bodyObject.zipEntries.map((e: unknown) => securityZipEntryProbeSchema.parse(e))
+      : undefined;
     return {
       upload: evaluateSecurityUploadProbe(parsed),
       zip: zipEntries ? evaluateSecurityZipProbe(zipEntries) : null,

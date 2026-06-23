@@ -434,7 +434,7 @@ describe('DEFAULT_PLATFORM_PRESETS', () => {
 
 describe('extensionForFormat', () => {
   it('handles JPG', () => expect(extensionForFormat('JPG')).toBe('jpg'));
-  it('handles JPEG', () => expect(extensionForFormat('JPEG')).toBe('jpeg'));
+  it('handles JPEG', () => expect(extensionForFormat('JPEG' as OutputFormat)).toBe('jpeg'));
   it('handles PNG', () => expect(extensionForFormat('PNG')).toBe('png'));
   it('handles WEBP', () => expect(extensionForFormat('WEBP')).toBe('webp'));
   it('handles ZIP', () => expect(extensionForFormat('ZIP')).toBe('zip'));
@@ -617,12 +617,13 @@ import type { DeliveryArchiveInput } from '@/domain/delivery-packaging';
 describe('delivery-packaging-service — branch coverage', () => {
   const base: DeliveryArchiveInput = {
     organizationId: 'org-1', jobId: 'job-1', jobNumber: 'LL-202601-00001', clientName: 'Test Client',
+    selectedPresets: [],
     processedFiles: [{
       id: 'file-1', imageId: 'img-1', sourceImageName: 'photo.jpg', fileName: 'photo_processed.jpg',
       outputType: 'SQUARE_JPG', outputFormat: 'JPG', presetKey: 'AmazonMainImageDraft', platform: 'Amazon',
       storageKey: 'uploads/photo.jpg', mimeType: 'image/jpeg', width: 2000, height: 2000, sizeBytes: 500000,
       status: 'READY_FOR_REVIEW', approvedStatus: 'PENDING', backgroundType: 'WHITE',
-      sellerReviewRequired: true, notes: null, folderPath: null,
+      sellerReviewRequired: true, notes: '', folderPath: '',
     }],
   };
 

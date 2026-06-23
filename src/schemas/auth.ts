@@ -1,9 +1,20 @@
 import { z } from 'zod';
+import type { RoleKey } from '@/domain/permissions';
 
 export interface AccountSettingsInput {
   name?: string;
   currentPassword?: string;
   newPassword?: string;
+}
+
+export interface SessionContext {
+  userId: string;
+  organizationId: string;
+  role: RoleKey;
+  organizationType?: string;
+  clientId?: string | null;
+  agencyScope?: boolean | null;
+  tokenHash?: string;
 }
 
 export const signupSchema = z.object({

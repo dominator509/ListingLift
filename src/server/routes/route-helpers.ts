@@ -7,6 +7,7 @@ import { requireSession } from '@/server/services/auth-session-service';
 import { checkIdempotency, storeIdempotency } from '@/server/services/idempotency-service';
 import { mapServiceError } from '@/lib/api-response';
 import { assertPermission } from '@/server/services/authorization-service';
+import type { SessionContext } from '@/schemas/auth';
 
 const DANGEROUS_PROPS = new Set(['__proto__', 'constructor', 'prototype']);
 
@@ -54,7 +55,7 @@ function getClientIp(request: Request): string | null {
 export async function guardedGet<T>(
   request: Request,
   permission: string,
-  handler: () => Promise<T>,
+  handler: () => T | Promise<T>,
 ): Promise<Response> {
   try {
     const session = await requireSession(request);
@@ -78,7 +79,7 @@ export async function guardedGet<T>(
 export async function guardedPost<T>(
   request: Request,
   permission: string,
-  handler: (_session: { userId: string; organizationId: string; role: string }) => Promise<T>,
+  handler: (_session: SessionContext) => T | Promise<T>,
 ): Promise<Response> {
   try {
     const session = await requireSession(request);
@@ -98,7 +99,7 @@ export async function guardedPost<T>(
       return Response.json(idemp.body, { status: idemp.status });
     }
 
-    const data = await handler(session);
+    const data = await handler(session as SessionContext);
 
     // Store idempotency result
     await storeIdempotency(request, session, 200, { ok: true, data });
@@ -113,7 +114,7 @@ export async function guardedPost<T>(
 export async function guardedPatch<T>(
   request: Request,
   permission: string,
-  handler: (_session: { userId: string; organizationId: string; role: string }) => Promise<T>,
+  handler: (_session: SessionContext) => T | Promise<T>,
 ): Promise<Response> {
   try {
     const session = await requireSession(request);
@@ -133,7 +134,7 @@ export async function guardedPatch<T>(
       return Response.json(idemp.body, { status: idemp.status });
     }
 
-    const data = await handler(session);
+    const data = await handler(session as SessionContext);
 
     // Store idempotency result
     await storeIdempotency(request, session, 200, { ok: true, data });
@@ -147,7 +148,7 @@ export async function guardedPatch<T>(
 /** Wraps a handler that needs only a valid session (no specific permission). */
 export async function guardedSession<T>(
   request: Request,
-  handler: (_session: { userId: string; organizationId: string; role: string; organizationType?: string }) => Promise<T>,
+  handler: (_session: SessionContext) => T | Promise<T>,
 ): Promise<Response> {
   try {
     const session = await requireSession(request);
@@ -159,7 +160,7 @@ export async function guardedSession<T>(
         { status: 429, headers: { 'Retry-After': String(Math.ceil((result.resetAt.getTime() - Date.now()) / 1000)) } },
       );
     }
-    const data = await handler(session);
+    const data = await handler(session as SessionContext);
     return Response.json({ ok: true, data });
   } catch (error) {
     return mapServiceError(error);

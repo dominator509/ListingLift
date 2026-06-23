@@ -27,6 +27,8 @@ export function getEnv() {
     STRIPE_PRICE_AGENCY_WHITE_LABEL: process.env.STRIPE_PRICE_AGENCY_WHITE_LABEL ?? '',
     GUMROAD_WEBHOOK_SECRET: process.env.GUMROAD_WEBHOOK_SECRET ?? '',
     APP_URL: process.env.APP_URL ?? 'http://localhost:3000',
+    STRIPE_ENABLED: process.env.STRIPE_ENABLED === 'true',
+    REAL_IMAGE_PROVIDER_CALLS_ENABLED: process.env.REAL_IMAGE_PROVIDER_CALLS_ENABLED === 'true',
     REAL_INTEGRATIONS_ENABLED: process.env.REAL_INTEGRATIONS_ENABLED === 'true',
   };
 }

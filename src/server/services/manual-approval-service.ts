@@ -1,8 +1,10 @@
-import { buildManualJobApprovalEvent, evaluateApprovalReadiness } from '@/domain/manual-approval';
+import { buildManualJobApprovalEvent, evaluateApprovalReadiness, type ApprovalReadiness } from '@/domain/manual-approval';
 import type { ManualJobApprovalInput } from '@/schemas/manual-approval';
 
 export function buildManualApprovalDecision(input: ManualJobApprovalInput, context: { organizationId: string; actorUserId?: string | null }) {
-  const readiness = input.readiness ?? evaluateApprovalReadiness({
+  const readiness: ApprovalReadiness = input.readiness
+    ? evaluateApprovalReadiness(input.readiness)
+    : evaluateApprovalReadiness({
     jobId: input.jobId,
     outputCount: 0,
     approvedOutputCount: 0,

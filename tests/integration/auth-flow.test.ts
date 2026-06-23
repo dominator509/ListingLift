@@ -11,7 +11,7 @@ import { describe, expect, it, afterEach } from 'vitest';
 import { prisma } from '@/lib/prisma';
 import { hashToken } from '@/lib/tokens';
 import { serializeSessionCookie } from '@/server/auth/session-cookie';
-import { cleanupAll, uniqueEmail, uniqueSlug } from './helpers';
+import { cleanupAll, signupVerifiedAndLogin, uniqueEmail, uniqueSlug } from './helpers';
 import { signup, login, logout, resolveSessionFromRequest, verifyEmail } from '@/server/auth/auth-service';
 
 afterEach(async () => {
@@ -23,15 +23,16 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
     const email = uniqueEmail();
     const orgName = `Alice Org ${uniqueSlug()}`;
 
-    const result = await signup({
+    const signupResult = await signup({
       email,
-      password: 'StrongP4ss!!',
+      password: 'StrongP4ssword!',
       name: 'Alice Chen',
       organizationName: orgName,
     });
 
     // Verify email before proceeding
-    await verifyEmail(result.verificationToken!);
+    await verifyEmail(signupResult.verificationToken);
+    const result = await login({ email, password: 'StrongP4ssword!' });
 
     expect(result.sessionToken).toBeTruthy();
     expect(typeof result.sessionToken).toBe('string');
@@ -67,12 +68,12 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
   it('completes a full login flow: validates password, returns session, updates lastLoginAt', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const signupResult = await signup({ email, password: 'Str0ngP4ss!!', name: 'Bob', organizationName: `Bob Corp ${slug}` });
-    await verifyEmail(signupResult.verificationToken!);
+    const signupResult = await signup({ email, password: 'Str0ngP4ssword!', name: 'Bob', organizationName: `Bob Corp ${slug}` });
+    await verifyEmail(signupResult.verificationToken);
 
-    const loginResult = await login({ email, password: 'Str0ngP4ss!!' });
+    const loginResult = await login({ email, password: 'Str0ngP4ssword!' });
     expect(loginResult.sessionToken).toBeTruthy();
-    expect(loginResult.session.userId).toBe(signupResult.session.userId);
+    expect(loginResult.session.userId).toBe(signupResult.user.id);
     expect(loginResult.user.email).toBe(email);
 
     const dbUser = await prisma.user.findUnique({ where: { email } });
@@ -82,27 +83,27 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
   it('rejects login with wrong password', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'C0rrectP4ss!!', name: 'Carol', organizationName: `Carol Inc ${slug}` });
-    await verifyEmail(result.verificationToken!);
+    const result = await signup({ email, password: 'C0rrectP4ssword!', name: 'Carol', organizationName: `Carol Inc ${slug}` });
+    await verifyEmail(result.verificationToken);
     await expect(login({ email, password: 'Wr0ngP4ss!!' })).rejects.toThrow('Invalid email or password');
   });
 
   it('rejects login for deleted user', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'Str0ngP4ss!!', name: 'Dave', organizationName: `Dave LLC ${slug}` });
-    await verifyEmail(result.verificationToken!);
+    const result = await signup({ email, password: 'Str0ngP4ssword!', name: 'Dave', organizationName: `Dave LLC ${slug}` });
+    await verifyEmail(result.verificationToken);
 
     const { user } = result;
     await prisma.user.update({ where: { id: user.id }, data: { deletedAt: new Date() } });
 
-    await expect(login({ email, password: 'Str0ngP4ss!!' })).rejects.toThrow('Invalid email or password');
+    await expect(login({ email, password: 'Str0ngP4ssword!' })).rejects.toThrow('Invalid email or password');
   });
 
   it('resolves session from request cookie', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'MyStr0ngP4ss!', name: 'Eve', organizationName: `Eve Ltd ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'MyStr0ngP4ss!', name: 'Eve', organizationName: `Eve Ltd ${slug}` });
 
     const cookie = serializeSessionCookie(result.sessionToken);
     const request = new Request('http://localhost:3000/api/test', { headers: { cookie } });
@@ -117,7 +118,7 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
   it('returns null for revoked session', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!?!?', name: 'Frank', organizationName: `Frank Co ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'P4ssw0rdSafe!?!?', name: 'Frank', organizationName: `Frank Co ${slug}` });
 
     const tokenHash = hashToken(result.sessionToken);
     await prisma.session.update({
@@ -134,7 +135,7 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
   it('completes logout: revokes session and records audit log', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!?!?', name: 'Grace', organizationName: `Grace Inc ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'P4ssw0rdSafe!?!?', name: 'Grace', organizationName: `Grace Inc ${slug}` });
 
     const cookie = serializeSessionCookie(result.sessionToken);
     const request = new Request('http://localhost:3000/api/test', { headers: { cookie } });
@@ -157,8 +158,8 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
     const email2 = uniqueEmail();
     const orgName = `Unique Org ${baseSlug}`;
 
-    const result1 = await signup({ email: email1, password: 'P4ssw0rd!?!?', name: 'User A', organizationName: orgName });
-    const result2 = await signup({ email: email2, password: 'P4ssw0rd!?!?', name: 'User B', organizationName: orgName });
+    const result1 = await signupVerifiedAndLogin({ email: email1, password: 'P4ssw0rdSafe!?!?', name: 'User A', organizationName: orgName });
+    const result2 = await signupVerifiedAndLogin({ email: email2, password: 'P4ssw0rdSafe!?!?', name: 'User B', organizationName: orgName });
 
     expect(result1.session.organizationId).not.toBe(result2.session.organizationId);
 

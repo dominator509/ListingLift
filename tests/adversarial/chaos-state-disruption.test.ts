@@ -20,6 +20,10 @@ describe('ST-01 [HIGH] Auth State Corruption — Token Replay', () => {
     class UploadTokenService {
       private tokens = new Map<string, { usedAt: Date | null; revokedAt: Date | null }>();
 
+      seedToken(tokenId: string): void {
+        this.tokens.set(tokenId, { usedAt: null, revokedAt: null });
+      }
+
       validateToken(tokenId: string): boolean {
         const record = this.tokens.get(tokenId);
         if (!record) return false;
@@ -36,7 +40,7 @@ describe('ST-01 [HIGH] Auth State Corruption — Token Replay', () => {
     }
 
     const service = new UploadTokenService();
-    service.tokens.set('token-1', { usedAt: null, revokedAt: null });
+    service.seedToken('token-1');
 
     // First use
     expect(service.validateToken('token-1')).toBe(true);
@@ -194,6 +198,10 @@ describe('ST-03 [MEDIUM] Listing Lifecycle Abuse', () => {
     class ListingService {
       private listings = new Map<string, { owner: string }>();
 
+      seedListing(listingId: string, owner: string): void {
+        this.listings.set(listingId, { owner });
+      }
+
       async transferOwnership(listingId: string, newOwner: string): Promise<boolean> {
         const listing = this.listings.get(listingId);
         if (!listing) return false;
@@ -208,7 +216,7 @@ describe('ST-03 [MEDIUM] Listing Lifecycle Abuse', () => {
     }
 
     const service = new ListingService();
-    service.listings.set('listing-1', { owner: 'user-a' });
+    service.seedListing('listing-1', 'user-a');
 
     // Concurrent transfer to two users
     await Promise.all([

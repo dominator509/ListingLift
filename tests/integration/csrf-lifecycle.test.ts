@@ -10,8 +10,7 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import { prisma } from '@/lib/prisma';
 import { generateCsrfToken, verifyCsrfForRequest, CsrfRejectionError } from '@/server/services/csrf-protection-service';
-import { signup } from '@/server/auth/auth-service';
-import { cleanupAll, uniqueEmail, uniqueSlug } from './helpers';
+import { cleanupAll, signupVerifiedAndLogin, uniqueEmail, uniqueSlug } from './helpers';
 
 afterEach(async () => {
   await cleanupAll();
@@ -21,7 +20,7 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('generates a valid CSRF token for an authenticated session', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CSRF Test', organizationName: `CSRF Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CSRF Test', organizationName: `CSRF Org ${slug}` });
 
     const { token, expiresAt } = generateCsrfToken(result.session);
     expect(token).toBeTruthy();
@@ -33,7 +32,7 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('accepts a fresh CSRF token on a mutation request', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
 
     const { token } = generateCsrfToken(result.session);
     const request = new Request('http://localhost:3000/api/test', {
@@ -47,7 +46,7 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('rejects a POST request with missing CSRF token', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
 
     const request = new Request('http://localhost:3000/api/test', {
       method: 'POST',
@@ -65,7 +64,7 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('rejects a POST request with a tampered CSRF token', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
 
     const { token } = generateCsrfToken(result.session);
     const parts = token.split('.');
@@ -87,8 +86,8 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('rejects a CSRF token from a different user session', async () => {
     const slug1 = uniqueSlug();
     const slug2 = uniqueSlug();
-    const result1 = await signup({ email: uniqueEmail(), password: 'P4ssw0rd!', name: 'User A', organizationName: `Org ${slug1}` });
-    const result2 = await signup({ email: uniqueEmail(), password: 'P4ssw0rd!', name: 'User B', organizationName: `Org ${slug2}` });
+    const result1 = await signupVerifiedAndLogin({ email: uniqueEmail(), password: 'StrongP4ssword!', name: 'User A', organizationName: `Org ${slug1}` });
+    const result2 = await signupVerifiedAndLogin({ email: uniqueEmail(), password: 'StrongP4ssword!', name: 'User B', organizationName: `Org ${slug2}` });
 
     const { token } = generateCsrfToken(result1.session);
     const request = new Request('http://localhost:3000/api/test', {
@@ -103,7 +102,7 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('allows GET requests without CSRF token', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
 
     const request = new Request('http://localhost:3000/api/test', { method: 'GET' });
     expect(() => verifyCsrfForRequest(request, result.session)).not.toThrow();
@@ -112,7 +111,7 @@ describe('CSRF lifecycle: generate -> use -> reject bad/replayed/expired', () =>
   it('skips origin check when skipOriginCheck is set', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CSRF User', organizationName: `CSRF Org ${slug}` });
 
     const { token } = generateCsrfToken(result.session);
     const request = new Request('http://evil.com/api/test', {

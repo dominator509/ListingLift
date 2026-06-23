@@ -9,10 +9,11 @@ test-results
 .env
 .env.*
 !.env.example
+!.env.test.example
 *.log
 .DS_Store
-uploads
-storage
+/uploads
+/storage
 /tmp
 *.tsbuildinfo
 tsconfig.tsbuildinfo

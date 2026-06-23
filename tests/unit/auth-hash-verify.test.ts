@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeEmail, assertPasswordPolicy, hashPassword, verifyPassword, redactUserForAuth } from '../../src/server/auth/password';
-import { createSessionToken, sessionExpiresAt } from '../../src/server/auth/session-cookie';
+import { createSessionToken, parseSignedToken, SESSION_TTL_SECONDS, sessionExpiresAt } from '../../src/server/auth/session-cookie';
 import { createOpaqueToken, hashToken, safeTokenPreview } from '../../src/lib/tokens';
 
 describe('password policy — edge cases', () => {
@@ -166,7 +166,9 @@ describe('session token generation — createSessionToken', () => {
 
   it('hashToken matches createSessionToken hash', () => {
     const { token, tokenHash } = createSessionToken();
-    expect(hashToken(token)).toBe(tokenHash);
+    const parsed = parseSignedToken(token);
+    expect(parsed).not.toBeNull();
+    expect(hashToken(parsed!.raw)).toBe(tokenHash);
   });
 });
 
@@ -180,7 +182,7 @@ describe('sessionExpiresAt — boundary values', () => {
     const now = new Date('2026-06-01T00:00:00Z');
     const expires = sessionExpiresAt(now);
     const diffMs = expires.getTime() - now.getTime();
-    expect(diffMs).toBe(14 * 24 * 60 * 60 * 1000);
+    expect(diffMs).toBe(SESSION_TTL_SECONDS * 1000);
   });
 });
 

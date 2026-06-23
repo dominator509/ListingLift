@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { createSessionToken } from '@/server/auth/session-cookie';
+import { login, signup, verifyEmail } from '@/server/auth/auth-service';
 
 /**
  * Cleanup IDs that tests register during setup so we can tear them down.
@@ -28,6 +29,7 @@ export async function cleanupAll() {
     if (cleanupIds.users.length) await prisma.auditLog.deleteMany({ where: { actorUserId: { in: cleanupIds.users } } });
     if (cleanupIds.jobs.length) await prisma.job.deleteMany({ where: { id: { in: cleanupIds.jobs } } });
     if (cleanupIds.sessions.length) await prisma.session.deleteMany({ where: { id: { in: cleanupIds.sessions } } });
+    if (cleanupIds.users.length) await prisma.session.deleteMany({ where: { userId: { in: cleanupIds.users } } });
     if (cleanupIds.users.length) await prisma.membership.deleteMany({ where: { userId: { in: cleanupIds.users } } });
     if (cleanupIds.users.length) await prisma.user.deleteMany({ where: { id: { in: cleanupIds.users } } });
     if (cleanupIds.orgs.length) await prisma.organization.deleteMany({ where: { id: { in: cleanupIds.orgs } } });
@@ -53,6 +55,26 @@ export function uniqueEmail() {
 export function uniqueSlug() {
   slugCounter++;
   return `slug_${UNIQUE_TAG}_${slugCounter}`;
+}
+
+export async function signupVerifiedAndLogin(input: {
+  email?: string;
+  password?: string;
+  name?: string;
+  organizationName?: string;
+}) {
+  const password = input.password ?? 'StrongP4ssword!';
+  const signupResult = await signup({
+    email: input.email ?? uniqueEmail(),
+    password,
+    name: input.name ?? 'Integration User',
+    organizationName: input.organizationName ?? `Integration Org ${uniqueSlug()}`,
+  });
+  trackUser(signupResult.user.id);
+  await verifyEmail(signupResult.verificationToken);
+  const loginResult = await login({ email: signupResult.user.email, password });
+  trackOrg(loginResult.session.organizationId);
+  return loginResult;
 }
 
 /**

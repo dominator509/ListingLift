@@ -1,6 +1,7 @@
 import { type AuditEntryInput, redactAuditMetadata } from '@/lib/audit';
 import { logger } from '@/lib/logger';
 import { prisma } from '@/lib/prisma';
+import type { Prisma } from '@prisma/client';
 
 export async function recordAuditLog(input: AuditEntryInput) {
   const entry = {
@@ -17,7 +18,7 @@ export async function recordAuditLog(input: AuditEntryInput) {
         action: entry.action,
         targetType: entry.targetType,
         targetId: entry.targetId ?? null,
-        metadata: entry.metadata != null ? (entry.metadata as Record<string, unknown>) : undefined,
+        metadata: entry.metadata != null ? (entry.metadata as Prisma.InputJsonValue) : undefined,
         ipAddress: entry.ipAddress ?? null,
       },
     });

@@ -23,6 +23,21 @@
 
 No automated test may require a paid API key.
 
+## Local test environment
+
+Copy `.env.test.example` to `.env.test` for local-only validation. The values are safe placeholders and keep real integrations disabled.
+
+Start the disposable PostgreSQL service before running integration or E2E suites:
+
+```bash
+docker compose up -d postgres
+npm run db:migrate
+npm run db:seed
+npm run db:seed
+```
+
+Use `DATABASE_URL=postgresql://user:password@127.0.0.1:5432/listinglift_test?schema=public` for this local database. Do not commit real secrets or paid provider keys.
+
 ## Phase 38 — Full Testing and QA
 
 Phase 38 adds a formal QA command plan, coverage matrix, smoke target list, no-fake-results guard, and admin QA dashboard.

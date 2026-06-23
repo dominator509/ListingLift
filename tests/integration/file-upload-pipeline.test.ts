@@ -10,10 +10,9 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import { prisma } from '@/lib/prisma';
 import { hashToken } from '@/lib/tokens';
-import { signup } from '@/server/auth/auth-service';
 import { buildUploadTokenIssuePlan, redactUploadTokenForLogs } from '@/server/services/upload-token-service';
 import { buildUploadIntakePlan } from '@/server/services/upload-intake-service';
-import { cleanupAll, uniqueEmail, uniqueSlug, trackUploadToken } from './helpers';
+import { cleanupAll, signupVerifiedAndLogin, uniqueEmail, uniqueSlug, trackUploadToken } from './helpers';
 
 afterEach(async () => {
   await cleanupAll();
@@ -23,7 +22,7 @@ describe('File upload pipeline: token creation -> validation -> intake', () => {
   it('creates an upload token for an authenticated user', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Upload User', organizationName: `Upload Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Upload User', organizationName: `Upload Org ${slug}` });
 
     const plan = buildUploadTokenIssuePlan({
       organizationId: result.session.organizationId,
@@ -40,7 +39,7 @@ describe('File upload pipeline: token creation -> validation -> intake', () => {
   it('persists an upload token hash to the database', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Upload User', organizationName: `Upload Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Upload User', organizationName: `Upload Org ${slug}` });
 
     const plan = buildUploadTokenIssuePlan({
       organizationId: result.session.organizationId,
@@ -71,7 +70,7 @@ describe('File upload pipeline: token creation -> validation -> intake', () => {
   it('redacts upload token for logging (safe output)', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Log User', organizationName: `Log Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Log User', organizationName: `Log Org ${slug}` });
 
     const plan = buildUploadTokenIssuePlan({
       organizationId: result.session.organizationId,
@@ -89,7 +88,7 @@ describe('File upload pipeline: token creation -> validation -> intake', () => {
   it('builds an upload intake plan', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Intake User', organizationName: `Intake Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Intake User', organizationName: `Intake Org ${slug}` });
 
     const plan = buildUploadIntakePlan({
       organizationId: result.session.organizationId,
@@ -110,7 +109,7 @@ describe('File upload pipeline: token creation -> validation -> intake', () => {
   it('records an upload token with job association', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Job Upload', organizationName: `JobOrg ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Job Upload', organizationName: `JobOrg ${slug}` });
 
     // Create a job first
     const job = await prisma.job.create({

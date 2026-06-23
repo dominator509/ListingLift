@@ -459,7 +459,7 @@ describe('RESOURCE EXHAUSTION — parseJson bounds', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(largeObject),
     });
-    const result = await parseJson<{ data: string }>(request, {});
+    const result = await parseJson<{ data: string }>(request, { data: '' });
     expect(result.data.length).toBe(100_000);
   });
 });

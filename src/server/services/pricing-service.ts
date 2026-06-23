@@ -8,6 +8,7 @@ export type PackageQuote = {
   minCents: number | null;
   maxCents: number | null;
   estimatedCents: number | null;
+  overageCents: number;
   manualQuoteRequired: boolean;
   quoteReasons: string[];
   imageQuantity: number;
@@ -61,6 +62,7 @@ export function buildPackageQuote(input: PackageQuoteRequest): PackageQuote {
     minCents: pkg.priceMinCents,
     maxCents: pkg.priceMaxCents,
     estimatedCents,
+    overageCents,
     manualQuoteRequired,
     quoteReasons: quoteReasons.filter(Boolean),
     imageQuantity: data.imageQuantity,

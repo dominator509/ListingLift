@@ -420,7 +420,7 @@ describe('4. Auth Failure Paths — graceful rejection of bad credentials', () =
       packageKey: 'test',
       successUrl: 'http://localhost:3000/success',
       cancelUrl: 'http://localhost:3000/cancel',
-      purpose: 'TEST',
+      purpose: 'PACKAGE',
       amountCents: 1000,
       currency: 'USD',
       metadata: {},
@@ -465,9 +465,9 @@ describe('5. Stripe API Failure Handling — graceful errors for payment failure
   });
 
   it('stripe webhook verification fails gracefully with missing signature', async () => {
-    const result = await stripePaymentAdapter.verifyWebhook(
+    const result = await stripePaymentAdapter.verifyWebhook!(
       '{"id":"evt_test"}',
-      null,
+      undefined,
     );
     expect(result.ok).toBe(false);
     expect(result.error).toBeTruthy();

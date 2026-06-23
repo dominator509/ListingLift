@@ -50,7 +50,10 @@ export async function getImageProviderHealthSummary() {
     summary: {
       total: health.length,
       healthy: health.filter((item) => item.health.ok).length,
-      manualFallbackRequired: health.filter((item) => item.health.manualFallbackRequired).length,
+      manualFallbackRequired: health.filter((item) => {
+        const healthResult = item.health as { manualFallbackRequired?: boolean };
+        return healthResult.manualFallbackRequired === true;
+      }).length,
     },
   };
 }

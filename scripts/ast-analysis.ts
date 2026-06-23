@@ -96,7 +96,7 @@ function computeCyclomaticComplexity(node: ts.Node): number {
 
 function getFunctionName(node: ts.FunctionDeclaration | ts.MethodDeclaration | ts.ArrowFunction | ts.FunctionExpression): string {
   if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) {
-    return node.name?.text ?? '(anonymous)';
+    return node.name?.getText() ?? '(anonymous)';
   }
   if (ts.isVariableDeclaration(node.parent) && node.parent.name) {
     return node.parent.name.getText();

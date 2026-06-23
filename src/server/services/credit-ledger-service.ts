@@ -1,8 +1,9 @@
-import { calculateBalanceAfter, buildCreditLedgerReference, isCreditDebit } from '@/domain/credits-subscriptions';
+import { calculateBalanceAfter, buildCreditLedgerReference, isCreditDebit, type CreditLedgerEntryType } from '@/domain/credits-subscriptions';
 import { creditLedgerEntryInputSchema, type CreditLedgerEntryInput, type CreditAdjustmentInput, creditAdjustmentInputSchema } from '@/schemas/credits-subscriptions';
 
 export function buildCreditLedgerEntryDraft(input: CreditLedgerEntryInput) {
   const parsed = creditLedgerEntryInputSchema.parse(input);
+  const entryType = parsed.entryType as CreditLedgerEntryType;
   const balanceAfter = calculateBalanceAfter(parsed.previousBalance, parsed.amount);
   return {
     organizationId: parsed.organizationId,
@@ -10,13 +11,13 @@ export function buildCreditLedgerEntryDraft(input: CreditLedgerEntryInput) {
     jobId: parsed.jobId ?? null,
     amount: parsed.amount,
     balanceAfter,
-    creditType: parsed.entryType,
+    creditType: entryType,
     source: parsed.source,
     reason: parsed.reason,
     sourceReferenceType: parsed.sourceReferenceType ?? null,
     sourceReferenceId: parsed.sourceReferenceId ?? buildCreditLedgerReference(parsed.source, parsed.reason),
     notes: parsed.notes ?? null,
-    debit: isCreditDebit(parsed.entryType, parsed.amount),
+    debit: isCreditDebit(entryType, parsed.amount),
   };
 }
 

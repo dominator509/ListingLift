@@ -26,7 +26,7 @@ export function normalizeEmail(email: string): string {
   return trimmed;
 }
 
-export function redactUserForAuth<T extends { passwordHash?: string | null }>(user: T): Omit<T, 'passwordHash'> {
+export function redactUserForAuth<T extends object & { passwordHash?: string | null }>(user: T): Omit<T, 'passwordHash'> {
   const { passwordHash, ...rest } = user;
   return rest as Omit<T, 'passwordHash'>;
 }

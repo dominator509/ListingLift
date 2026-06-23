@@ -1,20 +1,20 @@
 export interface CsrfTokenDraftInput {
-  sessionId: string;
+  sessionId?: string;
   organizationId: string;
   csrfSecret: string;
   expiresInMinutes: number;
 }
 
 export interface CsrfVerificationInput {
-  sessionId: string;
+  sessionId?: string;
   organizationId: string;
   csrfSecret: string;
-  token: string;
+  token?: string;
   nowIso?: string;
 }
 
 export interface SecurityRateLimitEvaluationInput {
-  action: string;
+  action: SecurityRateLimitAction;
   subjectParts: Record<string, string | null | undefined>;
   observedCount: number;
 }
@@ -45,7 +45,7 @@ export interface SecurityTokenRecordProbeInput {
 export interface SecuritySecretReferenceDraftInput {
   organizationId: string;
   provider: string;
-  secretClass: string;
+  secretClass: SecuritySecretClass;
   label: string;
   encryptedSecretRef?: string;
   createdByUserId?: string;
@@ -69,54 +69,101 @@ export interface SecurityZipEntryProbeInput {
 }
 
 export interface WebhookSignatureProbeInput {
-  provider: string;
+  provider: 'STRIPE' | 'GUMROAD' | 'SHOPIFY' | 'ETSY' | 'API_ACCESS_WEBHOOK' | 'AUTOMATION_WEBHOOK' | 'CUSTOM';
   payload: string;
   secretConfigured: boolean;
   signatureHeader: string | null;
   eventId?: string;
 }
 
+export interface SecurityAuditEventDraftInput {
+  sessionId: string;
+  organizationId?: string;
+  userId?: string;
+  action: string;
+  eventType?: string;
+  controlArea?: string;
+  route?: string;
+  resource: string;
+  resourceType?: string;
+  resourceId?: string;
+  metadata: Record<string, unknown>;
+}
+
 export const csrfTokenDraftSchema = {
-  parse: (input: CsrfTokenDraftInput) => {
-    if (!input.sessionId) throw new Error('sessionId required');
-    if (!input.organizationId) throw new Error('organizationId required');
-    if (!input.csrfSecret || input.csrfSecret.length < 16) throw new Error('csrfSecret must be at least 16 chars');
-    if (!Number.isFinite(input.expiresInMinutes) || input.expiresInMinutes < 1) throw new Error('expiresInMinutes must be >= 1');
-    return input;
+  parse: (input: unknown): CsrfTokenDraftInput => {
+    if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
+    const parsed = {
+      sessionId: obj.sessionId as string | undefined,
+      organizationId: obj.organizationId as string,
+      csrfSecret: obj.csrfSecret as string,
+      expiresInMinutes: obj.expiresInMinutes as number,
+    };
+    if (!parsed.organizationId) throw new Error('organizationId required');
+    if (!parsed.csrfSecret || parsed.csrfSecret.length < 16) throw new Error('csrfSecret must be at least 16 chars');
+    if (!Number.isFinite(parsed.expiresInMinutes) || parsed.expiresInMinutes < 1) throw new Error('expiresInMinutes must be >= 1');
+    return parsed;
   },
 };
 
 export const csrfVerificationSchema = {
-  parse: (input: CsrfVerificationInput) => {
-    if (!input.sessionId) throw new Error('sessionId required');
-    if (!input.organizationId) throw new Error('organizationId required');
-    if (!input.csrfSecret) throw new Error('csrfSecret required');
-    if (!input.token) throw new Error('token required');
-    return input;
+  parse: (input: unknown): CsrfVerificationInput => {
+    if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
+    const parsed = {
+      sessionId: obj.sessionId as string | undefined,
+      organizationId: obj.organizationId as string,
+      csrfSecret: obj.csrfSecret as string,
+      token: obj.token as string | undefined,
+      nowIso: obj.nowIso as string | undefined,
+    };
+    if (!parsed.organizationId) throw new Error('organizationId required');
+    if (!parsed.csrfSecret) throw new Error('csrfSecret required');
+    return parsed;
   },
 };
 
 export const securityAuditEventDraftSchema = {
-  parse: (input: unknown) => {
+  parse: (input: unknown): SecurityAuditEventDraftInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
-    return { sessionId: input.sessionId, action: input.action, resource: input.resource, metadata: input.metadata };
+    const obj = input as Record<string, unknown>;
+    return {
+      sessionId: obj.sessionId as string,
+      organizationId: obj.organizationId as string | undefined,
+      userId: obj.userId as string | undefined,
+      action: obj.action as SecurityRateLimitAction,
+      eventType: obj.eventType as string | undefined,
+      controlArea: obj.controlArea as string | undefined,
+      route: obj.route as string | undefined,
+      resource: obj.resource as string,
+      resourceType: obj.resourceType as string | undefined,
+      resourceId: obj.resourceId as string | undefined,
+      metadata: (obj.metadata as Record<string, unknown> | undefined) ?? {},
+    };
   },
 };
 
 export const securityDashboardQuerySchema = {
-  parse: (input: unknown) => {
+  parse: (input: unknown): { timeframe?: string; area?: string; status?: string } => {
     if (!input || typeof input !== 'object') return {};
-    return { timeframe: input.timeframe as string | undefined };
+    const obj = input as Record<string, unknown>;
+    return {
+      timeframe: obj.timeframe as string | undefined,
+      area: obj.area as string | undefined,
+      status: obj.status as string | undefined,
+    };
   },
 };
 
 export const securityRateLimitEvaluationSchema = {
   parse: (input: unknown): SecurityRateLimitEvaluationInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      action: input.action as string,
-      subjectParts: input.subjectParts as Record<string, string | null | undefined>,
-      observedCount: input.observedCount as number,
+      action: obj.action as SecurityRateLimitAction,
+      subjectParts: obj.subjectParts as Record<string, string | null | undefined>,
+      observedCount: obj.observedCount as number,
     };
   },
 };
@@ -124,14 +171,15 @@ export const securityRateLimitEvaluationSchema = {
 export const securitySecretReferenceDraftSchema = {
   parse: (input: unknown): SecuritySecretReferenceDraftInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      organizationId: input.organizationId as string,
-      provider: input.provider as string,
-      secretClass: input.secretClass as string,
-      label: input.label as string,
-      encryptedSecretRef: input.encryptedSecretRef as string | undefined,
-      createdByUserId: input.createdByUserId as string | undefined,
-      metadata: input.metadata as Record<string, unknown>,
+      organizationId: obj.organizationId as string,
+      provider: obj.provider as string,
+      secretClass: obj.secretClass as SecuritySecretClass,
+      label: obj.label as string,
+      encryptedSecretRef: obj.encryptedSecretRef as string | undefined,
+      createdByUserId: obj.createdByUserId as string | undefined,
+      metadata: (obj.metadata as Record<string, unknown> | undefined) ?? {},
     };
   },
 };
@@ -139,15 +187,16 @@ export const securitySecretReferenceDraftSchema = {
 export const securityTokenLifecycleDraftSchema = {
   parse: (input: unknown): SecurityTokenLifecycleDraftInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      organizationId: input.organizationId as string,
-      tokenKind: input.tokenKind as string,
-      resourceId: input.resourceId as string,
-      expiresInMinutes: input.expiresInMinutes as number,
-      approvedOnly: input.approvedOnly as boolean | undefined,
-      scope: input.scope as Record<string, unknown> | undefined,
-      maxUses: input.maxUses as number | undefined,
-      createdByUserId: input.createdByUserId as string | undefined,
+      organizationId: obj.organizationId as string,
+      tokenKind: obj.tokenKind as string,
+      resourceId: obj.resourceId as string,
+      expiresInMinutes: obj.expiresInMinutes as number,
+      approvedOnly: obj.approvedOnly as boolean | undefined,
+      scope: obj.scope as Record<string, unknown> | undefined,
+      maxUses: obj.maxUses as number | undefined,
+      createdByUserId: obj.createdByUserId as string | undefined,
     };
   },
 };
@@ -155,16 +204,17 @@ export const securityTokenLifecycleDraftSchema = {
 export const securityTokenRecordProbeSchema = {
   parse: (input: unknown): SecurityTokenRecordProbeInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      tokenKind: input.tokenKind as string,
-      tokenHash: input.tokenHash as string,
-      expiresAt: input.expiresAt as Date,
-      revokedAt: input.revokedAt as Date | null | undefined,
-      organizationId: input.organizationId as string | undefined,
-      clientId: input.clientId as string | undefined,
-      jobId: input.jobId as string | undefined,
-      agencyWorkspaceId: input.agencyWorkspaceId as string | undefined,
-      approvedOnly: input.approvedOnly as boolean | undefined,
+      tokenKind: obj.tokenKind as string,
+      tokenHash: obj.tokenHash as string,
+      expiresAt: obj.expiresAt as Date,
+      revokedAt: obj.revokedAt as Date | null | undefined,
+      organizationId: obj.organizationId as string | undefined,
+      clientId: obj.clientId as string | undefined,
+      jobId: obj.jobId as string | undefined,
+      agencyWorkspaceId: obj.agencyWorkspaceId as string | undefined,
+      approvedOnly: obj.approvedOnly as boolean | undefined,
     };
   },
 };
@@ -172,14 +222,15 @@ export const securityTokenRecordProbeSchema = {
 export const securityUploadProbeSchema = {
   parse: (input: unknown): SecurityUploadProbeInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      fileName: input.fileName as string,
-      mimeType: input.mimeType as string,
-      sizeBytes: input.sizeBytes as number,
-      sourceSurface: input.sourceSurface as string,
-      sha256: input.sha256 as string | undefined,
-      width: input.width as number | undefined,
-      height: input.height as number | undefined,
+      fileName: obj.fileName as string,
+      mimeType: obj.mimeType as string,
+      sizeBytes: obj.sizeBytes as number,
+      sourceSurface: obj.sourceSurface as string,
+      sha256: obj.sha256 as string | undefined,
+      width: obj.width as number | undefined,
+      height: obj.height as number | undefined,
     };
   },
 };
@@ -187,10 +238,11 @@ export const securityUploadProbeSchema = {
 export const securityZipEntryProbeSchema = {
   parse: (input: unknown): SecurityZipEntryProbeInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      path: input.path as string,
-      sizeBytes: input.sizeBytes as number,
-      isDirectory: input.isDirectory as boolean,
+      path: obj.path as string,
+      sizeBytes: obj.sizeBytes as number,
+      isDirectory: obj.isDirectory as boolean,
     };
   },
 };
@@ -198,12 +250,14 @@ export const securityZipEntryProbeSchema = {
 export const webhookSignatureProbeSchema = {
   parse: (input: unknown): WebhookSignatureProbeInput => {
     if (!input || typeof input !== 'object') throw new Error('Input must be an object');
+    const obj = input as Record<string, unknown>;
     return {
-      provider: input.provider as string,
-      payload: input.payload as string,
-      secretConfigured: input.secretConfigured as boolean,
-      signatureHeader: input.signatureHeader as string | null,
-      eventId: input.eventId as string | undefined,
+      provider: obj.provider as WebhookSignatureProbeInput['provider'],
+      payload: obj.payload as string,
+      secretConfigured: obj.secretConfigured as boolean,
+      signatureHeader: obj.signatureHeader as string | null,
+      eventId: obj.eventId as string | undefined,
     };
   },
 };
+import type { SecurityRateLimitAction, SecuritySecretClass } from '@/domain/security-hardening';

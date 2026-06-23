@@ -35,7 +35,8 @@ export function createCsrfTokenDraft(input: CsrfTokenDraftInput) {
   const parsed = csrfTokenDraftSchema.parse(input);
   const nonce = randomToken(24);
   const expiresAt = addMinutes(new Date(), parsed.expiresInMinutes);
-  const payload = `${nonce}.${parsed.sessionId}.${parsed.organizationId}.${expiresAt.toISOString()}`;
+  const sessionId = parsed.sessionId ?? 'session-not-bound';
+  const payload = `${nonce}.${sessionId}.${parsed.organizationId}.${expiresAt.toISOString()}`;
   const signature = signCsrfPayload(payload, parsed.csrfSecret);
   const token = `${nonce}|${expiresAt.toISOString()}|${signature}`;
   return {
@@ -49,13 +50,15 @@ export function createCsrfTokenDraft(input: CsrfTokenDraftInput) {
 
 export function verifyCsrfTokenDraft(input: CsrfVerificationInput) {
   const parsed = csrfVerificationSchema.parse(input);
+  if (!parsed.token) return { ok: false, reason: 'missing_token' as const };
   const [nonce, expiresAtIso, signature] = parsed.token.split('|');
   if (!nonce || !expiresAtIso || !signature) return { ok: false, reason: 'malformed_token' as const };
   const expiresAt = new Date(expiresAtIso);
   const now = parsed.nowIso ? new Date(parsed.nowIso) : new Date();
   if (!Number.isFinite(expiresAt.getTime())) return { ok: false, reason: 'malformed_expiry' as const };
   if (expiresAt.getTime() <= now.getTime()) return { ok: false, reason: 'expired' as const };
-  const payload = `${nonce}.${parsed.sessionId}.${parsed.organizationId}.${expiresAt.toISOString()}`;
+  const sessionId = parsed.sessionId ?? 'session-not-bound';
+  const payload = `${nonce}.${sessionId}.${parsed.organizationId}.${expiresAt.toISOString()}`;
   const expected = signCsrfPayload(payload, parsed.csrfSecret);
   return safeEqual(signature, expected) ? { ok: true, reason: null, expiresAt } : { ok: false, reason: 'signature_mismatch' as const };
 }

@@ -3,6 +3,7 @@ import { buildPackageQuote, formatCents } from '../../src/server/services/pricin
 import { assertPackageAllowance, assertRevisionAllowance } from '../../src/server/services/package-service';
 import { evaluatePermission, evaluateTenantAccess } from '../../src/server/services/rbac-policy-service';
 import { PERMISSIONS } from '../../src/domain/permissions';
+import type { ServicePackage } from '../../src/domain/packages';
 
 // ─── Pricing: buildPackageQuote — comprehensive edge cases ──────────
 
@@ -135,7 +136,18 @@ describe('formatCents', () => {
 // ─── Package Service: assertPackageAllowance ────────────────────────
 
 describe('assertPackageAllowance', () => {
-  const pkg = { key: 'QuickCleanup10', imageMax: 10, imageAllowance: 10, pricePolicy: { requiresManualQuoteAboveImages: 15, overagePriceCents: 500, baseImageAllowance: 10, rushAvailable: false, rushFeeCents: null } };
+  const pkg = {
+    key: 'QuickCleanup10',
+    imageMax: 10,
+    imageAllowance: 10,
+    pricePolicy: {
+      requiresManualQuoteAboveImages: 15,
+      overagePriceCents: 500,
+      baseImageAllowance: 10,
+      rushAvailable: false,
+      rushFeeCents: null,
+    },
+  } satisfies Pick<ServicePackage, 'key' | 'imageMax' | 'imageAllowance' | 'pricePolicy'>;
 
   it('allows image quantity at or below max', () => {
     expect(assertPackageAllowance(pkg, 10).allowed).toBe(true);
@@ -321,11 +333,11 @@ describe('evaluateTenantAccess — tenant isolation', () => {
   });
 
   it('blocks agency scope when agencyScope=false', () => {
-    expect(evaluateTenantAccess(orgScope('AGENCY_ADMIN', 'org_1', null, false), { organizationId: 'org_1' }).allowed).toBe(false);
+    expect(evaluateTenantAccess(orgScope('AGENCY_ADMIN', 'org_1', undefined, false), { organizationId: 'org_1' }).allowed).toBe(false);
   });
 
   it('allows agency scope when agencyScope=true or undefined', () => {
-    expect(evaluateTenantAccess(orgScope('AGENCY_ADMIN', 'org_1', null, true), { organizationId: 'org_1' }).allowed).toBe(true);
+    expect(evaluateTenantAccess(orgScope('AGENCY_ADMIN', 'org_1', undefined, true), { organizationId: 'org_1' }).allowed).toBe(true);
     expect(evaluateTenantAccess(orgScope('AGENCY_ADMIN', 'org_1'), { organizationId: 'org_1' }).allowed).toBe(true);
   });
 

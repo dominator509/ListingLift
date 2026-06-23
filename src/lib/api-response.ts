@@ -47,7 +47,7 @@ export function mapServiceError(error: unknown): NextResponse {
   if (error instanceof Error) {
     const csrfCodes = ['CSRF_TOKEN_MISSING', 'CSRF_TOKEN_MALFORMED', 'CSRF_TOKEN_INVALID', 'CSRF_TOKEN_EXPIRED', 'CSRF_ORIGIN_MISMATCH'];
     const code = (error as { code?: string }).code;
-    if (csrfCodes.includes(code)) return jsonFail(code, error.message, 403);
+    if (code && csrfCodes.includes(code)) return jsonFail(code, error.message, 403);
 
     // Prisma error codes — checked before generic code keys so they take priority
     if (code === 'P2002') return jsonFail('CONFLICT', error.message, 409);

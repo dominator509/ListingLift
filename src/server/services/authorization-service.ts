@@ -4,7 +4,7 @@
  */
 import { prisma } from '@/lib/prisma';
 import { evaluatePermission } from './rbac-policy-service';
-import type { PermissionKey } from '@/domain/permissions';
+import type { PermissionKey, RoleKey } from '@/domain/permissions';
 
 type Session = { userId: string; organizationId: string; role: string };
 
@@ -25,7 +25,7 @@ export function assertPermission(session: Session, permission: string): void {
  */
 export function can(session: Session, permission: string): boolean {
   return evaluatePermission(
-    { organizationId: session.organizationId, role: session.role },
+    { organizationId: session.organizationId, role: session.role as RoleKey },
     permission as PermissionKey,
   ).allowed;
 }

@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import type { WebhookEventStatus } from '@prisma/client';
+import type { Prisma, WebhookEventStatus } from '@prisma/client';
 
 export type IdempotencyResult =
   | { duplicate: true; existingId: string }
@@ -25,7 +25,7 @@ export async function recordWebhookEvent(
         provider,
         externalId,
         eventType,
-        payload,
+        payload: payload as Prisma.InputJsonValue,
         signatureVerified,
         status: signatureVerified ? 'VERIFIED' : 'RECEIVED',
         organizationId: organizationId ?? null,

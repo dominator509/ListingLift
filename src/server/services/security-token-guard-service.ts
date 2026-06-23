@@ -28,7 +28,7 @@ export function buildHashedSecurityTokenDraft(input: SecurityTokenLifecycleDraft
 
 export function evaluateSecurityTokenRecord(input: SecurityTokenRecordProbeInput, now = new Date()) {
   const parsed = securityTokenRecordProbeSchema.parse(input);
-  const expired = isExpired(parsed.expiresAt, now);
+  const expired = parsed.expiresAt.getTime() <= now.getTime();
   const revoked = Boolean(parsed.revokedAt);
   const scoped = Boolean(parsed.organizationId || parsed.clientId || parsed.jobId || parsed.agencyWorkspaceId);
   const issues = [

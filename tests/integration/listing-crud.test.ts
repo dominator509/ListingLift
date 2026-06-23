@@ -10,8 +10,7 @@
 
 import { describe, expect, it, afterEach } from 'vitest';
 import { prisma } from '@/lib/prisma';
-import { signup } from '@/server/auth/auth-service';
-import { cleanupAll, uniqueEmail, uniqueSlug, trackJob } from './helpers';
+import { cleanupAll, signupVerifiedAndLogin, uniqueEmail, uniqueSlug, trackJob } from './helpers';
 
 afterEach(async () => {
   await cleanupAll();
@@ -21,7 +20,7 @@ describe('Listing (Job) CRUD: create -> read -> update -> delete', () => {
   it('creates a job (listing) for an organization', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'CRUD User', organizationName: `CRUD Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'CRUD User', organizationName: `CRUD Org ${slug}` });
 
     const job = await prisma.job.create({
       data: {
@@ -46,7 +45,7 @@ describe('Listing (Job) CRUD: create -> read -> update -> delete', () => {
   it('reads a job by ID and verifies all fields', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Read User', organizationName: `Read Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Read User', organizationName: `Read Org ${slug}` });
 
     const created = await prisma.job.create({
       data: {
@@ -69,7 +68,7 @@ describe('Listing (Job) CRUD: create -> read -> update -> delete', () => {
   it('updates a job status and title', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Update User', organizationName: `Update Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Update User', organizationName: `Update Org ${slug}` });
 
     const created = await prisma.job.create({
       data: {
@@ -99,7 +98,7 @@ describe('Listing (Job) CRUD: create -> read -> update -> delete', () => {
   it('deletes a job and confirms it is gone', async () => {
     const email = uniqueEmail();
     const slug = uniqueSlug();
-    const result = await signup({ email, password: 'P4ssw0rd!', name: 'Delete User', organizationName: `Delete Org ${slug}` });
+    const result = await signupVerifiedAndLogin({ email, password: 'StrongP4ssword!', name: 'Delete User', organizationName: `Delete Org ${slug}` });
 
     const created = await prisma.job.create({
       data: {
@@ -120,8 +119,8 @@ describe('Listing (Job) CRUD: create -> read -> update -> delete', () => {
   it('enforces organization isolation — jobs from org A not visible to org B', async () => {
     const slug1 = uniqueSlug();
     const slug2 = uniqueSlug();
-    const orgA = await signup({ email: uniqueEmail(), password: 'P4ssw0rd!', name: 'OrgA User', organizationName: `Org A ${slug1}` });
-    const orgB = await signup({ email: uniqueEmail(), password: 'P4ssw0rd!', name: 'OrgB User', organizationName: `Org B ${slug2}` });
+    const orgA = await signupVerifiedAndLogin({ email: uniqueEmail(), password: 'StrongP4ssword!', name: 'OrgA User', organizationName: `Org A ${slug1}` });
+    const orgB = await signupVerifiedAndLogin({ email: uniqueEmail(), password: 'StrongP4ssword!', name: 'OrgB User', organizationName: `Org B ${slug2}` });
 
     const jobA = await prisma.job.create({
       data: { organizationId: orgA.session.organizationId, title: 'Org A Job', status: 'DRAFT', priority: 'NORMAL' },

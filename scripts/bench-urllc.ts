@@ -45,7 +45,7 @@ interface Result {
   underBudget: boolean;
 }
 
-function benchRoundtrip(label: string, sizeKb: number): Result {
+function benchRoundtrip(label: string, sizeKb: number): Promise<Result> {
   const payload = generatePayload(sizeKb);
   const json = JSON.stringify(payload);
   const buf = Buffer.from(json);
