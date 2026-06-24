@@ -17,6 +17,7 @@ export async function GET(request: Request) {
         notRun: ledger.notRun,
         productionReady: ledger.productionReady,
       },
+      retentionPolicy: ledger.retentionPolicy,
       records: ledger.records,
       persisted: true,
       codexNote: 'QA ledger records are loaded from Prisma for organization ' + session.organizationId + '. PASS rows still require evidence references and never imply production readiness by themselves.',
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     const parsed = qaVerificationLedgerDraftSchema.parse({ ...(typeof body === 'object' && body !== null ? body : {}), organizationId: session.organizationId, userId: session.userId });
     return {
       draft: await buildQaVerificationLedgerDraft(parsed),
-      codexNote: 'Ledger entry persisted with sanitized evidence references. This route rejects fake PASS claims and never marks production readiness by itself.',
+      codexNote: 'Ledger entry persisted with sanitized evidence references and local retention policy metadata. This route rejects fake PASS claims and never marks production readiness by itself.',
     };
   });
 }

@@ -2,6 +2,38 @@ import { rejectRuntimeClaimWithoutEvidence, type QaCheckStatus } from '@/domain/
 import { type QaVerificationLedgerDraftInput } from '@/schemas/full-testing-qa';
 import { prisma } from '@/lib/prisma';
 
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+export const QA_EVIDENCE_RETENTION_POLICY = {
+  policyKey: 'phase38-local-qa-evidence-retention',
+  evidenceReviewDays: 30,
+  evidenceDeleteAfterDays: 180,
+  commandLogDeleteAfterDays: 30,
+  externalArtifactStorageRequired: false,
+  purgeAction: 'manual_admin_purge_required',
+  note: 'Local QA evidence references are retained for review, then become eligible for manual purge. Raw secrets, raw tokens, signed URLs, raw file bytes, and unapproved delivery links must never be stored.',
+} as const;
+
+function addDays(date: Date, days: number) {
+  return new Date(date.getTime() + days * MS_PER_DAY);
+}
+
+export function buildQaEvidenceRetentionState(record: { createdAt?: Date | string | null; evidenceCount?: number | null }, now = new Date()) {
+  const createdAt = record.createdAt ? new Date(record.createdAt) : now;
+  const reviewUntil = addDays(createdAt, QA_EVIDENCE_RETENTION_POLICY.evidenceReviewDays);
+  const deleteAfter = addDays(createdAt, QA_EVIDENCE_RETENTION_POLICY.evidenceDeleteAfterDays);
+  const hasEvidence = (record.evidenceCount ?? 0) > 0;
+
+  return {
+    policyKey: QA_EVIDENCE_RETENTION_POLICY.policyKey,
+    hasEvidence,
+    reviewUntil,
+    deleteAfter,
+    purgeEligible: hasEvidence && now.getTime() >= deleteAfter.getTime(),
+    purgeAction: QA_EVIDENCE_RETENTION_POLICY.purgeAction,
+  };
+}
+
 function toEvidenceRefs(input: QaVerificationLedgerDraftInput['evidence']) {
   return (input ?? []).map((evidence) => ({
     type: evidence.type,
@@ -27,6 +59,7 @@ export async function buildQaVerificationLedgerDraft(input: QaVerificationLedger
       input.status === 'PASS' ? 'Codex must still update ROADMAP_STATUS.md, CODEX_GAPS.md, and PHASE_38_VERIFICATION_MATRIX.md with actual command output references.' : null,
     ].filter(Boolean),
     codexNote: 'Ledger entry persisted to database via Prisma. Evidence references are stored for audit review.',
+    retentionPolicy: QA_EVIDENCE_RETENTION_POLICY,
   };
 
   const record = await prisma.qaVerificationLedger.create({
@@ -67,6 +100,7 @@ export async function getQaVerificationLedgerSummary(organizationId?: string) {
     orderBy: { createdAt: 'desc' },
     take: 100,
   });
+  const now = new Date();
   return {
     total: records.length,
     passed: records.filter((r) => r.status === 'PASS').length,
@@ -76,6 +110,7 @@ export async function getQaVerificationLedgerSummary(organizationId?: string) {
       (r) => r.status === 'NOT_RUN' || r.status === 'CODEX_REQUIRED' || r.status === 'SCAFFOLDED'
     ).length,
     productionReady: false,
+    retentionPolicy: QA_EVIDENCE_RETENTION_POLICY,
     records: records.map((r) => ({
       id: r.id,
       checkKey: r.checkKey,
@@ -86,6 +121,7 @@ export async function getQaVerificationLedgerSummary(organizationId?: string) {
       accepted: r.accepted,
       evidenceCount: r.evidenceCount,
       evidenceRefs: r.evidenceRefs,
+      retention: buildQaEvidenceRetentionState(r, now),
       productionReleaseAllowed: r.productionReleaseAllowed,
       createdAt: r.createdAt,
     })),

@@ -59,6 +59,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 E2E hardening aligned browser tests with verified-email signup, 12-character password policy, per-IP signup limits, and session binding; generated valid local Stripe webhook signatures; fixed duplicate public navigation assertions; and updated the upload token route for Next async dynamic params.
 - Phase 38 final hardening resolved the remaining WCAG color-contrast violations, added persisted QA ledger evidence references via Prisma JSON storage, wired the ledger GET route to persisted organization records, and ran `npm run test-all` as one combined command.
 - Phase 38 evidence hardening replaced stale seed-era readiness claims in `PHASE_38_VERIFICATION_MATRIX.md` and `CODEX_GAPS.md` with current local test evidence, intentional skips, provider limitations, and non-production disposition; `qa:matrix` now reports documented local evidence separately from remaining production blockers.
+- Phase 38 QA retention hardening added local retention metadata to QA ledger evidence references: 30-day review window, 180-day delete-after boundary, and manual purge eligibility without requiring external artifact storage.
 
 ## Files Changed
 
@@ -68,6 +69,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 E2E hardening updates include `.env.test.example`, `src/app/upload/[token]/page.tsx`, and browser specs for fullstack auth, concurrency, session isolation, rate limiting, public shell navigation, and webhook resilience.
 - Phase 38 final hardening updates include `src/components/ui/button.tsx`, `src/components/workflow/before-after-card.tsx`, `src/app/api/admin/qa/verification-ledger/route.ts`, `src/server/services/full-testing-qa-verification-ledger-service.ts`, `prisma/schema.prisma`, `prisma/migrations/20260623_phase38_qa_ledger_evidence_refs/migration.sql`, QA ledger tests, and the regenerated Q12 a11y report.
 - Phase 38 evidence hardening updates include `PHASE_38_VERIFICATION_MATRIX.md`, `CODEX_GAPS.md`, `ROADMAP_STATUS.md`, and `scripts/qa-matrix.ts`.
+- Phase 38 QA retention hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -102,6 +104,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 final hardening: focused `tests/e2e/a11y-audit.spec.ts` on fresh port 3100 — passed, 48 pages scanned, 0 violations, 48/48 passing.
 - Phase 38 final hardening: `npm run test-all` — passed as one combined command with safe local test env and Docker PostgreSQL.
 - Phase 38 evidence hardening: `git diff --check` passed; `npm run qa:matrix` passed and prints local evidence plus remaining production blockers; `npm run typecheck` passed.
+- Phase 38 QA retention hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 4 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
 
 ## Test Results
 

@@ -30,7 +30,7 @@ vi.mock('@/lib/prisma', () => ({
           evidenceCount: 1,
           evidenceRefs: [{ type: 'COMMAND_OUTPUT', ref: 'ROADMAP_STATUS.md#build' }],
           productionReleaseAllowed: false,
-          createdAt: new Date('2026-06-23T00:00:00.000Z'),
+          createdAt: new Date('2026-01-01T00:00:00.000Z'),
         },
       ]),
     },
@@ -82,6 +82,8 @@ describe('phase38 full testing QA route contracts', () => {
     const body = await readJson(response);
     expect(JSON.stringify(body.data)).toContain('mock-ledger-id');
     expect(JSON.stringify(body.data)).toContain('ROADMAP_STATUS.md#build');
+    expect(JSON.stringify(body.data)).toContain('phase38-local-qa-evidence-retention');
+    expect(JSON.stringify(body.data)).toContain('manual_admin_purge_required');
     expect(JSON.stringify(body.data)).toContain('persisted');
   });
 });

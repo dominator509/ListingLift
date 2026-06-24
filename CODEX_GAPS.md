@@ -27,6 +27,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - `npm run test-all` passes as one combined command with safe local env and Docker PostgreSQL.
 - High-severity npm audit/security gate passes after the Nodemailer update; 5 moderate advisories remain because available fixes require force/breaking upgrades.
 - QA ledger evidence references are now persisted through Prisma JSON storage, and PASS rows require evidence.
+- QA ledger evidence references now expose a local retention policy with a 30-day review window, 180-day delete-after boundary, and manual purge eligibility.
 
 ## Remaining Codex/runtime gaps
 
@@ -75,7 +76,6 @@ These gaps remain active and should not be described as production-ready:
 
 ### QA persistence and evidence
 
-- Add a retention policy for QA artifacts and evidence references.
 - Decide whether external artifact storage is required for browser traces, screenshots, and command logs.
 - Keep persisted evidence sanitized; never store raw secrets, raw tokens, signed URLs, provider keys, raw webhook payloads, customer private notes, marketplace credentials, marketplace passwords, raw file bytes, or unapproved delivery links.
 - Preserve audit events for QA status changes, evidence creation, evidence deletion, and manual overrides.
