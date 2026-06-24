@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { rejectRuntimeClaimWithoutEvidence } from '@/domain/full-testing-qa';
 
 const auditLogCreate = vi.hoisted(() => vi.fn().mockImplementation(({ data }) => Promise.resolve({ id: 'mock-audit-log-id', ...data })));
+const qaLedgerCreate = vi.hoisted(() => vi.fn().mockResolvedValue({ id: 'mock-ledger-id' }));
 
 // Mock Prisma so the service can run without a real database connection
 vi.mock('@/lib/prisma', () => ({
@@ -10,7 +11,7 @@ vi.mock('@/lib/prisma', () => ({
       create: auditLogCreate,
     },
     qaVerificationLedger: {
-      create: vi.fn().mockResolvedValue({ id: 'mock-ledger-id' }),
+      create: qaLedgerCreate,
       findMany: vi.fn().mockResolvedValue([]),
     },
   },
@@ -32,6 +33,7 @@ const { recordQaLedgerAuditEvent } = await import(
 describe('Phase 38 no fake QA results', () => {
   beforeEach(() => {
     auditLogCreate.mockClear();
+    qaLedgerCreate.mockClear();
   });
 
   it('blocks PASS status without evidence', async () => {
@@ -136,6 +138,42 @@ describe('Phase 38 no fake QA results', () => {
     );
     expect(JSON.stringify(auditLogCreate.mock.calls)).not.toContain('ll_secret_token');
     expect(JSON.stringify(auditLogCreate.mock.calls)).not.toContain('super-secret');
+  });
+
+  it('redacts sensitive values from persisted QA evidence references and notes', async () => {
+    const draft = await buildQaVerificationLedgerDraft({
+      organizationId: 'org_qa',
+      packageVersion: 'v40',
+      phase: 38,
+      checkKey: 'e2e',
+      layer: 'E2E',
+      status: 'PASS',
+      severity: 'BLOCKER',
+      command: 'npm run test:e2e',
+      evidence: [
+        {
+          type: 'TRACE',
+          ref: 'https://storage.example/trace.zip?token=raw-token-123&signature=raw-signature-456',
+          note: 'authorization: Bearer secret-token password=plain-text apiKey=provider-key',
+        },
+      ],
+      notes: 'e2e passed with redacted local evidence',
+    });
+
+    const serializedDraft = JSON.stringify(draft.evidenceRefs);
+    const persistedData = JSON.stringify(qaLedgerCreate.mock.calls.at(-1)?.[0]?.data?.evidenceRefs);
+
+    expect(serializedDraft).toContain('token=[redacted]');
+    expect(serializedDraft).toContain('signature=[redacted]');
+    expect(serializedDraft).toContain('authorization:[redacted]');
+    expect(serializedDraft).toContain('password=[redacted]');
+    expect(serializedDraft).toContain('apiKey=[redacted]');
+    expect(serializedDraft).not.toContain('raw-token-123');
+    expect(serializedDraft).not.toContain('raw-signature-456');
+    expect(serializedDraft).not.toContain('secret-token');
+    expect(serializedDraft).not.toContain('plain-text');
+    expect(serializedDraft).not.toContain('provider-key');
+    expect(persistedData).toBe(serializedDraft);
   });
 
   it('marks old evidence references as purge eligible after the retention window', () => {

@@ -30,6 +30,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - QA ledger evidence references now expose a local retention policy with a 30-day review window, 180-day delete-after boundary, and manual purge eligibility.
 - QA ledger evidence references now expose a local storage policy: external artifact storage is not required for Phase 38 local verification, and production/CI artifact storage must be revisited before release gates.
 - QA ledger mutations now preserve sanitized audit events for entry creation, status changes, evidence creation, evidence deletion, and manual overrides.
+- QA ledger evidence refs and notes are redacted before persistence so token, secret, password, API key, authorization, signature, and signed URL values are not stored raw.
 
 ## Remaining Codex/runtime gaps
 
@@ -78,7 +79,7 @@ These gaps remain active and should not be described as production-ready:
 
 ### QA persistence and evidence
 
-- Keep persisted evidence sanitized; never store raw secrets, raw tokens, signed URLs, provider keys, raw webhook payloads, customer private notes, marketplace credentials, marketplace passwords, raw file bytes, or unapproved delivery links.
+No remaining credential-free QA persistence gaps are currently open. Production/CI artifact storage and deployment evidence remain pre-release work.
 
 ### Test command coverage
 

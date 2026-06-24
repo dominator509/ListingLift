@@ -62,6 +62,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 QA retention hardening added local retention metadata to QA ledger evidence references: 30-day review window, 180-day delete-after boundary, and manual purge eligibility without requiring external artifact storage.
 - Phase 38 QA storage hardening made the external artifact storage decision explicit: local database evidence references are sufficient for Phase 38 local verification, while production/CI artifact storage remains a pre-release decision.
 - Phase 38 QA audit hardening added sanitized audit events for QA ledger creation, status changes, evidence creation, evidence deletion, and manual overrides without requiring external logging credentials.
+- Phase 38 QA evidence sanitization redacts sensitive token, secret, password, API key, authorization, signature, and signed URL values from QA evidence refs and notes before persistence.
 
 ## Files Changed
 
@@ -74,6 +75,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 QA retention hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 QA storage hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 QA audit hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 QA evidence sanitization updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, QA ledger security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -111,6 +113,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 QA retention hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 4 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
 - Phase 38 QA storage hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 4 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
 - Phase 38 QA audit hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 5 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
+- Phase 38 QA evidence sanitization: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 6 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
 
 ## Test Results
 

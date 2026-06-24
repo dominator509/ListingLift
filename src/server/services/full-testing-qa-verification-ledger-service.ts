@@ -59,11 +59,21 @@ export function buildQaEvidenceRetentionState(record: { createdAt?: Date | strin
   };
 }
 
+export function sanitizeQaEvidenceText(value: string) {
+  return value
+    .replace(/\bauthorization\s*:\s*Bearer\s+[^,\s;]+/gi, 'authorization: [redacted]')
+    .replace(/([?&](?:token|secret|password|apiKey|apikey|authorization|signature|signedUrl|url)=)[^&#\s]+/gi, '$1[redacted]')
+    .replace(/\b(?:token|secret|password|apiKey|apikey|authorization|signature|signedUrl|providerKey)\s*[:=]\s*[^,&\s;]+/gi, (match) => {
+      const separator = match.includes(':') ? ':' : '=';
+      return `${match.slice(0, match.indexOf(separator)).trim()}${separator}[redacted]`;
+    });
+}
+
 function toEvidenceRefs(input: QaVerificationLedgerDraftInput['evidence']) {
   return (input ?? []).map((evidence) => ({
     type: evidence.type,
-    ref: evidence.ref,
-    ...(evidence.note ? { note: evidence.note } : {}),
+    ref: sanitizeQaEvidenceText(evidence.ref),
+    ...(evidence.note ? { note: sanitizeQaEvidenceText(evidence.note) } : {}),
   }));
 }
 
