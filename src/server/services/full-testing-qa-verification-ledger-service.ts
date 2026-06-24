@@ -4,12 +4,21 @@ import { prisma } from '@/lib/prisma';
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+export const QA_EVIDENCE_STORAGE_POLICY = {
+  policyKey: 'phase38-local-qa-evidence-storage',
+  mode: 'LOCAL_DATABASE_REFERENCES',
+  externalArtifactStorageRequired: false,
+  acceptedReferenceTypes: ['COMMAND_OUTPUT', 'SCREENSHOT', 'TRACE', 'LOG', 'DATABASE_RECORD', 'MANUAL_REVIEW_NOTE', 'ARTIFACT'],
+  productionDecision: 'External artifact storage is not required for local Phase 38 verification. Revisit before production/CI evidence retention, cross-run trace retention, or deployment release gates.',
+  forbiddenMaterial: ['rawSecret', 'rawToken', 'signedUrl', 'providerKey', 'rawWebhookPayload', 'customerPrivateNote', 'marketplaceCredential', 'marketplacePassword', 'rawFileBytes', 'unapprovedDeliveryLink'],
+} as const;
+
 export const QA_EVIDENCE_RETENTION_POLICY = {
   policyKey: 'phase38-local-qa-evidence-retention',
   evidenceReviewDays: 30,
   evidenceDeleteAfterDays: 180,
   commandLogDeleteAfterDays: 30,
-  externalArtifactStorageRequired: false,
+  externalArtifactStorageRequired: QA_EVIDENCE_STORAGE_POLICY.externalArtifactStorageRequired,
   purgeAction: 'manual_admin_purge_required',
   note: 'Local QA evidence references are retained for review, then become eligible for manual purge. Raw secrets, raw tokens, signed URLs, raw file bytes, and unapproved delivery links must never be stored.',
 } as const;
@@ -59,6 +68,7 @@ export async function buildQaVerificationLedgerDraft(input: QaVerificationLedger
       input.status === 'PASS' ? 'Codex must still update ROADMAP_STATUS.md, CODEX_GAPS.md, and PHASE_38_VERIFICATION_MATRIX.md with actual command output references.' : null,
     ].filter(Boolean),
     codexNote: 'Ledger entry persisted to database via Prisma. Evidence references are stored for audit review.',
+    storagePolicy: QA_EVIDENCE_STORAGE_POLICY,
     retentionPolicy: QA_EVIDENCE_RETENTION_POLICY,
   };
 
@@ -110,6 +120,7 @@ export async function getQaVerificationLedgerSummary(organizationId?: string) {
       (r) => r.status === 'NOT_RUN' || r.status === 'CODEX_REQUIRED' || r.status === 'SCAFFOLDED'
     ).length,
     productionReady: false,
+    storagePolicy: QA_EVIDENCE_STORAGE_POLICY,
     retentionPolicy: QA_EVIDENCE_RETENTION_POLICY,
     records: records.map((r) => ({
       id: r.id,

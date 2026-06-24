@@ -17,6 +17,7 @@ export async function GET(request: Request) {
         notRun: ledger.notRun,
         productionReady: ledger.productionReady,
       },
+      storagePolicy: ledger.storagePolicy,
       retentionPolicy: ledger.retentionPolicy,
       records: ledger.records,
       persisted: true,

@@ -82,6 +82,8 @@ describe('phase38 full testing QA route contracts', () => {
     const body = await readJson(response);
     expect(JSON.stringify(body.data)).toContain('mock-ledger-id');
     expect(JSON.stringify(body.data)).toContain('ROADMAP_STATUS.md#build');
+    expect(JSON.stringify(body.data)).toContain('phase38-local-qa-evidence-storage');
+    expect(JSON.stringify(body.data)).toContain('LOCAL_DATABASE_REFERENCES');
     expect(JSON.stringify(body.data)).toContain('phase38-local-qa-evidence-retention');
     expect(JSON.stringify(body.data)).toContain('manual_admin_purge_required');
     expect(JSON.stringify(body.data)).toContain('persisted');

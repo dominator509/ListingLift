@@ -17,6 +17,9 @@ const { buildQaVerificationLedgerDraft } = await import(
 const { buildQaEvidenceRetentionState, QA_EVIDENCE_RETENTION_POLICY } = await import(
   '@/server/services/full-testing-qa-verification-ledger-service'
 );
+const { QA_EVIDENCE_STORAGE_POLICY } = await import(
+  '@/server/services/full-testing-qa-verification-ledger-service'
+);
 
 describe('Phase 38 no fake QA results', () => {
   it('blocks PASS status without evidence', async () => {
@@ -56,8 +59,13 @@ describe('Phase 38 no fake QA results', () => {
 
     expect(draft.accepted).toBe(true);
     expect(draft.retentionPolicy.policyKey).toBe(QA_EVIDENCE_RETENTION_POLICY.policyKey);
+    expect(draft.storagePolicy.policyKey).toBe(QA_EVIDENCE_STORAGE_POLICY.policyKey);
+    expect(draft.storagePolicy.mode).toBe('LOCAL_DATABASE_REFERENCES');
+    expect(draft.storagePolicy.productionDecision).toContain('not required for local Phase 38 verification');
     expect(draft.retentionPolicy.purgeAction).toBe('manual_admin_purge_required');
     expect(draft.retentionPolicy.externalArtifactStorageRequired).toBe(false);
+    expect(draft.storagePolicy.externalArtifactStorageRequired).toBe(false);
+    expect(draft.storagePolicy.forbiddenMaterial).toContain('rawSecret');
   });
 
   it('marks old evidence references as purge eligible after the retention window', () => {
