@@ -55,7 +55,7 @@ Phase 39 — Replit Production Deployment
 - No runtime install, typecheck, lint, build, Prisma validation, migration application, seed, Vitest, Playwright, browser rendering, provider/API, storage, webhook, or real security checks were run in this environment.
 - **Stage 1 (Environment & Dependencies) completed by IpMan on 2026-06-14 05:51 UTC.** npm install succeeded (515 packages), verify-env passed with safe placeholders, Node.js v24.16.0 compatible (engines field added >=18.17.0), lockfile healthy (lockfileVersion 3).
 - **Phase 38 repair pass (2026-06-23 local)** restored `COMM_BUFFER.md`, added presentational upload-token components, documented `.env.test`/Docker PostgreSQL setup, removed unsupported `.npmrc` config, aligned route/session/schema/test contracts with the current hardened auth policy, fixed TypeScript drift, and updated Nodemailer to `9.0.1` to clear the high-severity audit advisory.
-- Local DB container startup succeeded with `docker compose up -d postgres`, but `npm run db:migrate` (`prisma migrate dev`) hung without output and could not be interrupted by this execution backend. The container was stopped with `docker compose stop postgres`; DB migration, seed idempotency, integration tests, and E2E tests remain blocked pending a non-interactive migration path or manual cleanup of the hung wrapper.
+- Phase 38 DB hardening replaced interactive `prisma migrate dev` with non-interactive `prisma migrate deploy` for `npm run db:migrate`, added `npm run db:migrate:dev` for intentional migration authoring, generated `20260623_phase38_schema_drift`, and verified local migration, seed idempotency, and integration tests against Docker PostgreSQL.
 
 ## Files Changed
 
@@ -82,7 +82,10 @@ Phase 39 — Replit Production Deployment
 - Phase 38 repair: `npm run build` — passed, 361 static pages generated; warning only for deprecated Next middleware convention.
 - Phase 38 repair: `npm run smoke` — passed.
 - Phase 38 repair: `npm audit --audit-level=high` — passed after Nodemailer `9.0.1`; 5 moderate advisories remain with force/breaking fixes only.
-- Phase 38 repair: `docker compose up -d postgres` — passed; `npm run db:migrate` hung without output.
+- Phase 38 repair: `docker compose up -d postgres` — passed; earlier `npm run db:migrate` hung when it used `prisma migrate dev`.
+- Phase 38 DB hardening: `npm run db:migrate` — passed using `prisma migrate deploy`, applied `20260623_phase38_schema_drift`.
+- Phase 38 DB hardening: `npm run db:seed` — passed twice, verifying idempotency.
+- Phase 38 DB hardening: `npm run test:integration` — passed, 44 files / 113 tests.
 
 ## Test Results
 
@@ -92,15 +95,15 @@ Phase 39 — Replit Production Deployment
 - **`npm install`** — PASSED (515 packages, lockfile lockfileVersion 3, healthy).
 - **`npm run verify-env`** — PASSED (8 env vars loaded, validation clean, no real integrations enabled).
 - **Node.js compatibility** — PASSED (v24.16.0 meets engines >=18.17.0 requirement).
-- `npm run typecheck`, `npm run lint`, `npm run test:unit`, `npm run test:security`, `npm run test:adapter-contract`, `npm run build`, `npm run smoke`, and high-level npm audit now have local passing evidence from 2026-06-23.
-- `npm run db:migrate`, `npm run db:seed` twice, `npm run test:integration`, and `npm run test:e2e` are not yet verified because `prisma migrate dev` hung against the local Docker PostgreSQL container.
+- `npm run typecheck`, `npm run lint`, `npm run test:unit`, `npm run test:security`, `npm run test:integration`, `npm run test:adapter-contract`, `npm run build`, `npm run smoke`, and high-level npm audit now have local passing evidence from 2026-06-23.
+- `npm run test:e2e` and browser rendering are not yet verified in this repair stream.
 
 ## Known Issues
 
-- Prisma migration application remains unverified because `npm run db:migrate` hung locally after Docker PostgreSQL startup.
+- Previous Prisma migration blocker is resolved by using non-interactive `prisma migrate deploy`; schema drift is captured in `20260623_phase38_schema_drift`.
 - QA route contracts return dry-run payloads until Codex wires Prisma/session/RBAC/audit/rate limiting and evidence persistence.
 - QA ledger rejects fake PASS claims as a scaffold but is not persisted.
-- `test-all` was not run end-to-end because the migration/seed/integration/E2E segment is blocked.
+- `test-all` was not run end-to-end because E2E/browser verification remains pending.
 - No browser pages are verified in this repair pass.
 - Prior phase runtime/database/security gaps remain unresolved until Codex work.
 - Zod `booleanString` transform bypassed by `.default()` — explicitly setting REAL flags in `.env` works around it.
@@ -111,9 +114,10 @@ Phase 39 — Replit Production Deployment
 
 ## Production Readiness Progress
 
-Not production-ready. Local non-DB gates now pass through typecheck, lint, unit, security, adapter-contract, build, smoke, and high-level audit, but DB migration/seed idempotency, integration tests, E2E tests, and browser rendering remain unverified.
+Not production-ready. Local gates now pass through typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, build, smoke, and high-level audit, but E2E tests and browser rendering remain unverified.
 
 ## Commit-Style History
 
 - `phase-38: full testing qa scaffold`
 - `phase-38: repair local validation gates`
+- `phase-38: harden db migration verification`

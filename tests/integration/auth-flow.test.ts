@@ -10,7 +10,7 @@
 import { describe, expect, it, afterEach } from 'vitest';
 import { prisma } from '@/lib/prisma';
 import { hashToken } from '@/lib/tokens';
-import { serializeSessionCookie } from '@/server/auth/session-cookie';
+import { parseSignedToken, serializeSessionCookie } from '@/server/auth/session-cookie';
 import { cleanupAll, signupVerifiedAndLogin, uniqueEmail, uniqueSlug } from './helpers';
 import { signup, login, logout, resolveSessionFromRequest, verifyEmail } from '@/server/auth/auth-service';
 
@@ -19,6 +19,12 @@ afterEach(async () => {
 });
 
 describe('Auth flow: signup -> login -> session -> logout', () => {
+  function hashSessionTokenForStorage(sessionToken: string) {
+    const parsed = parseSignedToken(sessionToken);
+    expect(parsed).not.toBeNull();
+    return hashToken(parsed!.raw);
+  }
+
   it('completes a full signup flow: creates user, org, membership, session', async () => {
     const email = uniqueEmail();
     const orgName = `Alice Org ${uniqueSlug()}`;
@@ -58,7 +64,7 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
     expect(membership).not.toBeNull();
     expect(membership!.roleKey).toBe('CLIENT_OWNER');
 
-    const tokenHash = hashToken(result.sessionToken);
+    const tokenHash = hashSessionTokenForStorage(result.sessionToken);
     const dbSession = await prisma.session.findUnique({ where: { sessionTokenHash: tokenHash } });
     expect(dbSession).not.toBeNull();
     expect(dbSession!.active).toBe(true);
@@ -120,7 +126,7 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
     const slug = uniqueSlug();
     const result = await signupVerifiedAndLogin({ email, password: 'P4ssw0rdSafe!?!?', name: 'Frank', organizationName: `Frank Co ${slug}` });
 
-    const tokenHash = hashToken(result.sessionToken);
+    const tokenHash = hashSessionTokenForStorage(result.sessionToken);
     await prisma.session.update({
       where: { sessionTokenHash: tokenHash },
       data: { active: false, revokedAt: new Date() },
@@ -141,7 +147,7 @@ describe('Auth flow: signup -> login -> session -> logout', () => {
     const request = new Request('http://localhost:3000/api/test', { headers: { cookie } });
     await logout(request);
 
-    const tokenHash = hashToken(result.sessionToken);
+    const tokenHash = hashSessionTokenForStorage(result.sessionToken);
     const dbSession = await prisma.session.findUnique({ where: { sessionTokenHash: tokenHash } });
     expect(dbSession!.active).toBe(false);
     expect(dbSession!.revokedAt).not.toBeNull();

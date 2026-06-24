@@ -5,7 +5,8 @@
 - `npm run verify-env`
 - `npm run db:validate`
 - `npm run db:generate`
-- `npm run db:migrate`
+- `npm run db:migrate` (non-interactive `prisma migrate deploy`)
+- `npm run db:migrate:dev` (interactive local migration authoring only)
 - `npm run db:seed`
 - `npm run typecheck`
 - `npm run lint`
@@ -37,6 +38,7 @@ npm run db:seed
 ```
 
 Use `DATABASE_URL=postgresql://user:password@127.0.0.1:5432/listinglift_test?schema=public` for this local database. Do not commit real secrets or paid provider keys.
+`npm run db:migrate` intentionally uses `prisma migrate deploy` so Codex, CI, and local validation do not hang on interactive migration prompts. Use `npm run db:migrate:dev` only when authoring a new migration intentionally.
 
 ## Phase 38 — Full Testing and QA
 
