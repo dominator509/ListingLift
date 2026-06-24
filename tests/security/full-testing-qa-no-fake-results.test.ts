@@ -1,9 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { rejectRuntimeClaimWithoutEvidence } from '@/domain/full-testing-qa';
+
+const auditLogCreate = vi.hoisted(() => vi.fn().mockImplementation(({ data }) => Promise.resolve({ id: 'mock-audit-log-id', ...data })));
 
 // Mock Prisma so the service can run without a real database connection
 vi.mock('@/lib/prisma', () => ({
   prisma: {
+    auditLog: {
+      create: auditLogCreate,
+    },
     qaVerificationLedger: {
       create: vi.fn().mockResolvedValue({ id: 'mock-ledger-id' }),
       findMany: vi.fn().mockResolvedValue([]),
@@ -20,8 +25,15 @@ const { buildQaEvidenceRetentionState, QA_EVIDENCE_RETENTION_POLICY } = await im
 const { QA_EVIDENCE_STORAGE_POLICY } = await import(
   '@/server/services/full-testing-qa-verification-ledger-service'
 );
+const { recordQaLedgerAuditEvent } = await import(
+  '@/server/services/full-testing-qa-verification-ledger-service'
+);
 
 describe('Phase 38 no fake QA results', () => {
+  beforeEach(() => {
+    auditLogCreate.mockClear();
+  });
+
   it('blocks PASS status without evidence', async () => {
     const draft = await buildQaVerificationLedgerDraft({
       organizationId: 'org_qa',
@@ -66,6 +78,64 @@ describe('Phase 38 no fake QA results', () => {
     expect(draft.retentionPolicy.externalArtifactStorageRequired).toBe(false);
     expect(draft.storagePolicy.externalArtifactStorageRequired).toBe(false);
     expect(draft.storagePolicy.forbiddenMaterial).toContain('rawSecret');
+    expect(draft.auditPolicy.requiredActions).toContain('qa.ledger.evidence_deleted');
+    expect(draft.auditPolicy.requiredActions).toContain('qa.ledger.manual_override');
+    expect(draft.auditActions).toEqual([
+      'qa.ledger.entry_created',
+      'qa.ledger.status_changed',
+      'qa.ledger.evidence_created',
+    ]);
+    expect(auditLogCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          action: 'qa.ledger.evidence_created',
+          targetType: 'qa_verification_ledger',
+          targetId: 'mock-ledger-id',
+          metadata: expect.objectContaining({
+            ledgerId: 'mock-ledger-id',
+            rawEvidenceStored: false,
+            evidenceCount: 1,
+          }),
+        }),
+      })
+    );
+    expect(JSON.stringify(auditLogCreate.mock.calls)).not.toContain('rawSecret');
+  });
+
+  it('supports sanitized QA deletion and manual override audit events', async () => {
+    await recordQaLedgerAuditEvent({
+      organizationId: 'org_qa',
+      actorUserId: 'user_qa',
+      ledgerId: 'ledger_qa',
+      action: 'qa.ledger.evidence_deleted',
+      metadata: { checkKey: 'build', evidenceCount: 0, rawToken: 'll_secret_token' },
+    });
+    await recordQaLedgerAuditEvent({
+      organizationId: 'org_qa',
+      actorUserId: 'user_qa',
+      ledgerId: 'ledger_qa',
+      action: 'qa.ledger.manual_override',
+      metadata: { checkKey: 'build', reason: 'Operator corrected stale evidence ref.', rawSecret: 'super-secret' },
+    });
+
+    expect(auditLogCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          action: 'qa.ledger.evidence_deleted',
+          metadata: expect.objectContaining({ rawToken: '[redacted]' }),
+        }),
+      })
+    );
+    expect(auditLogCreate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          action: 'qa.ledger.manual_override',
+          metadata: expect.objectContaining({ rawSecret: '[redacted]' }),
+        }),
+      })
+    );
+    expect(JSON.stringify(auditLogCreate.mock.calls)).not.toContain('ll_secret_token');
+    expect(JSON.stringify(auditLogCreate.mock.calls)).not.toContain('super-secret');
   });
 
   it('marks old evidence references as purge eligible after the retention window', () => {

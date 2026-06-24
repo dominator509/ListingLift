@@ -19,6 +19,7 @@ export async function GET(request: Request) {
       },
       storagePolicy: ledger.storagePolicy,
       retentionPolicy: ledger.retentionPolicy,
+      auditPolicy: ledger.auditPolicy,
       records: ledger.records,
       persisted: true,
       codexNote: 'QA ledger records are loaded from Prisma for organization ' + session.organizationId + '. PASS rows still require evidence references and never imply production readiness by themselves.',

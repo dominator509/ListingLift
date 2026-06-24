@@ -16,6 +16,9 @@ import { GET as getLedger, POST as postLedger } from '@/app/api/admin/qa/verific
 // Mock Prisma so the route handlers can load without a real database
 vi.mock('@/lib/prisma', () => ({
   prisma: {
+    auditLog: {
+      create: vi.fn().mockImplementation(({ data }) => Promise.resolve({ id: 'mock-audit-log-id', ...data })),
+    },
     qaVerificationLedger: {
       create: vi.fn().mockResolvedValue({ id: 'mock-ledger-id' }),
       findMany: vi.fn().mockResolvedValue([
@@ -85,6 +88,8 @@ describe('phase38 full testing QA route contracts', () => {
     expect(JSON.stringify(body.data)).toContain('phase38-local-qa-evidence-storage');
     expect(JSON.stringify(body.data)).toContain('LOCAL_DATABASE_REFERENCES');
     expect(JSON.stringify(body.data)).toContain('phase38-local-qa-evidence-retention');
+    expect(JSON.stringify(body.data)).toContain('phase38-qa-ledger-audit-events');
+    expect(JSON.stringify(body.data)).toContain('qa.ledger.manual_override');
     expect(JSON.stringify(body.data)).toContain('manual_admin_purge_required');
     expect(JSON.stringify(body.data)).toContain('persisted');
   });

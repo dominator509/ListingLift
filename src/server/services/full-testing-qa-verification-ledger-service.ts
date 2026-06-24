@@ -1,6 +1,7 @@
 import { rejectRuntimeClaimWithoutEvidence, type QaCheckStatus } from '@/domain/full-testing-qa';
 import { type QaVerificationLedgerDraftInput } from '@/schemas/full-testing-qa';
 import { prisma } from '@/lib/prisma';
+import { recordAuditLog } from '@/server/services/audit-log-service';
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
@@ -22,6 +23,21 @@ export const QA_EVIDENCE_RETENTION_POLICY = {
   purgeAction: 'manual_admin_purge_required',
   note: 'Local QA evidence references are retained for review, then become eligible for manual purge. Raw secrets, raw tokens, signed URLs, raw file bytes, and unapproved delivery links must never be stored.',
 } as const;
+
+export const QA_LEDGER_AUDIT_POLICY = {
+  policyKey: 'phase38-qa-ledger-audit-events',
+  requiredActions: [
+    'qa.ledger.entry_created',
+    'qa.ledger.status_changed',
+    'qa.ledger.evidence_created',
+    'qa.ledger.evidence_deleted',
+    'qa.ledger.manual_override',
+  ],
+  forbiddenMetadata: QA_EVIDENCE_STORAGE_POLICY.forbiddenMaterial,
+  note: 'QA ledger mutations must be audited with organization scope, actor when available, ledger/check identifiers, evidence counts, and redacted metadata only.',
+} as const;
+
+export type QaLedgerAuditAction = (typeof QA_LEDGER_AUDIT_POLICY.requiredActions)[number];
 
 function addDays(date: Date, days: number) {
   return new Date(date.getTime() + days * MS_PER_DAY);
@@ -49,6 +65,62 @@ function toEvidenceRefs(input: QaVerificationLedgerDraftInput['evidence']) {
     ref: evidence.ref,
     ...(evidence.note ? { note: evidence.note } : {}),
   }));
+}
+
+function buildQaLedgerAuditMetadata(input: {
+  ledgerId: string;
+  packageVersion: string;
+  phase: number;
+  checkKey: string;
+  layer: string;
+  status: QaCheckStatus;
+  severity: string;
+  accepted: boolean;
+  evidenceCount: number;
+  productionReleaseAllowed: boolean;
+}) {
+  return {
+    ledgerId: input.ledgerId,
+    packageVersion: input.packageVersion,
+    phase: input.phase,
+    checkKey: input.checkKey,
+    layer: input.layer,
+    status: input.status,
+    severity: input.severity,
+    accepted: input.accepted,
+    evidenceCount: input.evidenceCount,
+    productionReleaseAllowed: input.productionReleaseAllowed,
+    rawEvidenceStored: false,
+    policyKey: QA_LEDGER_AUDIT_POLICY.policyKey,
+  };
+}
+
+export function listQaLedgerAuditActions(input: { status: QaCheckStatus; evidenceCount: number }): QaLedgerAuditAction[] {
+  return [
+    'qa.ledger.entry_created',
+    'qa.ledger.status_changed',
+    input.evidenceCount > 0 ? 'qa.ledger.evidence_created' : null,
+  ].filter(Boolean) as QaLedgerAuditAction[];
+}
+
+export async function recordQaLedgerAuditEvent(input: {
+  organizationId: string;
+  actorUserId?: string | null;
+  ledgerId: string;
+  action: QaLedgerAuditAction;
+  metadata: Record<string, unknown>;
+}) {
+  return recordAuditLog({
+    organizationId: input.organizationId,
+    actorUserId: input.actorUserId ?? null,
+    action: input.action,
+    targetType: 'qa_verification_ledger',
+    targetId: input.ledgerId,
+    metadata: {
+      ...input.metadata,
+      policyKey: QA_LEDGER_AUDIT_POLICY.policyKey,
+    },
+  });
 }
 
 export async function buildQaVerificationLedgerDraft(input: QaVerificationLedgerDraftInput) {
@@ -90,7 +162,21 @@ export async function buildQaVerificationLedgerDraft(input: QaVerificationLedger
     },
   });
 
-  return { ...draft, id: record.id, persisted: true };
+  const auditMetadata = buildQaLedgerAuditMetadata({ ...draft, ledgerId: record.id });
+  const auditActions = listQaLedgerAuditActions({ status: draft.status, evidenceCount: draft.evidenceCount });
+  const auditEvents = await Promise.all(
+    auditActions.map((action) =>
+      recordQaLedgerAuditEvent({
+        organizationId: draft.organizationId,
+        actorUserId: draft.userId ?? null,
+        ledgerId: record.id,
+        action,
+        metadata: auditMetadata,
+      })
+    )
+  );
+
+  return { ...draft, id: record.id, persisted: true, auditPolicy: QA_LEDGER_AUDIT_POLICY, auditActions, auditEvents };
 }
 
 export function summarizeQaLedgerStatuses(records: { status: QaCheckStatus }[] = []) {
@@ -122,6 +208,7 @@ export async function getQaVerificationLedgerSummary(organizationId?: string) {
     productionReady: false,
     storagePolicy: QA_EVIDENCE_STORAGE_POLICY,
     retentionPolicy: QA_EVIDENCE_RETENTION_POLICY,
+    auditPolicy: QA_LEDGER_AUDIT_POLICY,
     records: records.map((r) => ({
       id: r.id,
       checkKey: r.checkKey,

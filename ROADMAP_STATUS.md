@@ -61,6 +61,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 evidence hardening replaced stale seed-era readiness claims in `PHASE_38_VERIFICATION_MATRIX.md` and `CODEX_GAPS.md` with current local test evidence, intentional skips, provider limitations, and non-production disposition; `qa:matrix` now reports documented local evidence separately from remaining production blockers.
 - Phase 38 QA retention hardening added local retention metadata to QA ledger evidence references: 30-day review window, 180-day delete-after boundary, and manual purge eligibility without requiring external artifact storage.
 - Phase 38 QA storage hardening made the external artifact storage decision explicit: local database evidence references are sufficient for Phase 38 local verification, while production/CI artifact storage remains a pre-release decision.
+- Phase 38 QA audit hardening added sanitized audit events for QA ledger creation, status changes, evidence creation, evidence deletion, and manual overrides without requiring external logging credentials.
 
 ## Files Changed
 
@@ -72,6 +73,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 evidence hardening updates include `PHASE_38_VERIFICATION_MATRIX.md`, `CODEX_GAPS.md`, `ROADMAP_STATUS.md`, and `scripts/qa-matrix.ts`.
 - Phase 38 QA retention hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 QA storage hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 QA audit hardening updates include `src/server/services/full-testing-qa-verification-ledger-service.ts`, `src/app/api/admin/qa/verification-ledger/route.ts`, QA ledger route/security tests, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -108,6 +110,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 evidence hardening: `git diff --check` passed; `npm run qa:matrix` passed and prints local evidence plus remaining production blockers; `npm run typecheck` passed.
 - Phase 38 QA retention hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 4 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
 - Phase 38 QA storage hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 4 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
+- Phase 38 QA audit hardening: `npx vitest run tests/security/full-testing-qa-no-fake-results.test.ts` passed, 1 file / 5 tests; `npx vitest run tests/integration/phase38-full-testing-qa-route-contract.test.ts` passed, 1 file / 4 tests; `npm run typecheck` passed.
 
 ## Test Results
 

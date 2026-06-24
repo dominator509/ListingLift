@@ -29,6 +29,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - QA ledger evidence references are now persisted through Prisma JSON storage, and PASS rows require evidence.
 - QA ledger evidence references now expose a local retention policy with a 30-day review window, 180-day delete-after boundary, and manual purge eligibility.
 - QA ledger evidence references now expose a local storage policy: external artifact storage is not required for Phase 38 local verification, and production/CI artifact storage must be revisited before release gates.
+- QA ledger mutations now preserve sanitized audit events for entry creation, status changes, evidence creation, evidence deletion, and manual overrides.
 
 ## Remaining Codex/runtime gaps
 
@@ -78,7 +79,6 @@ These gaps remain active and should not be described as production-ready:
 ### QA persistence and evidence
 
 - Keep persisted evidence sanitized; never store raw secrets, raw tokens, signed URLs, provider keys, raw webhook payloads, customer private notes, marketplace credentials, marketplace passwords, raw file bytes, or unapproved delivery links.
-- Preserve audit events for QA status changes, evidence creation, evidence deletion, and manual overrides.
 
 ### Test command coverage
 
