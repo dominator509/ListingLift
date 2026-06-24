@@ -6,7 +6,7 @@ Phase 38 — Full Testing and QA
 
 ## Current Task
 
-Close the remaining Phase 38 hardening blockers: resolve accessibility contrast findings, persist QA ledger evidence references through Prisma, and run the complete `test-all` gate as one command.
+Harden Phase 38 evidence/status documentation so it reflects the current local `test-all` pass without claiming production/provider readiness.
 
 ## Previous Completed Phase
 
@@ -58,6 +58,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 DB hardening replaced interactive `prisma migrate dev` with non-interactive `prisma migrate deploy` for `npm run db:migrate`, added `npm run db:migrate:dev` for intentional migration authoring, generated `20260623_phase38_schema_drift`, and verified local migration, seed idempotency, and integration tests against Docker PostgreSQL.
 - Phase 38 E2E hardening aligned browser tests with verified-email signup, 12-character password policy, per-IP signup limits, and session binding; generated valid local Stripe webhook signatures; fixed duplicate public navigation assertions; and updated the upload token route for Next async dynamic params.
 - Phase 38 final hardening resolved the remaining WCAG color-contrast violations, added persisted QA ledger evidence references via Prisma JSON storage, wired the ledger GET route to persisted organization records, and ran `npm run test-all` as one combined command.
+- Phase 38 evidence hardening replaced stale seed-era readiness claims in `PHASE_38_VERIFICATION_MATRIX.md` and `CODEX_GAPS.md` with current local test evidence, intentional skips, provider limitations, and non-production disposition; `qa:matrix` now reports documented local evidence separately from remaining production blockers.
 
 ## Files Changed
 
@@ -66,6 +67,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 repair additions/updates include `COMM_BUFFER.md`, `.env.test.example`, `docker-compose.yml`, `TESTING.md`, `src/components/uploads/index.tsx`, auth/session/security/upload/Stripe schema and route helpers, upload/auth/package/payment tests, script type fixes, and `package.json`/`package-lock.json` for Nodemailer `9.0.1`.
 - Phase 38 E2E hardening updates include `.env.test.example`, `src/app/upload/[token]/page.tsx`, and browser specs for fullstack auth, concurrency, session isolation, rate limiting, public shell navigation, and webhook resilience.
 - Phase 38 final hardening updates include `src/components/ui/button.tsx`, `src/components/workflow/before-after-card.tsx`, `src/app/api/admin/qa/verification-ledger/route.ts`, `src/server/services/full-testing-qa-verification-ledger-service.ts`, `prisma/schema.prisma`, `prisma/migrations/20260623_phase38_qa_ledger_evidence_refs/migration.sql`, QA ledger tests, and the regenerated Q12 a11y report.
+- Phase 38 evidence hardening updates include `PHASE_38_VERIFICATION_MATRIX.md`, `CODEX_GAPS.md`, `ROADMAP_STATUS.md`, and `scripts/qa-matrix.ts`.
 
 ## Tests/Checks Run
 
@@ -99,6 +101,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 final hardening: `npm run test:security -- tests/security/full-testing-qa-no-fake-results.test.ts` — passed, 54 files passed / 1 skipped, 102 tests passed / 7 skipped.
 - Phase 38 final hardening: focused `tests/e2e/a11y-audit.spec.ts` on fresh port 3100 — passed, 48 pages scanned, 0 violations, 48/48 passing.
 - Phase 38 final hardening: `npm run test-all` — passed as one combined command with safe local test env and Docker PostgreSQL.
+- Phase 38 evidence hardening: `git diff --check` passed; `npm run qa:matrix` passed and prints local evidence plus remaining production blockers; `npm run typecheck` passed.
 
 ## Test Results
 
@@ -115,7 +118,7 @@ Phase 39 — Replit Production Deployment
 
 - Previous Prisma migration blocker is resolved by using non-interactive `prisma migrate deploy`; schema drift is captured in `20260623_phase38_schema_drift`.
 - QA ledger entries are now persisted through Prisma with sanitized evidence references. PASS rows still require evidence and never imply production readiness by themselves.
-- Prior phase runtime/database/security gaps remain unresolved until Codex work.
+- Prior phase runtime/database/security gaps remain unresolved until they are covered by local and production evidence.
 - Zod `booleanString` transform bypassed by `.default()` — explicitly setting REAL flags in `.env` works around it.
 
 ## Deviations

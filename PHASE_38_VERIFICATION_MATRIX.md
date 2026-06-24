@@ -2,61 +2,54 @@
 
 ## Phase
 
-Phase 38 — Full Testing and QA
+Phase 38 - Full Testing and QA
 
 ## Verification status
 
-This matrix tracks actual execution evidence for the Phase 38 stitch.
+This matrix tracks current local Codex repair evidence. It does not claim production readiness or real-provider readiness.
 
-| Area | Command / Check | Status | Evidence Required | Notes |
-|---|---:|---|---|---|
-| Install | `npm install` | ✅ PASS | npm ci completed, all deps installed | Stage 1 — verified 2026-06-14. |
-| Environment | `npm run verify-env` | ✅ PASS | DATABASE_URL verified, PostgreSQL 16 running on localhost:5432, database listinglift_dev accessible | Stage 2 — verified 2026-06-14. |
-| Prisma validate | `npm run db:validate` | ✅ PASS | Schema valid, no errors | Stage 2 — verified 2026-06-14. |
-| Prisma generate | `npm run db:generate` | ✅ PASS | Prisma client generated successfully | Stage 2 — verified 2026-06-14. |
-| Migrations | `npx prisma migrate status` | ✅ PASS | Database schema is up to date — 1 migration applied, no drift | Stage 8 re-verified 2026-06-14. |
-| Seed pass 1 | `npm run db:seed` | ✅ PASS | Seed ran successfully | Stage 2 — verified 2026-06-14. |
-| Seed pass 2 | `npm run db:seed` | ✅ PASS | Idempotent — no errors on re-run | Stage 2 — verified 2026-06-14. |
-| TypeScript | `npx tsc --noEmit` | ✅ PASS | 0 type errors | Stage 8 re-verified 2026-06-14 — clean compile. |
-| Lint | `npm run lint` | ✅ PASS | 0 lint errors | Stage 3 — verified 2026-06-14. |
-| Unit | `npx vitest run` (full suite) | ✅ PASS | 192 files, 372 tests passed (23.78s) | Stage 8 fresh evidence 2026-06-14 — comprehensive suite includes all unit, security, integration, and adapter-contract tests. |
-| Security | `npx vitest run tests/security` | ✅ PASS | 54 files, 102 tests passed (6.32s) | Stage 8 re-verified 2026-06-14. |
-| Integration | `npx vitest run tests/integration` | ✅ PASS | 37 files, 64 tests passed (5.83s) | Stage 8 re-verified 2026-06-14. |
-| Adapter contracts | `npm run test:adapter-contract` | ✅ PASS | 4/4 files, 7/7 tests — WooCommerce + naming bugs fixed by Ip Man | Stage 5 — verified 2026-06-14 by Deziray audit. |
-| Stripe unit | `npx vitest run tests/unit/stripe-*` | ✅ PASS | 2 files, 4 tests passed (922ms) | Stage 8 fresh evidence 2026-06-14 — Stripe SDK integration functional. |
-| E2E | `npx playwright test` | ✅ PASS | 38 specs: 6 passed, 32 skipped, 0 failed. Verified by Alfred (rerun confirmed). Auth headers fixed on 28 admin specs, strict-mode locators fixed (3), delivery-download gracefully skipped. | Stage 6 — 2026-06-14. Ip Man executed, Deziray audited. |
-| Build | `npm run build` | ✅ PASS | ✓ Compiled successfully in 26.1s, ✓ 369 static pages generated (5 workers), 0 TypeScript errors. Two root-cause fixes: prisma.ts Pool adapter + explicit not-found.tsx. Ip Man's ignoreBuildErrors hack removed. | Stage 7 — verified by Alfred 2026-06-14. |
-| Smoke | `npm run smoketest` | ✅ PASS | Production server starts on port 3001, HTTP 200 with full HTML (title "ListingLift", nav, pricing, packages). BUILD_ID: OkzRzXGqKMv8u_06UfXXb | Stage 7 — verified by Alfred 2026-06-14. |
-| No fake results | PASS requires evidence | ✅ IMPLEMENTED | Service persists ledger entries to database, requiring real evidence for PASS claims. Phase 38 security test verifies this. | Stage 4. |
-| SMTP | Resend credentials | ✅ RESOLVED | smtp.resend.com:465 configured in .env | Dominic provided 2026-06-14. |
+| Area | Command / Check | Status | Current evidence | Notes |
+|---|---|---|---|---|
+| Environment | `npm run verify-env` | PASS | Passed inside the combined `npm run test-all` gate with safe local test env. | Real integrations disabled by default. |
+| Prisma validate | `npm run db:validate` | PASS | Passed inside `npm run test-all`. | Schema validates. |
+| Prisma generate | `npm run db:generate` | PASS | Passed inside `npm run test-all`. | Prisma client generated. |
+| Migrations | `npm run db:migrate` | PASS | Passed inside `npm run test-all` using non-interactive `prisma migrate deploy`. | Local Docker PostgreSQL applied migrations, including Phase 38 drift/evidence migrations. |
+| Seed pass 1 | `npm run db:seed` | PASS | Passed inside `npm run test-all`. | Local test database seeded. |
+| Seed pass 2 | `npm run db:seed` | PASS | Passed inside `npm run test-all`. | Idempotency verified by immediate rerun. |
+| TypeScript | `npm run typecheck` | PASS | Passed inside `npm run test-all`. | 0 type errors in the latest combined gate. |
+| Lint | `npm run lint` | PASS | Passed inside `npm run test-all`. | 12 warnings remain, 0 errors. |
+| Unit | `npm run test:unit` | PASS | 101 files / 451 tests passed inside `npm run test-all`. | Current local evidence supersedes older seed counts. |
+| Security | `npm run test:security` | PASS | 54 files passed / 1 skipped, 102 tests passed / 7 skipped inside `npm run test-all`. | Intentional skips remain. |
+| Integration | `npm run test:integration` | PASS | 44 files / 114 tests passed inside `npm run test-all`. | Includes persisted QA ledger evidence-reference coverage. |
+| Adapter contracts | `npm run test:adapter-contract` | PASS | 4 files / 7 tests passed inside `npm run test-all`. | Mock adapters remain default. |
+| E2E and a11y | `npm run test:e2e` | PASS | 34 tests passed / 32 skipped inside `npm run test-all`; a11y audit scanned 48 pages with 0 violations. | Skips are intentional scaffold coverage, not production proof. |
+| High-severity audit | `npm run security-check` / high audit gate | PASS | Passed inside `npm run test-all`. | 5 moderate advisories remain; force/breaking fixes deferred. |
+| Build | `npm run build` | PASS | Passed inside `npm run test-all`; 361 static pages generated. | Known warning only for deprecated Next middleware/proxy convention. |
+| Smoke | `npm run smoke` | PASS | Passed inside `npm run test-all`. | Local smoke script validates configured domain defaults; not a production deployment smoke. |
+| No fake results | QA ledger service and tests | PASS | QA ledger entries persist through Prisma with sanitized evidence references; PASS requires evidence. | Evidence storage still local/database-scoped in this repair stream. |
 
 ## Credential Status
 
 | Credential | Status | Notes |
-|---|---:|---|
-| DATABASE_URL | ✅ RESOLVED | PostgreSQL 16, localhost:5432 |
-| SMTP (Resend) | ✅ RESOLVED | smtp.resend.com:465, resend API key |
-| STRIPE_SECRET_KEY | ✅ RESOLVED | sk_test_... Provided by Dominic 2026-06-14. Verified: Stripe SDK price query OK. |
-| STRIPE_WEBHOOK_SECRET | ✅ RESOLVED | whsec_... Provided by Dominic 2026-06-14. |
-| Stripe Price IDs (5) | ✅ RESOLVED | 5 price IDs provided: standard, premium, highlight, urgent, featured |
-
----
+|---|---|---|
+| DATABASE_URL | LOCAL TEST VERIFIED | Docker PostgreSQL path verified for `listinglift_test`; no production database was verified. |
+| SMTP / Resend | NOT PRODUCTION VERIFIED | Real SMTP credentials were not required or used in the latest local Phase 38 repair gate. |
+| Stripe secrets / price IDs | NOT PRODUCTION VERIFIED | Stripe flows stay test/mock safe by default; no paid-provider dependency is required for automated tests. |
+| Marketplace/provider keys | DISABLED BY DEFAULT | Fiverr, Etsy, Upwork, Shopify, Gumroad, TaskRabbit, image providers, storage providers, and other integrations remain feature-flagged or mocked unless explicitly configured. |
 
 ## Final Disposition
 
-| Metric | Value |
+| Metric | Current value |
 |---|---|
-| Stages completed | 8 / 8 (38_A through 38_H) |
-| Active stage | 38_H — Evidence & Documentation — **COMPLETE** |
-| E2E specs | 38 total: 6 passed, 32 skipped, 0 failed |
-| All tests (full suite) | 372/372 passed (192 files) |
-| Unit tests | 196/196 passed (94 files) |
-| Security tests | 102/102 passed (54 files) |
-| Integration tests | 64/64 passed (37 files) |
-| Adapter contracts | 7/7 passed (4 files) |
-| Stripe tests | 4/4 passed (2 files) |
-| Build | ✓ 369 static pages, 26.1s |
+| Active stage | Phase 38 local repair and verification evidence |
+| Combined gate | `npm run test-all` passed as one command with safe local env and Docker PostgreSQL |
+| E2E specs | 34 passed, 32 intentional skips, 0 failed |
+| A11y audit | 48 pages scanned, 0 violations |
+| Unit tests | 451 passed across 101 files |
+| Security tests | 102 passed / 7 skipped across 55 files |
+| Integration tests | 114 passed across 44 files |
+| Adapter contracts | 7 passed across 4 files |
+| Build | 361 static pages generated |
 | TypeScript | 0 errors |
-| Credentials | All 3 resolved: DB + SMTP + Stripe |
-| Integration APIs | Mock mode default — Fiverr, Etsy, Upwork, Shopify, Gumroad, TaskRabbit all use mock data (production keys not needed for Phase 38) |
-| Overall | **✅ PRODUCTION-READY** — All 8 stages complete, all evidence collected and verified. |
+| Production/provider verification | Not completed in this repair stream |
+| Overall | NOT PRODUCTION-READY. Local Phase 38 gates pass, but production deployment, production credentials/providers, and intentionally skipped scaffold E2E coverage remain unresolved. |

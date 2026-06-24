@@ -2,36 +2,44 @@
 
 ## Current package
 
-ListingLift Repo Seed v40
+ListingLift Repo Seed v40, locally repaired through Phase 38 evidence hardening.
 
 ## Current phase
 
-Phase 38 — Full Testing and QA
+Phase 38 - Full Testing and QA
 
-## Global unresolved Codex/runtime gaps
+## Current local Codex evidence
 
-This repo seed has not been installed or runtime-verified. Codex must still:
+The earlier seed-era runtime gaps in this file have been partially closed by local Codex repair work. Current evidence:
 
-- Install dependencies.
-- Validate environment.
-- Validate Prisma schema.
-- Regenerate or repair all migration SQL, including Phase 38 migration SQL.
-- Generate Prisma client.
-- Apply migrations.
-- Run seed twice and verify idempotency.
-- Run typecheck, lint, unit tests, security tests, integration tests, adapter-contract tests, E2E tests, build, smoke checks, QA matrix, and browser rendering checks.
-- Wire dry-run route contracts to real Prisma transactions.
-- Enforce RBAC and tenant isolation server-side across admin, client, agency, API, upload, delivery, webhook, billing, marketplace, storage, processing, reporting, upsell, QA, and integration routes.
-- Verify all UI pages render in the browser.
-- Verify all security tests and add missing regression coverage.
-- Replace mock/dry-run provider logic with real integrations only behind explicit feature flags.
-- Keep real integrations disabled by default.
-- Keep secrets encrypted or in env/secret-manager only.
-- Preserve manual fallback.
-- Preserve admin approval before final delivery.
-- Never expose final downloads before approval.
-- Never overwrite original uploads.
-- Never guarantee marketplace approval, ranking, sales, conversion, ad performance, listing approval, product approval, or platform acceptance.
+- `npm run verify-env` passes with safe local test configuration.
+- Prisma validation, client generation, non-interactive migration deploy, and seed idempotency pass against Docker PostgreSQL.
+- `npm run typecheck` passes with 0 TypeScript errors.
+- `npm run lint` passes with 12 warnings and 0 errors.
+- `npm run test:unit` passes, 101 files / 451 tests.
+- `npm run test:security` passes, 54 files passed / 1 skipped, 102 tests passed / 7 skipped.
+- `npm run test:integration` passes, 44 files / 114 tests.
+- `npm run test:adapter-contract` passes, 4 files / 7 tests.
+- `npm run test:e2e` passes, 34 tests passed / 32 intentional skips.
+- The accessibility audit scans 48 pages with 0 violations.
+- `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
+- `npm run smoke` passes for local domain-default smoke coverage.
+- `npm run test-all` passes as one combined command with safe local env and Docker PostgreSQL.
+- High-severity npm audit/security gate passes after the Nodemailer update; 5 moderate advisories remain because available fixes require force/breaking upgrades.
+- QA ledger evidence references are now persisted through Prisma JSON storage, and PASS rows require evidence.
+
+## Remaining Codex/runtime gaps
+
+These gaps remain active and should not be described as production-ready:
+
+- Production deployment has not been verified.
+- Production database, SMTP, Stripe, marketplace/provider, image-provider, storage-provider, and webhook credentials were not verified in this repair stream.
+- Real integrations remain disabled by default and must stay feature-flagged until explicit provider verification is completed.
+- 32 Playwright specs remain intentionally skipped as scaffold or future-provider coverage.
+- Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
+- The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
+- Five moderate dependency advisories remain because the available npm fixes require breaking or force upgrades.
+- Production observability, artifact retention, and external QA evidence storage remain unverified.
 
 ## Project-wide guardrails Codex must preserve
 
@@ -55,69 +63,40 @@ This repo seed has not been installed or runtime-verified. Codex must still:
 - Audit paid, client-facing, manual override, admin analytics, agency white-label, API token, webhook, shared upload portal, security setting, secret reference, permission, delivery, upload rejection, QA result, and QA evidence actions.
 - Keep API and advanced integrations disabled by default until verified plan gates, encrypted secret references, rate limits, signature checks, and audited token checks are wired.
 - Never mark QA checks as passed without actual evidence.
+- Never guarantee marketplace approval, ranking, sales, conversion, ad performance, listing approval, product approval, or platform acceptance.
 
-## Current known unresolved package state
+## Phase 38 residual hardening backlog
 
-- Phase 38 code is scaffolded but not installed, compiled, typechecked, linted, migrated, seeded, tested, browser-rendered, or security-verified.
-- Prisma schema additions and migration SQL are scaffold-only.
-- Admin QA pages are UI shells only.
-- Admin QA API routes return dry-run contract payloads.
-- QA services are deterministic scaffolds and not connected to real persistence, test runners, CI, artifact storage, browser traces, screenshots, or command output capture.
-- `test-all`, `qa:matrix`, and `qa:codex-required` scripts were added but not run.
-- No npm, Prisma, Playwright, Vitest, browser, provider, storage, external API, or webhook checks were run in ChatGPT Project Mode.
+### Provider and production readiness
 
-## Phase 38 — Full Testing and QA Codex-only gaps
-
-### Dependency/runtime verification
-
-- Run `npm install`.
-- Confirm the package manager/lockfile strategy.
-- Run `npm run verify-env`.
-- Run `npm run db:validate` / `prisma validate`.
-- Regenerate/repair `prisma/migrations/0037_phase38_full_testing_qa/migration.sql`.
-- Generate Prisma client.
-- Apply migrations.
-- Run seed twice.
-- Run typecheck, lint, unit, security, integration, adapter-contract, E2E, build, smoke, QA matrix, and test-all commands.
+- Verify production deployment separately from local build/smoke.
+- Verify real SMTP, Stripe, storage, marketplace, image-provider, and webhook integrations only behind explicit feature flags.
+- Add production-safe rollback and observability evidence before any production-ready claim.
 
 ### QA persistence and evidence
 
-- Wire `QaRun`, `QaCheckResult`, `QaEvidenceReference`, and `QaSmokeRouteResult` to real Prisma transactions.
-- Persist command results with status, command, exit code, start/end times, sanitized notes, and redacted evidence references.
-- Prevent `PASS` without evidence.
-- Prevent evidence records from storing raw secrets, raw tokens, signed URLs, provider keys, raw webhook payloads, customer private notes, marketplace credentials, marketplace passwords, raw file bytes, or unapproved delivery links.
-- Add retention policy for QA artifacts.
-- Add audit events for QA status changes, evidence creation, evidence deletion, and manual overrides.
+- Add a retention policy for QA artifacts and evidence references.
+- Decide whether external artifact storage is required for browser traces, screenshots, and command logs.
+- Keep persisted evidence sanitized; never store raw secrets, raw tokens, signed URLs, provider keys, raw webhook payloads, customer private notes, marketplace credentials, marketplace passwords, raw file bytes, or unapproved delivery links.
+- Preserve audit events for QA status changes, evidence creation, evidence deletion, and manual overrides.
 
 ### Test command coverage
 
-- Verify package mapping, preset validation, sales-channel normalization, file naming, manifest generation, image-processing helpers, credit ledger, RBAC, upload tokens, and download tokens with unit tests.
-- Verify auth, client/job CRUD, manual order creation, Stripe webhook, Gumroad webhook, upload flow, mock image processing, ZIP generation, preview gallery, approval/revision, delivery, reports, upsells, credits/subscriptions, sales-channel workflows, storage adapters, and automation webhooks with integration tests.
-- Verify signup/login, package selection, Stripe test checkout, Gumroad webhook intake, upload 10 images, mock processing, review previews, approval, ZIP delivery, client download, client revision request, admin revision resolution, manual Fiverr/Upwork/Taskrabbit jobs, and revenue source dashboard with E2E tests.
-- Verify public, admin, client, agency, upload, delivery, QA, security, API-access, and integration pages render in a browser.
+- Convert intentionally skipped Playwright scaffold specs into runnable coverage as the corresponding product flows become real.
+- Expand browser coverage for any route that moves from dry-run/mock mode to real provider behavior.
+- Keep `npm run test-all` as the combined local evidence gate after each broad Phase 38 repair.
 
 ### Security and product guardrail verification
 
-- Verify server-side RBAC and tenant isolation across QA routes and all prior protected routes.
-- Verify unsafe upload rejection and ZIP slip prevention across all upload/import surfaces.
-- Verify original uploads are preserved and never overwritten.
-- Verify delivery approval gates and expiring hashed delivery tokens.
-- Verify upload, delivery, API, invite, shared portal, webhook, and CSRF token hash/expiry/revocation behavior.
-- Verify webhook signatures and idempotency for Stripe, Gumroad, automation/API webhooks, and future provider webhooks before paid/client-facing state changes.
-- Verify no provider key, OAuth token, SMTP secret, webhook secret, API token, signed URL, marketplace credential, marketplace password, raw webhook payload, private note, or raw customer file data leaks to frontend/API/logs/test snapshots.
-- Verify reports, upsells, marketplace templates, webhook templates, delivery messages, QA notes, and generated copy contain no marketplace approval, ranking, sales, conversion, listing approval, product approval, or ad-performance guarantees.
-
-### Browser and build gaps
-
-- Run Playwright against all critical flows.
-- Capture failure traces/screenshots and store sanitized references.
-- Verify Next production build.
-- Verify response headers in browser/deployment context.
-- Verify app health endpoint and smoke checks.
+- Re-verify server-side RBAC and tenant isolation whenever admin, client, agency, API, upload, delivery, webhook, billing, marketplace, storage, processing, reporting, upsell, QA, or integration routes change.
+- Re-verify unsafe upload rejection and ZIP slip prevention across every new upload/import surface.
+- Re-verify original upload preservation and final-download approval gates whenever storage, processing, preview, revision, or delivery code changes.
+- Re-verify token hash, expiry, and revocation behavior for upload, delivery, API, invite, shared portal, webhook, and CSRF tokens after auth/session changes.
+- Re-verify generated and templated copy for compliance-safe language after marketplace, report, upsell, delivery, and QA messaging changes.
 
 ## Prior phase unresolved Codex/runtime gaps still active
 
-All unresolved gaps from Phases 0 through 37 remain active until Codex verifies them. Important examples include:
+All unresolved gaps from Phases 0 through 37 remain active until they are covered by local and production evidence. Important examples include:
 
 - Auth/session implementation and cookie/session security.
 - Tenant, client, agency, and RBAC persistence.
@@ -137,33 +116,3 @@ All unresolved gaps from Phases 0 through 37 remain active until Codex verifies 
 - Advanced image processing/local workers.
 - Reports and upsell engine safety.
 - Client dashboard, admin dashboard, agency white-label, API access, and security hardening runtime enforcement.
-
-## ChatGPT Project Mode checks actually run for v40
-
-- Static alias-import target scan across new/updated Phase 38 TS/TSX files.
-- Suspicious high-confidence secret-pattern scan across new/updated Phase 38 code/test/doc files.
-- ZIP integrity check after packaging.
-
-## ChatGPT Project Mode checks not run for v40
-
-```bash
-npm install
-npm run verify-env
-npm run db:validate
-npm run db:generate
-npm run db:migrate
-npm run db:seed
-npm run typecheck
-npm run lint
-npm run test
-npm run test:unit
-npm run test:security
-npm run test:integration
-npm run test:adapter-contract
-npm run test:e2e
-npm run security-check
-npm run build
-npm run smoke
-npm run qa:matrix
-npm run test-all
-```
