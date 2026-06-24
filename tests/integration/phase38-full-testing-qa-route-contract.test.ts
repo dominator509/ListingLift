@@ -11,13 +11,28 @@ vi.mock('@/server/services/auth-session-service', () => ({
 
 import { GET as getDashboard } from '@/app/api/admin/qa/dashboard/route';
 import { GET as getRunbook } from '@/app/api/admin/qa/runbook/route';
-import { POST as postLedger } from '@/app/api/admin/qa/verification-ledger/route';
+import { GET as getLedger, POST as postLedger } from '@/app/api/admin/qa/verification-ledger/route';
 
 // Mock Prisma so the route handlers can load without a real database
 vi.mock('@/lib/prisma', () => ({
   prisma: {
     qaVerificationLedger: {
       create: vi.fn().mockResolvedValue({ id: 'mock-ledger-id' }),
+      findMany: vi.fn().mockResolvedValue([
+        {
+          id: 'mock-ledger-id',
+          checkKey: 'build',
+          phase: 38,
+          layer: 'BUILD',
+          status: 'PASS',
+          severity: 'BLOCKER',
+          accepted: true,
+          evidenceCount: 1,
+          evidenceRefs: [{ type: 'COMMAND_OUTPUT', ref: 'ROADMAP_STATUS.md#build' }],
+          productionReleaseAllowed: false,
+          createdAt: new Date('2026-06-23T00:00:00.000Z'),
+        },
+      ]),
     },
   },
 }));
@@ -58,5 +73,15 @@ describe('phase38 full testing QA route contracts', () => {
     expect(response.status).toBe(200);
     const body = await readJson(response);
     expect(JSON.stringify(body.data)).toContain('PASS status requires evidence');
+    expect(JSON.stringify(body.data)).toContain('persisted');
+  });
+
+  it('serves persisted QA ledger records for the organization', async () => {
+    const response = await getLedger(new Request('http://localhost/api/admin/qa/verification-ledger', { headers }));
+    expect(response.status).toBe(200);
+    const body = await readJson(response);
+    expect(JSON.stringify(body.data)).toContain('mock-ledger-id');
+    expect(JSON.stringify(body.data)).toContain('ROADMAP_STATUS.md#build');
+    expect(JSON.stringify(body.data)).toContain('persisted');
   });
 });

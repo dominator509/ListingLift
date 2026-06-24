@@ -7,22 +7,22 @@ Scanned 48 pages with axe-core (WCAG 2.2 AA ruleset).
 | Metric | Value |
 |--------|-------|
 | Pages Scanned | 48 |
-| Total Violations | 3 |
+| Total Violations | 0 |
 | Critical | 0 |
-| Serious | 3 |
+| Serious | 0 |
 | Moderate | 0 |
 | Minor | 0 |
-| Passing Routes | 45 |
-| Failing Routes | 3 |
+| Passing Routes | 48 |
+| Failing Routes | 0 |
 | Incomplete Checks | 15 |
 
 ## Route Results
 
 | # | Route | Label | Status | V | C | S | M | m |
 |---|---|---|---|---|---|---|---|---|
-| 1 | / | Home / Landing | ❌ | 1 | 0 | 1 | 0 | 0 |
+| 1 | / | Home / Landing | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 2 | /login | Login Page | ✅ | 0 | 0 | 0 | 0 | 0 |
-| 3 | /pricing | Pricing Page | ❌ | 1 | 0 | 1 | 0 | 0 |
+| 3 | /pricing | Pricing Page | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 4 | /examples | Examples Page | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 5 | /admin | Admin Dashboard | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 6 | /admin/qa | Admin QA Dashboard | ✅ | 0 | 0 | 0 | 0 | 0 |
@@ -65,7 +65,7 @@ Scanned 48 pages with axe-core (WCAG 2.2 AA ruleset).
 | 43 | /agency/delivery | Agency Delivery | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 44 | /agency/reports | Agency Reports | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 45 | /agency/team | Agency Team | ✅ | 0 | 0 | 0 | 0 | 0 |
-| 46 | /agency/billing | Agency Billing | ❌ | 1 | 0 | 1 | 0 | 0 |
+| 46 | /agency/billing | Agency Billing | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 47 | /agency/volume-pricing | Agency Volume Pricing | ✅ | 0 | 0 | 0 | 0 | 0 |
 | 48 | /agency/white-label-settings | Agency White-Label Settings | ✅ | 0 | 0 | 0 | 0 | 0 |
 
@@ -73,29 +73,6 @@ Scanned 48 pages with axe-core (WCAG 2.2 AA ruleset).
 
 | Category | Pages |
 |----------|-------|
-| wcag143 | 3 |
-| wcag2aa | 3 |
-
-## Violation Details
-
-### Home / Landing (/)
-
-| ID | Impact | Description | Element |
-|---|---|---|---|
-| color-contrast | serious | Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds | `<a href="/pricing" class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition bg-blue-700 text-white hover:bg-blue-800">View packages</a>` |
-
-### Pricing Page (/pricing)
-
-| ID | Impact | Description | Element |
-|---|---|---|---|
-| color-contrast | serious | Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds | `<a href="/checkout/QuickCleanup10" class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition bg-blue-700 text-white hover:bg-blue-800">Start package</a>` |
-
-### Agency Billing (/agency/billing)
-
-| ID | Impact | Description | Element |
-|---|---|---|---|
-| color-contrast | serious | Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds | `<a href="/agency/billing" class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition bg-blue-700 text-white hover:bg-blue-800">Review checkout</a>` |
-
 
 ## Manual Checklist (axe-unsupported)
 
@@ -116,7 +93,7 @@ Scanned 48 pages with axe-core (WCAG 2.2 AA ruleset).
 
 ## Remediation Summary
 
-1. **Color contrast (WCAG 1.4.3)** — Fixed `bg-blue-600` → `bg-blue-700` in Button component (contrast ratio now ≥4.5:1).
+1. **Color contrast (WCAG 1.4.3)** — Primary buttons use explicit high-contrast foreground/background colors, and the home preview placeholder uses darker slate text on the slate background.
 2. **Skip-to-content (WCAG 2.4.1)** — Added skip link in root layout with `id="main-content" targets in all shells.
 3. **Semantic landmarks** — All layouts use <main>, <nav>, <header>, <aside> with aria-labels.
 4. **Heading hierarchy** — All pages have exactly one <h1>, sequential nesting.

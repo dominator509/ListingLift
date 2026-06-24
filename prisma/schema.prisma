@@ -4984,6 +4984,7 @@ model QaVerificationLedger {
   command                  String?
   exitCode                 Int?
   evidenceCount            Int
+  evidenceRefs             Json?
   notes                    String?
   accepted                 Boolean
   productionReleaseAllowed Boolean

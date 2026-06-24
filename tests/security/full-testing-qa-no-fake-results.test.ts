@@ -6,6 +6,7 @@ vi.mock('@/lib/prisma', () => ({
   prisma: {
     qaVerificationLedger: {
       create: vi.fn().mockResolvedValue({ id: 'mock-ledger-id' }),
+      findMany: vi.fn().mockResolvedValue([]),
     },
   },
 }));

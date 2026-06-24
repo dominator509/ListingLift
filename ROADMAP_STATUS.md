@@ -6,7 +6,7 @@ Phase 38 — Full Testing and QA
 
 ## Current Task
 
-Repair Phase 38 local end-to-end validation gates: restore upload page build dependencies, align TypeScript/auth/test contracts with hardened runtime behavior, document the safe local PostgreSQL test path, remove stale readiness claims, and capture live verification evidence.
+Close the remaining Phase 38 hardening blockers: resolve accessibility contrast findings, persist QA ledger evidence references through Prisma, and run the complete `test-all` gate as one command.
 
 ## Previous Completed Phase
 
@@ -36,7 +36,7 @@ Phase 39 — Replit Production Deployment
 - [x] Codex installs dependencies.
 - [x] Stage 1 — Environment & Dependencies ✅ (npm install, verify-env, Node.js compatibility, engines field — merged 06:08 UTC)
 - [x] Codex validates schema, migrations, seed idempotency, typecheck, lint, build, tests, security checks, smoke checks, and browser rendering.
-- [ ] Codex wires QA ledger to real persistence and evidence references.
+- [x] Codex wires QA ledger to real persistence and evidence references.
 
 ## Acceptance Criteria
 
@@ -57,6 +57,7 @@ Phase 39 — Replit Production Deployment
 - **Phase 38 repair pass (2026-06-23 local)** restored `COMM_BUFFER.md`, added presentational upload-token components, documented `.env.test`/Docker PostgreSQL setup, removed unsupported `.npmrc` config, aligned route/session/schema/test contracts with the current hardened auth policy, fixed TypeScript drift, and updated Nodemailer to `9.0.1` to clear the high-severity audit advisory.
 - Phase 38 DB hardening replaced interactive `prisma migrate dev` with non-interactive `prisma migrate deploy` for `npm run db:migrate`, added `npm run db:migrate:dev` for intentional migration authoring, generated `20260623_phase38_schema_drift`, and verified local migration, seed idempotency, and integration tests against Docker PostgreSQL.
 - Phase 38 E2E hardening aligned browser tests with verified-email signup, 12-character password policy, per-IP signup limits, and session binding; generated valid local Stripe webhook signatures; fixed duplicate public navigation assertions; and updated the upload token route for Next async dynamic params.
+- Phase 38 final hardening resolved the remaining WCAG color-contrast violations, added persisted QA ledger evidence references via Prisma JSON storage, wired the ledger GET route to persisted organization records, and ran `npm run test-all` as one combined command.
 
 ## Files Changed
 
@@ -64,6 +65,7 @@ Phase 39 — Replit Production Deployment
 - Stage 1 additions: `package.json` (added engines field), `.nvmrc`, `.env` (safe placeholders), `src/schemas/env.ts` (reverted), `scripts/verify-env.ts` (reverted debug lines).
 - Phase 38 repair additions/updates include `COMM_BUFFER.md`, `.env.test.example`, `docker-compose.yml`, `TESTING.md`, `src/components/uploads/index.tsx`, auth/session/security/upload/Stripe schema and route helpers, upload/auth/package/payment tests, script type fixes, and `package.json`/`package-lock.json` for Nodemailer `9.0.1`.
 - Phase 38 E2E hardening updates include `.env.test.example`, `src/app/upload/[token]/page.tsx`, and browser specs for fullstack auth, concurrency, session isolation, rate limiting, public shell navigation, and webhook resilience.
+- Phase 38 final hardening updates include `src/components/ui/button.tsx`, `src/components/workflow/before-after-card.tsx`, `src/app/api/admin/qa/verification-ledger/route.ts`, `src/server/services/full-testing-qa-verification-ledger-service.ts`, `prisma/schema.prisma`, `prisma/migrations/20260623_phase38_qa_ledger_evidence_refs/migration.sql`, QA ledger tests, and the regenerated Q12 a11y report.
 
 ## Tests/Checks Run
 
@@ -91,6 +93,12 @@ Phase 39 — Replit Production Deployment
 - Phase 38 E2E hardening: focused Playwright retry for `fullstack-flow`, `concurrent-requests`, `session-isolation`, `rate-limiting`, `ui-shell`, and `webhook-resilience` — passed, 24 tests / 1 intentional skip.
 - Phase 38 E2E hardening: `npm run test:e2e` — passed, 34 tests / 32 intentional skips; browser audit scanned 48 pages and generated 3 serious accessibility violations across 45/48 otherwise passing pages.
 - Phase 38 E2E hardening: `npm run lint` — passed with 12 existing warnings; `npm run build` — passed with safe local test env, 361 pages generated.
+- Phase 38 final hardening: `npm run db:generate` — passed after adding QA ledger `evidenceRefs`.
+- Phase 38 final hardening: `npm run db:migrate` — passed, applied `20260623_phase38_qa_ledger_evidence_refs`.
+- Phase 38 final hardening: focused QA ledger route contract test — passed, 1 file / 4 tests.
+- Phase 38 final hardening: `npm run test:security -- tests/security/full-testing-qa-no-fake-results.test.ts` — passed, 54 files passed / 1 skipped, 102 tests passed / 7 skipped.
+- Phase 38 final hardening: focused `tests/e2e/a11y-audit.spec.ts` on fresh port 3100 — passed, 48 pages scanned, 0 violations, 48/48 passing.
+- Phase 38 final hardening: `npm run test-all` — passed as one combined command with safe local test env and Docker PostgreSQL.
 
 ## Test Results
 
@@ -100,16 +108,13 @@ Phase 39 — Replit Production Deployment
 - **`npm install`** — PASSED (515 packages, lockfile lockfileVersion 3, healthy).
 - **`npm run verify-env`** — PASSED (8 env vars loaded, validation clean, no real integrations enabled).
 - **Node.js compatibility** — PASSED (v24.16.0 meets engines >=18.17.0 requirement).
-- `npm run typecheck`, `npm run lint`, `npm run test:unit`, `npm run test:security`, `npm run test:integration`, `npm run test:adapter-contract`, `npm run build`, `npm run smoke`, `npm run test:e2e`, and high-level npm audit now have local passing evidence from 2026-06-23.
-- Browser route rendering is locally verified through Playwright for public, admin, client, agency, upload, delivery, security, API-access, revenue, upsell, image-provider, and QA surfaces covered by the E2E/a11y sweep.
+- `npm run test-all` passed as one combined command on 2026-06-23 with local safe env, Docker PostgreSQL, and Playwright on port 3100. The run covered verify-env, Prisma validate/generate/migrate, seed twice, typecheck, lint, unit, security, integration, adapter-contract, E2E/a11y, high-severity audit, build, and smoke.
+- Browser route rendering is locally verified through Playwright for public, admin, client, agency, upload, delivery, security, API-access, revenue, upsell, image-provider, and QA surfaces covered by the E2E/a11y sweep. The latest a11y report scanned 48 pages with 0 violations.
 
 ## Known Issues
 
 - Previous Prisma migration blocker is resolved by using non-interactive `prisma migrate deploy`; schema drift is captured in `20260623_phase38_schema_drift`.
-- QA route contracts return dry-run payloads until Codex wires Prisma/session/RBAC/audit/rate limiting and evidence persistence.
-- QA ledger rejects fake PASS claims as a scaffold but is not persisted.
-- `test-all` was not run end-to-end as one command; its component gates have local evidence, including full Playwright E2E/browser verification.
-- Playwright a11y audit still reports 3 serious accessibility violations: public home, public pricing, and agency billing.
+- QA ledger entries are now persisted through Prisma with sanitized evidence references. PASS rows still require evidence and never imply production readiness by themselves.
 - Prior phase runtime/database/security gaps remain unresolved until Codex work.
 - Zod `booleanString` transform bypassed by `.default()` — explicitly setting REAL flags in `.env` works around it.
 
@@ -119,7 +124,7 @@ Phase 39 — Replit Production Deployment
 
 ## Production Readiness Progress
 
-Not production-ready. Local gates now pass through typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, build, smoke, high-level audit, and full Playwright E2E/browser rendering. Remaining blockers include dry-run QA persistence, intentional skipped scaffold E2E specs, 3 serious a11y findings, and unresolved production deployment/provider verification.
+Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include intentional skipped scaffold E2E specs and unresolved production deployment/provider verification.
 
 ## Commit-Style History
 
@@ -127,3 +132,4 @@ Not production-ready. Local gates now pass through typecheck, lint, unit, securi
 - `phase-38: repair local validation gates`
 - `phase-38: harden db migration verification`
 - `phase-38: harden e2e browser verification`
+- `phase-38: persist qa evidence and close test-all`

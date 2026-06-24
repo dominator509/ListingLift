@@ -2,13 +2,23 @@ import { rejectRuntimeClaimWithoutEvidence, type QaCheckStatus } from '@/domain/
 import { type QaVerificationLedgerDraftInput } from '@/schemas/full-testing-qa';
 import { prisma } from '@/lib/prisma';
 
+function toEvidenceRefs(input: QaVerificationLedgerDraftInput['evidence']) {
+  return (input ?? []).map((evidence) => ({
+    type: evidence.type,
+    ref: evidence.ref,
+    ...(evidence.note ? { note: evidence.note } : {}),
+  }));
+}
+
 export async function buildQaVerificationLedgerDraft(input: QaVerificationLedgerDraftInput) {
   const evidence = input.evidence ?? [];
+  const evidenceRefs = toEvidenceRefs(evidence);
   const unsupportedRuntimeClaim = rejectRuntimeClaimWithoutEvidence(input.notes, evidence);
   const passWithoutEvidence = input.status === 'PASS' && evidence.length === 0;
   const draft = {
     ...input,
     evidenceCount: evidence.length,
+    evidenceRefs,
     accepted: !passWithoutEvidence && unsupportedRuntimeClaim.ok,
     productionReleaseAllowed: false,
     blockers: [
@@ -16,11 +26,10 @@ export async function buildQaVerificationLedgerDraft(input: QaVerificationLedger
       unsupportedRuntimeClaim.ok ? null : unsupportedRuntimeClaim.reason,
       input.status === 'PASS' ? 'Codex must still update ROADMAP_STATUS.md, CODEX_GAPS.md, and PHASE_38_VERIFICATION_MATRIX.md with actual command output references.' : null,
     ].filter(Boolean),
-    codexNote: 'Ledger entry persisted to database via Prisma. Evidence is real.',
+    codexNote: 'Ledger entry persisted to database via Prisma. Evidence references are stored for audit review.',
   };
 
-  // Persist the draft to the database
-  await prisma.qaVerificationLedger.create({
+  const record = await prisma.qaVerificationLedger.create({
     data: {
       organizationId: draft.organizationId,
       packageVersion: draft.packageVersion,
@@ -31,13 +40,14 @@ export async function buildQaVerificationLedgerDraft(input: QaVerificationLedger
       severity: draft.severity,
       command: draft.command ?? undefined,
       evidenceCount: draft.evidenceCount,
+      evidenceRefs: draft.evidenceRefs,
       notes: draft.notes ?? undefined,
       accepted: draft.accepted,
       productionReleaseAllowed: draft.productionReleaseAllowed,
     },
   });
 
-  return draft;
+  return { ...draft, id: record.id, persisted: true };
 }
 
 export function summarizeQaLedgerStatuses(records: { status: QaCheckStatus }[] = []) {
@@ -51,8 +61,12 @@ export function summarizeQaLedgerStatuses(records: { status: QaCheckStatus }[] =
   };
 }
 
-export async function getQaVerificationLedgerSummary() {
-  const records = await prisma.qaVerificationLedger.findMany();
+export async function getQaVerificationLedgerSummary(organizationId?: string) {
+  const records = await prisma.qaVerificationLedger.findMany({
+    where: organizationId ? { organizationId } : undefined,
+    orderBy: { createdAt: 'desc' },
+    take: 100,
+  });
   return {
     total: records.length,
     passed: records.filter((r) => r.status === 'PASS').length,
@@ -71,6 +85,8 @@ export async function getQaVerificationLedgerSummary() {
       severity: r.severity,
       accepted: r.accepted,
       evidenceCount: r.evidenceCount,
+      evidenceRefs: r.evidenceRefs,
+      productionReleaseAllowed: r.productionReleaseAllowed,
       createdAt: r.createdAt,
     })),
   };
