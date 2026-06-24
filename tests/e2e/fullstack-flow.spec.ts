@@ -1,13 +1,24 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type APIRequestContext } from '@playwright/test';
 
 const BASE = process.env.APP_URL || 'http://localhost:3000';
 
 test.describe('Full-stack E2E flow', () => {
   const ts = Date.now();
   const email = `e2e-flow-${ts}@test.com`;
-  const password = 'E2EFlow789!';
+  const password = 'E2EFlow789!ok';
   const name = 'E2E Flow User';
   const orgName = `E2EFlowOrg-${ts}`;
+  const headers = { 'x-forwarded-for': `10.38.1.${ts % 200}` };
+  let verificationToken: string;
+
+  async function verifySignedUpEmail(request: APIRequestContext) {
+    if (!verificationToken) throw new Error('signup test did not expose a verification token');
+    const verifyRes = await request.post(`${BASE}/api/auth/verify-email`, {
+      data: { token: verificationToken },
+      headers,
+    });
+    expect(verifyRes.status()).toBe(200);
+  }
 
   test('home page loads with core content', async ({ page }) => {
     await page.goto('/');
@@ -26,19 +37,22 @@ test.describe('Full-stack E2E flow', () => {
   test('signup flow via API creates account and session', async ({ request }) => {
     const res = await request.post(`${BASE}/api/auth/signup`, {
       data: { email, password, name, organizationName: orgName },
+      headers,
     });
     expect(res.status()).toBe(201);
     const body = await res.json();
     expect(body?.ok).toBe(true);
     expect(body?.data?.user?.email).toBe(email);
-    // Session cookie should be set
-    const cookies = res.headers()['set-cookie'] || '';
-    expect(cookies).toContain('ll_session');
+    expect(body?.data?.emailVerificationRequired).toBe(true);
+    verificationToken = body?.data?.verificationToken;
+    expect(verificationToken).toBeTruthy();
+    await verifySignedUpEmail(request);
   });
 
   test('login flow via API returns session', async ({ request }) => {
     const res = await request.post(`${BASE}/api/auth/login`, {
       data: { email, password },
+      headers,
     });
     expect(res.status()).toBe(200);
     const body = await res.json();
@@ -51,6 +65,7 @@ test.describe('Full-stack E2E flow', () => {
     // Login first
     const loginRes = await request.post(`${BASE}/api/auth/login`, {
       data: { email, password },
+      headers,
     });
     const cookies = loginRes.headers()['set-cookie'] || '';
     const match = cookies.match(/ll_session=([^;]+)/);
@@ -58,7 +73,7 @@ test.describe('Full-stack E2E flow', () => {
     const token = match![1];
 
     const meRes = await request.get(`${BASE}/api/auth/me`, {
-      headers: { cookie: `ll_session=${token}` },
+      headers: { ...headers, cookie: `ll_session=${token}` },
     });
     expect(meRes.status()).toBe(200);
     const body = await meRes.json();

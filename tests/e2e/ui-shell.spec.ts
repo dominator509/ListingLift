@@ -2,9 +2,10 @@ import { expect, test } from '@playwright/test';
 
 test('public shell exposes core navigation', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('link', { name: 'Pricing' })).toBeVisible();
-  await expect(page.getByRole('link', { name: /^Packages$/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Agencies' })).toBeVisible();
+  const publicNavigation = page.getByLabel('Public navigation');
+  await expect(publicNavigation.getByRole('link', { name: 'Pricing' })).toBeVisible();
+  await expect(publicNavigation.getByRole('link', { name: /^Packages$/ })).toBeVisible();
+  await expect(publicNavigation.getByRole('link', { name: 'Agencies' })).toBeVisible();
 });
 
 test.skip('admin shell exposes fulfillment navigation', async ({ page }) => {

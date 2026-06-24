@@ -8,20 +8,28 @@ test.describe('Rate limiting enforcement', () => {
   const password = 'RateLimit789!';
   const name = 'Rate Limit User';
   const orgName = `RateLimitOrg-${uniqueId}`;
+  const headers = { 'x-forwarded-for': '10.38.5.1' };
 
   test.beforeAll(async ({ request }) => {
     // Create a valid user
     const res = await request.post(`${BASE}/api/auth/signup`, {
       data: { email, password, name, organizationName: orgName },
+      headers,
     });
-    // Allow 201 or potential rate limit if another test also hammered it
-    expect([201, 429]).toContain(res.status());
+    expect(res.status()).toBe(201);
+    const body = await res.json();
+    const verifyRes = await request.post(`${BASE}/api/auth/verify-email`, {
+      data: { token: body?.data?.verificationToken },
+      headers,
+    });
+    expect(verifyRes.status()).toBe(200);
   });
 
   test('rapid login attempts with wrong password trigger rate limit', async ({ request }) => {
     const attempts = Array.from({ length: 30 }, (_, i) =>
       request.post(`${BASE}/api/auth/login`, {
         data: { email: `nobody-${uniqueId}@test.com`, password: `wrong-${i}` },
+        headers: { 'x-forwarded-for': '10.38.5.2' },
       }),
     );
 
@@ -40,6 +48,7 @@ test.describe('Rate limiting enforcement', () => {
   test('valid login still works (not globally blocked)', async ({ request }) => {
     const res = await request.post(`${BASE}/api/auth/login`, {
       data: { email, password },
+      headers,
     });
     // Either works or is rate-limited for this specific user
     expect([200, 429]).toContain(res.status());
@@ -49,6 +58,7 @@ test.describe('Rate limiting enforcement', () => {
     // First login to get a session
     const loginRes = await request.post(`${BASE}/api/auth/login`, {
       data: { email, password },
+      headers,
     });
     const cookies = loginRes.headers()['set-cookie'] || '';
     const match = cookies.match(/ll_session=([^;]+)/);
@@ -62,7 +72,7 @@ test.describe('Rate limiting enforcement', () => {
     const results: Awaited<ReturnType<typeof request.get>>[] = [];
     for (let i = 0; i < 10; i++) {
       const res = await request.get(`${BASE}/api/auth/me`, {
-        headers: { cookie: `ll_session=${token}` },
+        headers: { ...headers, cookie: `ll_session=${token}` },
       });
       results.push(res);
     }

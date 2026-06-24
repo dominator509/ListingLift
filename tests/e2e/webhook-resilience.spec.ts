@@ -1,6 +1,15 @@
 import { expect, test } from '@playwright/test';
+import crypto from 'node:crypto';
 
 const BASE = process.env.APP_URL || 'http://localhost:3000';
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || 'dev-stripe-webhook-secret';
+
+function stripeSignature(payload: unknown) {
+  const body = JSON.stringify(payload);
+  const timestamp = Math.floor(Date.now() / 1000);
+  const signature = crypto.createHmac('sha256', STRIPE_WEBHOOK_SECRET).update(`${timestamp}.${body}`).digest('hex');
+  return { body, header: `t=${timestamp},v1=${signature}` };
+}
 
 test.describe('Webhook resilience', () => {
   const uniqueId = `wh-${Date.now()}`;
@@ -23,16 +32,16 @@ test.describe('Webhook resilience', () => {
       },
     };
 
-    const signature = 'test_sig_dup';
+    const signed = stripeSignature(payload);
     const headers = {
-      'stripe-signature': signature,
+      'stripe-signature': signed.header,
       'content-type': 'application/json',
     };
 
     // Send same webhook twice
     const [res1, res2] = await Promise.all([
-      request.post(`${BASE}/api/stripe/webhook`, { data: payload, headers }),
-      request.post(`${BASE}/api/stripe/webhook`, { data: payload, headers }),
+      request.post(`${BASE}/api/stripe/webhook`, { data: signed.body, headers }),
+      request.post(`${BASE}/api/stripe/webhook`, { data: signed.body, headers }),
     ]);
 
     // Both should return 200 (webhooks are idempotent by event ID)
@@ -95,14 +104,17 @@ test.describe('Webhook resilience', () => {
       },
     };
 
+    const signedPaymentIntent = stripeSignature(paymentIntentPayload);
+    const signedCheckout = stripeSignature(checkoutPayload);
+
     const [piRes, csRes] = await Promise.all([
       request.post(`${BASE}/api/stripe/webhook`, {
-        data: paymentIntentPayload,
-        headers: { 'stripe-signature': 'test_ooo_pi', 'content-type': 'application/json' },
+        data: signedPaymentIntent.body,
+        headers: { 'stripe-signature': signedPaymentIntent.header, 'content-type': 'application/json' },
       }),
       request.post(`${BASE}/api/stripe/webhook`, {
-        data: checkoutPayload,
-        headers: { 'stripe-signature': 'test_ooo_cs', 'content-type': 'application/json' },
+        data: signedCheckout.body,
+        headers: { 'stripe-signature': signedCheckout.header, 'content-type': 'application/json' },
       }),
     ]);
 

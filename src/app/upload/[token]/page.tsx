@@ -8,8 +8,8 @@ const sampleFiles = [
   { fileName: 'product-batch.zip', mimeType: 'application/zip' as const, sizeBytes: 12_000_000 },
 ];
 
-export default function UploadTokenPage({ params }: { params: { token: string } }) {
-  const token = params?.token;
+export default async function UploadTokenPage({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params;
   if (!token || typeof token !== 'string') return notFound();
 
   return (
