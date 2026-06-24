@@ -12,6 +12,7 @@ test-results
 !.env.test.example
 *.log
 .DS_Store
+.serena/
 /uploads
 /storage
 /tmp
