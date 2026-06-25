@@ -69,6 +69,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Upwork E2E hardening converted the skipped manual workflow scaffold into runnable local Playwright coverage for contract intake, proposals, delivery, revisions, retainers, and marketplace-safe guardrails.
 - Phase 38 Gumroad E2E hardening converted the skipped intake scaffold into runnable local Playwright coverage for webhook signature gating, dry-run/manual-review mode, dedupe requirements, product mapping, hashed upload-link planning, and redacted admin notifications.
 - Phase 38 Fiverr E2E hardening converted the skipped manual workflow scaffold into runnable local Playwright coverage for order intake, dedupe/audit copy, gig mapping, delivery templates, revision blocking, and marketplace-safe guardrails.
+- Phase 38 Taskrabbit E2E hardening converted the skipped manual workflow scaffold into runnable local Playwright coverage for local-service intake, service mapping, delivery messaging, direct-retainer conversion guardrails, and marketplace-safe rules.
 
 ## Files Changed
 
@@ -88,6 +89,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Upwork E2E hardening updates include `tests/e2e/upwork-manual-contract.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 Gumroad E2E hardening updates include `tests/e2e/gumroad-intake.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 Fiverr E2E hardening updates include `tests/e2e/fiverr-manual-order.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 Taskrabbit E2E hardening updates include `tests/e2e/taskrabbit-manual-task.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -132,6 +134,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Upwork E2E hardening: `set APP_URL=http://127.0.0.1:3103&& npx playwright test tests/e2e/upwork-manual-contract.spec.ts --workers=1` passed, 1 test across six Upwork manual workflow routes, against a fresh local Next server; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 Gumroad E2E hardening: `set APP_URL=http://127.0.0.1:3104&& npx playwright test tests/e2e/gumroad-intake.spec.ts --workers=1` passed, 1 test, against a fresh local Next server; `npm run typecheck` passed after removing stale generated `.next/dev/types`; `git diff --check` passed.
 - Phase 38 Fiverr E2E hardening: `npx playwright test tests/e2e/fiverr-manual-order.spec.ts --workers=1` passed, 1 test across four Fiverr manual workflow routes; `npm run typecheck` passed; `git diff --check` passed.
+- Phase 38 Taskrabbit E2E hardening: `npx playwright test tests/e2e/taskrabbit-manual-task.spec.ts --workers=1` passed, 1 test across four Taskrabbit manual workflow routes; `npm run typecheck` passed after removing stale generated `.next/dev/types`; `git diff --check` passed.
 
 ## Test Results
 
