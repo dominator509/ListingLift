@@ -24,6 +24,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - Focused delivery E2E coverage now passes for the public delivery-token page and admin delivery-send page on a fresh local Next server.
 - Focused Upwork manual workflow E2E coverage now passes across contract intake, proposals, delivery, revisions, retainers, and marketplace-safe copy surfaces.
 - Focused Gumroad intake E2E coverage now passes for webhook signature gating, dry-run/manual-review mode, dedupe copy, product mapping, hashed upload-link planning, and secret-redaction messaging.
+- Focused Fiverr manual workflow E2E coverage now passes across manual order intake, gig mapping, delivery template, revision tracking, and marketplace-safe compliance copy.
 - The accessibility audit scans 48 pages with 0 violations.
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
@@ -42,7 +43,7 @@ These gaps remain active and should not be described as production-ready:
 - Production deployment has not been verified.
 - Production database, SMTP, Stripe, marketplace/provider, image-provider, storage-provider, and webhook credentials were not verified in this repair stream.
 - Real integrations remain disabled by default and must stay feature-flagged until explicit provider verification is completed.
-- 26 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, and Gumroad intake E2E checks are now runnable local coverage.
+- 25 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, and Fiverr manual workflow E2E checks are now runnable local coverage.
 - Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
 - The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
 - Five moderate dependency advisories remain because the available npm fixes require breaking or force upgrades.
@@ -91,6 +92,7 @@ No remaining credential-free QA persistence gaps are currently open. Production/
 - Converted the skipped delivery token/send page scaffold into runnable local Playwright coverage for hashed delivery-token language, approval/archive delivery gates, audit copy, and marketplace-safe delivery messaging.
 - Converted the skipped Upwork manual workflow scaffold into runnable local Playwright coverage for manual contract intake, proposal copy, delivery copy, revision tracking, retainer messaging, and marketplace-safe guardrails.
 - Converted the skipped Gumroad intake scaffold into runnable local Playwright coverage for webhook signature gating, dry-run/manual-review mode, dedupe requirements, product mapping, hashed expiring upload-link planning, and redacted admin notifications.
+- Converted the skipped Fiverr manual workflow scaffold into runnable local Playwright coverage for manual order intake, dedupe/audit copy, gig mapping, safe delivery templates, revision blocking, and no-scraping/password-storage guardrails.
 - Convert intentionally skipped Playwright scaffold specs into runnable coverage as the corresponding product flows become real.
 - Expand browser coverage for any route that moves from dry-run/mock mode to real provider behavior.
 - Keep `npm run test-all` as the combined local evidence gate after each broad Phase 38 repair.
