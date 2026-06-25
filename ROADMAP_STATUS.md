@@ -85,6 +85,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 admin-delivery-archive E2E hardening converted the skipped Phase 12 scaffold into runnable local Playwright coverage for delivery archive planning copy, seeded ZIP/package checklist shells, file-naming preview, folder-tree output, and manifest preview headers; the local route also required the Next async dynamic-params fix now applied in `src/app/admin/jobs/[jobId]/delivery/page.tsx`.
 - Phase 38 ui-shell hardening converted the skipped admin shell scaffold into runnable local Playwright coverage for the admin dashboard shell, fulfillment analytics copy, and core admin navigation links while preserving the existing public navigation check.
 - Phase 38 api-access E2E hardening converted the skipped Phase 36 scaffold into runnable local Playwright coverage for the overview plus token management, scope matrix, webhook subscriptions, shared upload portal, and advanced integration catalog shells.
+- Phase 38 admin-dashboard E2E hardening converted the skipped Phase 34 scaffold into runnable local Playwright coverage for the dashboard plus revenue analytics, source tracking, marketplace-to-direct conversions, and retainer alert shells.
 
 ## Files Changed
 
@@ -120,6 +121,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 admin-delivery-archive E2E hardening updates include `src/app/admin/jobs/[jobId]/delivery/page.tsx`, `tests/e2e/admin-delivery-archive.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 ui-shell hardening updates include `tests/e2e/ui-shell.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 api-access E2E hardening updates include `tests/e2e/api-access.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 admin-dashboard E2E hardening updates include `tests/e2e/admin-dashboard.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -180,6 +182,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 admin-delivery-archive E2E hardening: `npx playwright test tests/e2e/admin-delivery-archive.spec.ts --workers=1` passed, 1 test for the delivery archive planning route after fixing async dynamic params; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
 - Phase 38 ui-shell hardening: `npx playwright test tests/e2e/ui-shell.spec.ts --workers=1` passed, 2 tests for the public shell and admin dashboard shell routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 api-access E2E hardening: `npx playwright test tests/e2e/api-access.spec.ts --workers=1` passed, 1 test across the Phase 36 overview plus token, scope, webhook, shared-portal, and integration routes; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
+- Phase 38 admin-dashboard E2E hardening: `npx playwright test tests/e2e/admin-dashboard.spec.ts --workers=1` passed, 1 test across the Phase 34 dashboard plus revenue analytics, source tracking, conversions, and retainer routes; `npm run typecheck` passed; `git diff --check` passed.
 
 ## Test Results
 
