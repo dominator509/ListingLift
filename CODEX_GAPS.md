@@ -48,6 +48,8 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - Focused advanced-image-processing E2E coverage now passes for the admin advanced-processing shell, including the visible admin-approval guardrails on recipe cards.
 - Focused quality-control E2E coverage now passes for the admin quality-control and flagged-outputs shells, including final-delivery gating language and manual replacement fallback messaging.
 - Focused agency-white-label E2E coverage now passes across the agency dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells.
+- Focused admin-job-queue E2E coverage now passes for the admin jobs shell, including the fulfillment queue and manual-job intake card.
+- Focused preview-gallery E2E coverage now passes for the admin previews shell, including bulk preview approval and explicit marketplace-safe review language.
 - The accessibility audit scans 48 pages with 0 violations.
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
@@ -66,7 +68,8 @@ These gaps remain active and should not be described as production-ready:
 - Production deployment has not been verified.
 - Production database, SMTP, Stripe, marketplace/provider, image-provider, storage-provider, and webhook credentials were not verified in this repair stream.
 - Real integrations remain disabled by default and must stay feature-flagged until explicit provider verification is completed.
-- 2 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, Fiverr manual workflow E2E, Taskrabbit manual workflow E2E, Etsy workflow E2E, Shopify workflow E2E, social-commerce workflow E2E, other-sales-channels workflow E2E, image-provider admin E2E, file-storage admin E2E, task-notification integration E2E, manual-invoices E2E, preset-manager E2E, reports-upsells E2E, automation-webhooks E2E, admin-processing E2E, admin-delivery-archive E2E, ui-shell E2E, api-access E2E, admin-dashboard E2E, client-dashboard E2E, marketplace-exports E2E, approval-revision E2E, advanced-image-processing E2E, quality-control E2E, and agency-white-label E2E checks are now runnable local coverage.
+- No Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, Fiverr manual workflow E2E, Taskrabbit manual workflow E2E, Etsy workflow E2E, Shopify workflow E2E, social-commerce workflow E2E, other-sales-channels workflow E2E, image-provider admin E2E, file-storage admin E2E, task-notification integration E2E, manual-invoices E2E, preset-manager E2E, reports-upsells E2E, automation-webhooks E2E, admin-processing E2E, admin-delivery-archive E2E, ui-shell E2E, api-access E2E, admin-dashboard E2E, client-dashboard E2E, marketplace-exports E2E, approval-revision E2E, advanced-image-processing E2E, quality-control E2E, agency-white-label E2E, admin-job-queue E2E, and preview-gallery E2E checks are now runnable local coverage.
+- One conditional branch still remains inside `tests/e2e/rate-limiting.spec.ts`: the `/api/auth/me` request test currently exits early when login does not return an `ll_session` cookie, and the focused local rerun is also blocked earlier by `DATABASE_URL is not set` during `/api/auth/signup`.
 - Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
 - Nested file-storage admin routes (`/admin/file-storage/connections`, `/admin/file-storage/folder-import`, `/admin/file-storage/delivery-export`) returned local 404s during focused Playwright probing and remain unverified.
 - The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
@@ -140,6 +143,8 @@ No remaining credential-free QA persistence gaps are currently open. Production/
 - Converted the skipped advanced-image-processing scaffold into runnable local Playwright coverage for the admin advanced-processing shell.
 - Converted the skipped quality-control scaffold into runnable local Playwright coverage for the admin quality-control and flagged-outputs shells.
 - Converted the skipped agency-white-label scaffold into runnable local Playwright coverage for the agency dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells.
+- Converted the skipped admin-job-queue scaffold into runnable local Playwright coverage for the admin jobs shell.
+- Converted the skipped preview-gallery scaffold into runnable local Playwright coverage for the admin previews shell and restored the admin preview safe-language notice from the preview gallery service output.
 - Convert intentionally skipped Playwright scaffold specs into runnable coverage as the corresponding product flows become real.
 - Expand browser coverage for any route that moves from dry-run/mock mode to real provider behavior.
 - Keep `npm run test-all` as the combined local evidence gate after each broad Phase 38 repair.

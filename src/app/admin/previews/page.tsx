@@ -63,6 +63,7 @@ export default function AdminPreviewsPage() {
   return (
     <main className="mx-auto max-w-7xl space-y-8 px-6 py-10">
       <PageHeader title="Preview gallery" description="Review processed outputs, before/after comparisons, flagged previews, and client visibility before final approval." />
+      <p className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-800">{gallery.safeLanguage}</p>
       <PreviewSummaryCards summary={gallery.summary} />
       <BulkApprovalPanel summary={gallery.summary} />
       <PreviewFilterBar filters={gallery.availableFilters} />
