@@ -95,6 +95,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 admin-job-queue and preview-gallery E2E hardening converted the last two fully skipped Playwright shells into runnable local coverage and restored the preview safe-language notice on the admin previews page.
 - Phase 38 rate-limiting env hardening wired Playwright and Prisma-backed local DB scripts to preload `.env.test`, verified the documented Docker PostgreSQL path with migrate/seed idempotency, and removed the final conditional skip branch from the rate-limiting E2E suite.
 - Phase 38 file-storage nested-route hardening verified the previously unconfirmed `connections`, `folder-import`, and `delivery-export` admin shells with focused local Playwright coverage, closing the stale 404/unverified note.
+- Phase 38 dependency hardening used an npm override on Prisma's nested `@hono/node-server` dependency to remove three moderate audit findings without a major upgrade; the remaining two moderates are still isolated to Next's bundled `postcss` tree.
 
 ## Files Changed
 
@@ -139,6 +140,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 admin-job-queue and preview-gallery E2E hardening updates include `src/app/admin/previews/page.tsx`, `tests/e2e/admin-job-queue.spec.ts`, `tests/e2e/preview-gallery.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 rate-limiting env hardening updates include `playwright.config.ts`, `scripts/run-with-test-env.ts`, `scripts/verify-env.ts`, `package.json`, `tests/e2e/rate-limiting.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 file-storage nested-route hardening updates include `tests/e2e/file-storage-admin.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 dependency hardening updates include `package.json`, `package-lock.json`, `CODEX_GAPS.md`, `PHASE_38_VERIFICATION_MATRIX.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -158,7 +160,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 repair: `npm run test:adapter-contract` — passed, 4 files / 7 tests.
 - Phase 38 repair: `npm run build` — passed, 361 static pages generated; warning only for deprecated Next middleware convention.
 - Phase 38 repair: `npm run smoke` — passed.
-- Phase 38 repair: `npm audit --audit-level=high` — passed after Nodemailer `9.0.1`; 5 moderate advisories remain with force/breaking fixes only.
+- Phase 38 repair: `npm audit --audit-level=high` passed after Nodemailer `9.0.1`; later local dependency hardening reduced the remaining moderate advisories from 5 to 2, with the residue still isolated to Next's bundled `postcss` tree.
 - Phase 38 repair: `docker compose up -d postgres` — passed; earlier `npm run db:migrate` hung when it used `prisma migrate dev`.
 - Phase 38 DB hardening: `npm run db:migrate` — passed using `prisma migrate deploy`, applied `20260623_phase38_schema_drift`.
 - Phase 38 DB hardening: `npm run db:seed` — passed twice, verifying idempotency.
@@ -208,6 +210,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 admin-job-queue and preview-gallery E2E hardening: `npx playwright test tests/e2e/admin-job-queue.spec.ts tests/e2e/preview-gallery.spec.ts --workers=1` passed, 2 tests across the admin jobs and admin previews shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 - Phase 38 rate-limiting env hardening: `npm run verify-env`, `npm run db:validate`, `npm run db:generate`, `npm run db:migrate`, and `npm run db:seed` passed against the safe `.env.test` Docker PostgreSQL path; `npx playwright test tests/e2e/rate-limiting.spec.ts --workers=1` passed, 3 tests, after removing the conditional `test.skip()` branch; `npm run typecheck` passed and `git diff --check` passed after the config/script updates.
 - Phase 38 file-storage nested-route hardening: `npx playwright test tests/e2e/file-storage-admin.spec.ts --workers=1` passed, verifying the main file-storage shell plus the nested `connections`, `folder-import`, and `delivery-export` admin routes; `npm run typecheck` passed and `git diff --check` passed after the spec expansion.
+- Phase 38 dependency hardening: `npm install` passed with the Prisma transitive override in place; `npm audit --json` now reports 2 moderate advisories instead of 5; `npm ls next prisma @prisma/dev @hono/node-server postcss --depth=2` confirms `@hono/node-server@1.19.14` under Prisma while `next@16.2.9` still carries bundled `postcss@8.4.31`; `npm run typecheck` passed.
 
 ## Test Results
 
@@ -233,7 +236,7 @@ Phase 39 — Replit Production Deployment
 
 ## Production Readiness Progress
 
-Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include production deployment/provider verification, moderate dependency advisories requiring force/breaking upgrades, and production observability/artifact-storage decisions rather than skipped Playwright scaffolds or unresolved local a11y findings.
+Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include production deployment/provider verification, the remaining two moderate Next/postcss audit advisories that still need a breaking or upstream fix path, and production observability/artifact-storage decisions rather than skipped Playwright scaffolds or unresolved local a11y findings.
 
 ## Commit-Style History
 

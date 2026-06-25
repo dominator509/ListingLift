@@ -80,5 +80,10 @@
     "tsx": "latest",
     "typescript": "latest",
     "vitest": "latest"
+  },
+  "overrides": {
+    "@prisma/dev": {
+      "@hono/node-server": "^1.19.13"
+    }
   }
 }

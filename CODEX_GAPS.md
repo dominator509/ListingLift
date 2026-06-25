@@ -55,7 +55,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
 - `npm run test-all` passes as one combined command with safe local env and Docker PostgreSQL.
-- High-severity npm audit/security gate passes after the Nodemailer update; 5 moderate advisories remain because available fixes require force/breaking upgrades.
+- High-severity npm audit/security gate passes after the Nodemailer update; 2 moderate advisories remain after a non-breaking Prisma transitive override updated `@hono/node-server` to `1.19.14`.
 - QA ledger evidence references are now persisted through Prisma JSON storage, and PASS rows require evidence.
 - QA ledger evidence references now expose a local retention policy with a 30-day review window, 180-day delete-after boundary, and manual purge eligibility.
 - QA ledger evidence references now expose a local storage policy: external artifact storage is not required for Phase 38 local verification, and production/CI artifact storage must be revisited before release gates.
@@ -73,7 +73,7 @@ These gaps remain active and should not be described as production-ready:
 - Focused `rate-limiting` E2E coverage now passes without any conditional skip branch after Playwright began preloading `.env.test`, the local DB scripts began honoring the safe test env, Docker PostgreSQL was migrated/seeded, and the auth/session flow returned a real `ll_session` cookie during the suite.
 - Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
 - The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
-- Five moderate dependency advisories remain because the available npm fixes require breaking or force upgrades.
+- Two moderate dependency advisories remain, both tied to Next's bundled `postcss@8.4.31` tree under the current installed `next@16.2.9`; the available `npm audit` fix is still a breaking/force path rather than a safe local patch.
 - Production observability, artifact retention, and external QA evidence storage remain unverified.
 
 ## Project-wide guardrails Codex must preserve

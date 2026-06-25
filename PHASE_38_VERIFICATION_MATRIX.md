@@ -23,7 +23,7 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | Integration | `npm run test:integration` | PASS | 44 files / 114 tests passed inside `npm run test-all`. | Includes persisted QA ledger evidence-reference coverage. |
 | Adapter contracts | `npm run test:adapter-contract` | PASS | 4 files / 7 tests passed inside `npm run test-all`. | Mock adapters remain default. |
 | E2E and a11y | `npm run test:e2e` | PASS | 66 tests passed / 0 skipped in the latest local rerun; a11y audit scanned 48 pages with 0 violations. | Local browser coverage is now fully runnable without skipped scaffold specs. |
-| High-severity audit | `npm run security-check` / high audit gate | PASS | Passed inside `npm run test-all`. | 5 moderate advisories remain; force/breaking fixes deferred. |
+| High-severity audit | `npm run security-check` / high audit gate | PASS | Passed inside `npm run test-all`; latest local `npm audit --json` now shows 2 moderate advisories after the Prisma-side transitive hardening. | Remaining moderates are in Next's bundled `postcss` tree and still require a breaking/force path. |
 | Build | `npm run build` | PASS | Passed inside `npm run test-all`; 361 static pages generated. | Known warning only for deprecated Next middleware/proxy convention. |
 | Smoke | `npm run smoke` | PASS | Passed inside `npm run test-all`. | Local smoke script validates configured domain defaults; not a production deployment smoke. |
 | No fake results | QA ledger service and tests | PASS | QA ledger entries persist through Prisma with sanitized evidence references; PASS requires evidence. | Evidence storage still local/database-scoped in this repair stream. |
@@ -52,4 +52,4 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | Build | 361 static pages generated |
 | TypeScript | 0 errors |
 | Production/provider verification | Not completed in this repair stream |
-| Overall | NOT PRODUCTION-READY. Local Phase 38 gates pass, but production deployment, production credentials/providers, moderate dependency upgrades, and production observability/artifact-storage decisions remain unresolved. |
+| Overall | NOT PRODUCTION-READY. Local Phase 38 gates pass, but production deployment, production credentials/providers, the remaining two moderate Next/postcss advisories, and production observability/artifact-storage decisions remain unresolved. |
