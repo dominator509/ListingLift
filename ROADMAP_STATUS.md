@@ -66,6 +66,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 CSRF coverage hardening converted the skipped server-dependent CSRF security file into runnable local Request/service coverage without credentials or a live Next server.
 - Phase 38 upload E2E hardening converted the skipped upload token page scaffold into runnable local Playwright coverage for secure intake language, original preservation, approval gating, ZIP safety, and manual fallback.
 - Phase 38 delivery E2E hardening converted the skipped delivery token/send scaffold into runnable local Playwright coverage for hashed token language, approval/archive delivery gates, audit copy, and marketplace-safe delivery messaging.
+- Phase 38 Upwork E2E hardening converted the skipped manual workflow scaffold into runnable local Playwright coverage for contract intake, proposals, delivery, revisions, retainers, and marketplace-safe guardrails.
 
 ## Files Changed
 
@@ -82,6 +83,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 CSRF coverage hardening updates include `tests/security/csrf-integration.test.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 upload E2E hardening updates include `tests/e2e/upload-flow.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 delivery E2E hardening updates include `src/app/delivery/[token]/page.tsx`, `src/app/admin/jobs/[jobId]/delivery/send/page.tsx`, `src/components/delivery/download-security-panel.tsx`, `tests/e2e/delivery-download.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 Upwork E2E hardening updates include `tests/e2e/upwork-manual-contract.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -123,6 +125,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 CSRF coverage hardening: `npx vitest run tests/security/csrf-integration.test.ts` passed, 1 file / 6 tests; `npm run test:security` passed, 55 files / 112 tests.
 - Phase 38 upload E2E hardening: `npx playwright test tests/e2e/upload-flow.spec.ts` passed, 1 test; `npm run typecheck` passed; `git diff --check` passed. The Playwright wrapper left its dev-server process running and sandbox cleanup was denied.
 - Phase 38 delivery E2E hardening: `set APP_URL=http://127.0.0.1:3102&& npx playwright test tests/e2e/delivery-download.spec.ts --workers=1` passed, 2 tests, against a fresh local Next server.
+- Phase 38 Upwork E2E hardening: `set APP_URL=http://127.0.0.1:3103&& npx playwright test tests/e2e/upwork-manual-contract.spec.ts --workers=1` passed, 1 test across six Upwork manual workflow routes, against a fresh local Next server; `npm run typecheck` passed; `git diff --check` passed.
 
 ## Test Results
 
