@@ -80,6 +80,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 manual-invoices E2E hardening converted the skipped Phase 19 billing scaffold into runnable local Playwright coverage for invoice creation, external payment confirmation, transactional billing/audit warnings, and verified-payment gate messaging.
 - Phase 38 preset-manager E2E hardening converted the skipped Phase 6 scaffold into runnable local Playwright coverage for preset catalog copy, seeded summary cards, admin preset table headers, selector controls, and custom preset draft/audit guardrails.
 - Phase 38 reports-upsells E2E hardening converted the skipped Phase 32 scaffold into runnable local Playwright coverage for reports summary copy, report/upsell safety messaging, report-builder shell, upsell opportunity cards, and offer-template table headers.
+- Phase 38 automation-webhooks E2E hardening converted the skipped Phase 29 scaffold into runnable local Playwright coverage for provider scaffolds, trigger/action mapping, dry-run test mode, subscription draft controls, and dead-letter/manual-fallback safety messaging.
 
 ## Files Changed
 
@@ -110,6 +111,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 manual-invoices E2E hardening updates include `tests/e2e/manual-invoices.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 preset-manager E2E hardening updates include `tests/e2e/preset-manager.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 reports-upsells E2E hardening updates include `tests/e2e/reports-upsells.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 automation-webhooks E2E hardening updates include `tests/e2e/automation-webhooks.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -165,6 +167,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 manual-invoices E2E hardening: `npx playwright test tests/e2e/manual-invoices.spec.ts --workers=1` passed, 1 test for the manual invoice billing route; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 preset-manager E2E hardening: `npx playwright test tests/e2e/preset-manager.spec.ts --workers=1` passed, 1 test for the admin presets route; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 reports-upsells E2E hardening: `npx playwright test tests/e2e/reports-upsells.spec.ts --workers=1` passed, 1 test across the admin reports and upsells routes; `npm run typecheck` passed; `git diff --check` passed.
+- Phase 38 automation-webhooks E2E hardening: `npx playwright test tests/e2e/automation-webhooks.spec.ts --workers=1` passed, 1 test across the automation overview, subscriptions, and dead-letter routes; `npm run typecheck` passed; `git diff --check` passed.
 
 ## Test Results
 
