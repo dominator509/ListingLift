@@ -44,6 +44,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - Focused admin-dashboard E2E coverage now passes across the Phase 34 dashboard plus revenue analytics, source tracking, marketplace-to-direct conversions, and retainer alert shells.
 - Focused client-dashboard E2E coverage now passes across the client workspace plus jobs, downloads, reports, and revisions shells with client-scoped demo headers.
 - Focused marketplace-exports E2E coverage now passes across the marketplace export overview plus export-plan, manual-order, delivery, and safety shells for Amazon, eBay, and WooCommerce flows.
+- Focused approval-revision E2E coverage now passes for the admin approvals shell, including the manual approval guardrails and explicit separation between approval and delivery gates.
 - The accessibility audit scans 48 pages with 0 violations.
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
@@ -62,7 +63,7 @@ These gaps remain active and should not be described as production-ready:
 - Production deployment has not been verified.
 - Production database, SMTP, Stripe, marketplace/provider, image-provider, storage-provider, and webhook credentials were not verified in this repair stream.
 - Real integrations remain disabled by default and must stay feature-flagged until explicit provider verification is completed.
-- 6 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, Fiverr manual workflow E2E, Taskrabbit manual workflow E2E, Etsy workflow E2E, Shopify workflow E2E, social-commerce workflow E2E, other-sales-channels workflow E2E, image-provider admin E2E, file-storage admin E2E, task-notification integration E2E, manual-invoices E2E, preset-manager E2E, reports-upsells E2E, automation-webhooks E2E, admin-processing E2E, admin-delivery-archive E2E, ui-shell E2E, api-access E2E, admin-dashboard E2E, client-dashboard E2E, and marketplace-exports E2E checks are now runnable local coverage.
+- 5 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, Fiverr manual workflow E2E, Taskrabbit manual workflow E2E, Etsy workflow E2E, Shopify workflow E2E, social-commerce workflow E2E, other-sales-channels workflow E2E, image-provider admin E2E, file-storage admin E2E, task-notification integration E2E, manual-invoices E2E, preset-manager E2E, reports-upsells E2E, automation-webhooks E2E, admin-processing E2E, admin-delivery-archive E2E, ui-shell E2E, api-access E2E, admin-dashboard E2E, client-dashboard E2E, marketplace-exports E2E, and approval-revision E2E checks are now runnable local coverage.
 - Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
 - Nested file-storage admin routes (`/admin/file-storage/connections`, `/admin/file-storage/folder-import`, `/admin/file-storage/delivery-export`) returned local 404s during focused Playwright probing and remain unverified.
 - The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
@@ -132,6 +133,7 @@ No remaining credential-free QA persistence gaps are currently open. Production/
 - Converted the skipped admin-dashboard scaffold into runnable local Playwright coverage for the Phase 34 dashboard plus revenue analytics, source tracking, marketplace-to-direct conversions, and retainer alert shells.
 - Converted the skipped client-dashboard scaffold into runnable local Playwright coverage for the client workspace plus jobs, downloads, reports, and revisions shells with client-scoped demo headers.
 - Converted the skipped marketplace-exports scaffold into runnable local Playwright coverage for the marketplace export overview plus export-plan, manual-order, delivery, and safety shells for Amazon, eBay, and WooCommerce flows.
+- Converted the skipped approval-revision scaffold into runnable local Playwright coverage for the admin approvals shell and its manual approval guardrails.
 - Convert intentionally skipped Playwright scaffold specs into runnable coverage as the corresponding product flows become real.
 - Expand browser coverage for any route that moves from dry-run/mock mode to real provider behavior.
 - Keep `npm run test-all` as the combined local evidence gate after each broad Phase 38 repair.
