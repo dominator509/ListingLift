@@ -62,10 +62,8 @@ test.describe('Rate limiting enforcement', () => {
     });
     const cookies = loginRes.headers()['set-cookie'] || '';
     const match = cookies.match(/ll_session=([^;]+)/);
-    if (!match) {
-      test.skip();
-      return;
-    }
+    expect(match).toBeTruthy();
+    if (!match) throw new Error('Expected ll_session cookie after login.');
     const token = match[1];
 
     // Use sequential requests to avoid ECONNRESET from connection pool pressure

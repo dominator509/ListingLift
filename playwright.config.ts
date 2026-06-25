@@ -1,4 +1,8 @@
+import { config as loadEnv } from 'dotenv';
 import { defineConfig, devices } from '@playwright/test';
+
+loadEnv({ path: '.env.test', override: false });
+loadEnv({ override: false });
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -14,6 +18,6 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: process.env.APP_URL || 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: process.env.PW_REUSE_EXISTING_SERVER === 'true',
   },
 });

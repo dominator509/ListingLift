@@ -93,6 +93,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 quality-control E2E hardening converted the skipped Phase 14 QC scaffold into runnable local Playwright coverage for the quality-control and flagged-outputs shells, including final-delivery gating and manual replacement fallback messaging.
 - Phase 38 agency-white-label E2E hardening converted the skipped Phase 35 agency white-label scaffold into runnable local Playwright coverage for the dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells.
 - Phase 38 admin-job-queue and preview-gallery E2E hardening converted the last two fully skipped Playwright shells into runnable local coverage and restored the preview safe-language notice on the admin previews page.
+- Phase 38 rate-limiting env hardening wired Playwright and Prisma-backed local DB scripts to preload `.env.test`, verified the documented Docker PostgreSQL path with migrate/seed idempotency, and removed the final conditional skip branch from the rate-limiting E2E suite.
 
 ## Files Changed
 
@@ -135,6 +136,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 advanced-image-processing and quality-control E2E hardening updates include `tests/e2e/advanced-image-processing.spec.ts`, `tests/e2e/quality-control.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 agency-white-label E2E hardening updates include `tests/e2e/agency-white-label.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 admin-job-queue and preview-gallery E2E hardening updates include `src/app/admin/previews/page.tsx`, `tests/e2e/admin-job-queue.spec.ts`, `tests/e2e/preview-gallery.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 rate-limiting env hardening updates include `playwright.config.ts`, `scripts/run-with-test-env.ts`, `scripts/verify-env.ts`, `package.json`, `tests/e2e/rate-limiting.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -202,7 +204,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 advanced-image-processing and quality-control E2E hardening: `npx playwright test tests/e2e/advanced-image-processing.spec.ts tests/e2e/quality-control.spec.ts --workers=1` passed, 3 tests across the admin advanced-processing, quality-control, and flagged-outputs shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 - Phase 38 agency-white-label E2E hardening: `npx playwright test tests/e2e/agency-white-label.spec.ts --workers=1` passed, 1 test across the agency dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 - Phase 38 admin-job-queue and preview-gallery E2E hardening: `npx playwright test tests/e2e/admin-job-queue.spec.ts tests/e2e/preview-gallery.spec.ts --workers=1` passed, 2 tests across the admin jobs and admin previews shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
-- Phase 38 conditional rate-limiting follow-up: `npx playwright test tests/e2e/rate-limiting.spec.ts --workers=1` does not currently prove the remaining conditional skip because the local web server aborts during `/api/auth/signup` with `DATABASE_URL is not set`; the suite also still contains a `test.skip()` branch when login does not return `ll_session`.
+- Phase 38 rate-limiting env hardening: `npm run verify-env`, `npm run db:validate`, `npm run db:generate`, `npm run db:migrate`, and `npm run db:seed` passed against the safe `.env.test` Docker PostgreSQL path; `npx playwright test tests/e2e/rate-limiting.spec.ts --workers=1` passed, 3 tests, after removing the conditional `test.skip()` branch; `npm run typecheck` passed and `git diff --check` passed after the config/script updates.
 
 ## Test Results
 
@@ -228,7 +230,7 @@ Phase 39 — Replit Production Deployment
 
 ## Production Readiness Progress
 
-Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include intentional skipped scaffold E2E specs and unresolved production deployment/provider verification.
+Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include unresolved accessibility violations, QA ledger evidence maturity, and production deployment/provider verification rather than skipped Playwright scaffolds.
 
 ## Commit-Style History
 

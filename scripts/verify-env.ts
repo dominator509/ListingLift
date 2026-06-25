@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import { envSchema } from '../src/schemas/env';
 
+config({ path: '.env.test', override: false });
 config({ path: '.env' });
 config({ path: '.env.local', override: true });
 
