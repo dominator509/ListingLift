@@ -19,10 +19,10 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | TypeScript | `npm run typecheck` | PASS | Passed inside `npm run test-all`. | 0 type errors in the latest combined gate. |
 | Lint | `npm run lint` | PASS | Passed inside `npm run test-all`. | 12 warnings remain, 0 errors. |
 | Unit | `npm run test:unit` | PASS | 101 files / 451 tests passed inside `npm run test-all`. | Current local evidence supersedes older seed counts. |
-| Security | `npm run test:security` | PASS | 54 files passed / 1 skipped, 102 tests passed / 7 skipped inside `npm run test-all`. | Intentional skips remain. |
+| Security | `npm run test:security` | PASS | 54 files passed / 1 skipped, 102 tests passed / 7 skipped inside `npm run test-all`. | Intentional skips remain in security coverage only. |
 | Integration | `npm run test:integration` | PASS | 44 files / 114 tests passed inside `npm run test-all`. | Includes persisted QA ledger evidence-reference coverage. |
 | Adapter contracts | `npm run test:adapter-contract` | PASS | 4 files / 7 tests passed inside `npm run test-all`. | Mock adapters remain default. |
-| E2E and a11y | `npm run test:e2e` | PASS | 34 tests passed / 32 skipped inside `npm run test-all`; a11y audit scanned 48 pages with 0 violations. | Skips are intentional scaffold coverage, not production proof. |
+| E2E and a11y | `npm run test:e2e` | PASS | 66 tests passed / 0 skipped in the latest local rerun; a11y audit scanned 48 pages with 0 violations. | Local browser coverage is now fully runnable without skipped scaffold specs. |
 | High-severity audit | `npm run security-check` / high audit gate | PASS | Passed inside `npm run test-all`. | 5 moderate advisories remain; force/breaking fixes deferred. |
 | Build | `npm run build` | PASS | Passed inside `npm run test-all`; 361 static pages generated. | Known warning only for deprecated Next middleware/proxy convention. |
 | Smoke | `npm run smoke` | PASS | Passed inside `npm run test-all`. | Local smoke script validates configured domain defaults; not a production deployment smoke. |
@@ -43,7 +43,7 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 |---|---|
 | Active stage | Phase 38 local repair and verification evidence |
 | Combined gate | `npm run test-all` passed as one command with safe local env and Docker PostgreSQL |
-| E2E specs | 34 passed, 32 intentional skips, 0 failed |
+| E2E specs | 66 passed, 0 skipped, 0 failed |
 | A11y audit | 48 pages scanned, 0 violations |
 | Unit tests | 451 passed across 101 files |
 | Security tests | 102 passed / 7 skipped across 55 files |
@@ -52,4 +52,4 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | Build | 361 static pages generated |
 | TypeScript | 0 errors |
 | Production/provider verification | Not completed in this repair stream |
-| Overall | NOT PRODUCTION-READY. Local Phase 38 gates pass, but production deployment, production credentials/providers, and intentionally skipped scaffold E2E coverage remain unresolved. |
+| Overall | NOT PRODUCTION-READY. Local Phase 38 gates pass, but production deployment, production credentials/providers, moderate dependency upgrades, and production observability/artifact-storage decisions remain unresolved. |

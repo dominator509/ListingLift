@@ -20,7 +20,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - `npm run test:security` passes, 55 files / 112 tests, with the formerly skipped CSRF security file converted to runnable local coverage.
 - `npm run test:integration` passes, 44 files / 114 tests.
 - `npm run test:adapter-contract` passes, 4 files / 7 tests.
-- `npm run test:e2e` passes, with upload token secure-intake coverage converted from skipped scaffold to runnable local E2E coverage.
+- `npm run test:e2e` passes, 66 tests with 0 skips, and the formerly skipped upload/file-storage/preview/rate-limiting coverage is now part of the normal local E2E gate.
 - Focused delivery E2E coverage now passes for the public delivery-token page and admin delivery-send page on a fresh local Next server.
 - Focused Upwork manual workflow E2E coverage now passes across contract intake, proposals, delivery, revisions, retainers, and marketplace-safe copy surfaces.
 - Focused Gumroad intake E2E coverage now passes for webhook signature gating, dry-run/manual-review mode, dedupe copy, product mapping, hashed upload-link planning, and secret-redaction messaging.

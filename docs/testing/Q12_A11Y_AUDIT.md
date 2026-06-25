@@ -93,7 +93,7 @@ Scanned 48 pages with axe-core (WCAG 2.2 AA ruleset).
 
 ## Remediation Summary
 
-1. **Color contrast (WCAG 1.4.3)** — Primary buttons use explicit high-contrast foreground/background colors, and the home preview placeholder uses darker slate text on the slate background.
+1. **Color contrast (WCAG 1.4.3)** — Fixed `bg-blue-600` → `bg-blue-700` in Button component (contrast ratio now ≥4.5:1).
 2. **Skip-to-content (WCAG 2.4.1)** — Added skip link in root layout with `id="main-content" targets in all shells.
 3. **Semantic landmarks** — All layouts use <main>, <nav>, <header>, <aside> with aria-labels.
 4. **Heading hierarchy** — All pages have exactly one <h1>, sequential nesting.

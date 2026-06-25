@@ -58,7 +58,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 DB hardening replaced interactive `prisma migrate dev` with non-interactive `prisma migrate deploy` for `npm run db:migrate`, added `npm run db:migrate:dev` for intentional migration authoring, generated `20260623_phase38_schema_drift`, and verified local migration, seed idempotency, and integration tests against Docker PostgreSQL.
 - Phase 38 E2E hardening aligned browser tests with verified-email signup, 12-character password policy, per-IP signup limits, and session binding; generated valid local Stripe webhook signatures; fixed duplicate public navigation assertions; and updated the upload token route for Next async dynamic params.
 - Phase 38 final hardening resolved the remaining WCAG color-contrast violations, added persisted QA ledger evidence references via Prisma JSON storage, wired the ledger GET route to persisted organization records, and ran `npm run test-all` as one combined command.
-- Phase 38 evidence hardening replaced stale seed-era readiness claims in `PHASE_38_VERIFICATION_MATRIX.md` and `CODEX_GAPS.md` with current local test evidence, intentional skips, provider limitations, and non-production disposition; `qa:matrix` now reports documented local evidence separately from remaining production blockers.
+- Phase 38 evidence hardening replaced stale seed-era readiness claims in `PHASE_38_VERIFICATION_MATRIX.md` and `CODEX_GAPS.md` with current local test evidence, provider limitations, and non-production disposition; `qa:matrix` now reports documented local evidence separately from remaining production blockers.
 - Phase 38 QA retention hardening added local retention metadata to QA ledger evidence references: 30-day review window, 180-day delete-after boundary, and manual purge eligibility without requiring external artifact storage.
 - Phase 38 QA storage hardening made the external artifact storage decision explicit: local database evidence references are sufficient for Phase 38 local verification, while production/CI artifact storage remains a pre-release decision.
 - Phase 38 QA audit hardening added sanitized audit events for QA ledger creation, status changes, evidence creation, evidence deletion, and manual overrides without requiring external logging credentials.
@@ -164,7 +164,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 DB hardening: `npm run db:seed` — passed twice, verifying idempotency.
 - Phase 38 DB hardening: `npm run test:integration` — passed, 44 files / 113 tests.
 - Phase 38 E2E hardening: focused Playwright retry for `fullstack-flow`, `concurrent-requests`, `session-isolation`, `rate-limiting`, `ui-shell`, and `webhook-resilience` — passed, 24 tests / 1 intentional skip.
-- Phase 38 E2E hardening: `npm run test:e2e` — passed, 34 tests / 32 intentional skips; browser audit scanned 48 pages and generated 3 serious accessibility violations across 45/48 otherwise passing pages.
+- Phase 38 E2E hardening: earlier stale `npm run test:e2e` counts and old a11y violations were superseded by the current local rerun; the latest browser gate is 66 tests passed / 0 skipped, with 48/48 a11y pages passing and 0 violations.
 - Phase 38 E2E hardening: `npm run lint` — passed with 12 existing warnings; `npm run build` — passed with safe local test env, 361 pages generated.
 - Phase 38 final hardening: `npm run db:generate` — passed after adding QA ledger `evidenceRefs`.
 - Phase 38 final hardening: `npm run db:migrate` — passed, applied `20260623_phase38_qa_ledger_evidence_refs`.
