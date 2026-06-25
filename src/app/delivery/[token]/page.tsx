@@ -3,8 +3,8 @@ import { DeliveryDownloadCard } from '@/components/delivery/delivery-download-ca
 import { DownloadSecurityPanel } from '@/components/delivery/download-security-panel';
 import { notFound } from 'next/navigation';
 
-export default function DeliveryTokenPage({ params }: { params: { token: string } }) {
-  const token = params?.token;
+export default async function DeliveryTokenPage({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params;
   if (!token || typeof token !== 'string') return notFound();
 
   return (

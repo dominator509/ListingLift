@@ -21,6 +21,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - `npm run test:integration` passes, 44 files / 114 tests.
 - `npm run test:adapter-contract` passes, 4 files / 7 tests.
 - `npm run test:e2e` passes, with upload token secure-intake coverage converted from skipped scaffold to runnable local E2E coverage.
+- Focused delivery E2E coverage now passes for the public delivery-token page and admin delivery-send page on a fresh local Next server.
 - The accessibility audit scans 48 pages with 0 violations.
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
@@ -39,7 +40,7 @@ These gaps remain active and should not be described as production-ready:
 - Production deployment has not been verified.
 - Production database, SMTP, Stripe, marketplace/provider, image-provider, storage-provider, and webhook credentials were not verified in this repair stream.
 - Real integrations remain disabled by default and must stay feature-flagged until explicit provider verification is completed.
-- 30 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite and upload token secure-intake E2E are now runnable local coverage.
+- 28 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, and delivery token/send E2E checks are now runnable local coverage.
 - Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
 - The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
 - Five moderate dependency advisories remain because the available npm fixes require breaking or force upgrades.
@@ -85,6 +86,7 @@ No remaining credential-free QA persistence gaps are currently open. Production/
 
 - Converted the skipped CSRF security scaffold into runnable local service/request coverage for missing token, valid token, forged token, expired token, cross-origin rejection, and safe-method bypass.
 - Converted the skipped upload token page scaffold into runnable local Playwright coverage for secure intake language, original preservation, approval gating, ZIP safety, and manual fallback.
+- Converted the skipped delivery token/send page scaffold into runnable local Playwright coverage for hashed delivery-token language, approval/archive delivery gates, audit copy, and marketplace-safe delivery messaging.
 - Convert intentionally skipped Playwright scaffold specs into runnable coverage as the corresponding product flows become real.
 - Expand browser coverage for any route that moves from dry-run/mock mode to real provider behavior.
 - Keep `npm run test-all` as the combined local evidence gate after each broad Phase 38 repair.
