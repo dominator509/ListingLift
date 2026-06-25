@@ -91,6 +91,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 approval-revision E2E hardening converted the skipped approval and revision scaffold into runnable local Playwright coverage for the admin approvals shell and its manual approval guardrails.
 - Phase 38 advanced-image-processing E2E hardening converted the skipped advanced processing scaffold into runnable local Playwright coverage for the admin advanced-processing shell and its visible admin-approval guardrails.
 - Phase 38 quality-control E2E hardening converted the skipped Phase 14 QC scaffold into runnable local Playwright coverage for the quality-control and flagged-outputs shells, including final-delivery gating and manual replacement fallback messaging.
+- Phase 38 agency-white-label E2E hardening converted the skipped Phase 35 agency white-label scaffold into runnable local Playwright coverage for the dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells.
 
 ## Files Changed
 
@@ -131,6 +132,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 marketplace-exports E2E hardening updates include `tests/e2e/marketplace-exports.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 approval-revision E2E hardening updates include `tests/e2e/approval-revision.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 advanced-image-processing and quality-control E2E hardening updates include `tests/e2e/advanced-image-processing.spec.ts`, `tests/e2e/quality-control.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 agency-white-label E2E hardening updates include `tests/e2e/agency-white-label.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -196,6 +198,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 marketplace-exports E2E hardening: `npx playwright test tests/e2e/marketplace-exports.spec.ts --workers=1` passed, 1 test across the overview plus export-plan, manual-order, delivery, and safety routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 approval-revision E2E hardening: `npx playwright test tests/e2e/approval-revision.spec.ts --workers=1` passed, 1 test for the admin approvals shell; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 - Phase 38 advanced-image-processing and quality-control E2E hardening: `npx playwright test tests/e2e/advanced-image-processing.spec.ts tests/e2e/quality-control.spec.ts --workers=1` passed, 3 tests across the admin advanced-processing, quality-control, and flagged-outputs shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
+- Phase 38 agency-white-label E2E hardening: `npx playwright test tests/e2e/agency-white-label.spec.ts --workers=1` passed, 1 test across the agency dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 
 ## Test Results
 
