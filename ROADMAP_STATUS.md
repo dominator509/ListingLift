@@ -72,6 +72,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Taskrabbit E2E hardening converted the skipped manual workflow scaffold into runnable local Playwright coverage for local-service intake, service mapping, delivery messaging, direct-retainer conversion guardrails, and marketplace-safe rules.
 - Phase 38 Etsy E2E hardening converted the skipped workflow scaffold into runnable local Playwright coverage for manual order intake, delivery templates, listing import planning, visual reports, seller-review warnings, and marketplace-safe guardrails.
 - Phase 38 Shopify E2E hardening converted the skipped workflow scaffold into runnable local Playwright coverage for manual job intake, OAuth scaffold safety, product/SKU import planning, delivery templates, replacement approval gates, product-page audits, and marketplace-safe guardrails.
+- Phase 38 social-commerce E2E hardening converted the skipped workflow scaffold into runnable local Playwright coverage for manual order intake, channel mapping, creative planning, delivery templates, revision blocking, and platform-safe guardrails.
 
 ## Files Changed
 
@@ -94,6 +95,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Taskrabbit E2E hardening updates include `tests/e2e/taskrabbit-manual-task.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 Etsy E2E hardening updates include `tests/e2e/etsy-workflow.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 Shopify E2E hardening updates include `tests/e2e/shopify-workflow.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 social-commerce E2E hardening updates include `tests/e2e/social-commerce-workflow.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -141,6 +143,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Taskrabbit E2E hardening: `npx playwright test tests/e2e/taskrabbit-manual-task.spec.ts --workers=1` passed, 1 test across four Taskrabbit manual workflow routes; `npm run typecheck` passed after removing stale generated `.next/dev/types`; `git diff --check` passed.
 - Phase 38 Etsy E2E hardening: `npx playwright test tests/e2e/etsy-workflow.spec.ts --workers=1` passed, 1 test across five Etsy workflow routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 Shopify E2E hardening: `npx playwright test tests/e2e/shopify-workflow.spec.ts --workers=1` passed, 1 test across seven Shopify workflow routes; `npm run typecheck` passed; `git diff --check` passed.
+- Phase 38 social-commerce E2E hardening: `npx playwright test tests/e2e/social-commerce-workflow.spec.ts --workers=1` passed, 1 test across five social-commerce workflow routes; `npm run typecheck` passed; `git diff --check` passed.
 
 ## Test Results
 
