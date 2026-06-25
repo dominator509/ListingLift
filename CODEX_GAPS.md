@@ -54,7 +54,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - The accessibility audit scans 48 pages with 0 violations.
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
-- `npm run test-all` passes as one combined command with safe local env and Docker PostgreSQL.
+- `npm run test-all` passes as one combined command with safe local env and Docker PostgreSQL, including the now-wrapped `npm run build` step that preloads `.env.test` instead of failing on missing `DATABASE_URL`.
 - High-severity npm audit/security gate passes after the Nodemailer update; 2 moderate advisories remain after a non-breaking Prisma transitive override updated `@hono/node-server` to `1.19.14`.
 - QA ledger evidence references are now persisted through Prisma JSON storage, and PASS rows require evidence.
 - QA ledger evidence references now expose a local retention policy with a 30-day review window, 180-day delete-after boundary, and manual purge eligibility.

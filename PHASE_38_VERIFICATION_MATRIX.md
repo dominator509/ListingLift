@@ -24,7 +24,7 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | Adapter contracts | `npm run test:adapter-contract` | PASS | 4 files / 7 tests passed inside `npm run test-all`. | Mock adapters remain default. |
 | E2E and a11y | `npm run test:e2e` | PASS | 66 tests passed / 0 skipped in the latest local rerun; a11y audit scanned 48 pages with 0 violations. | Local browser coverage is now fully runnable without skipped scaffold specs. |
 | High-severity audit | `npm run security-check` / high audit gate | PASS | Passed inside `npm run test-all`; latest local `npm audit --json` now shows 2 moderate advisories after the Prisma-side transitive hardening. | Remaining moderates are in Next's bundled `postcss` tree and still require a breaking/force path. |
-| Build | `npm run build` | PASS | Passed inside `npm run test-all`; 361 static pages generated. | Known warning only for deprecated Next middleware/proxy convention. |
+| Build | `npm run build` | PASS | Passed inside `npm run test-all`; 361 static pages generated after the script was routed through the shared test-env wrapper. | Known warning only for deprecated Next middleware/proxy convention. |
 | Smoke | `npm run smoke` | PASS | Passed inside `npm run test-all`. | Local smoke script validates configured domain defaults; not a production deployment smoke. |
 | No fake results | QA ledger service and tests | PASS | QA ledger entries persist through Prisma with sanitized evidence references; PASS requires evidence. | Evidence storage still local/database-scoped in this repair stream. |
 
@@ -42,7 +42,7 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | Metric | Current value |
 |---|---|
 | Active stage | Phase 38 local repair and verification evidence |
-| Combined gate | `npm run test-all` passed as one command with safe local env and Docker PostgreSQL |
+| Combined gate | `npm run test-all` passed as one command on the latest local rerun with safe `.env.test`, Docker PostgreSQL, E2E/a11y, audit, wrapped build, and smoke |
 | E2E specs | 66 passed, 0 skipped, 0 failed |
 | A11y audit | 48 pages scanned, 0 violations |
 | Unit tests | 451 passed across 101 files |

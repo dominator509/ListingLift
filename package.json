@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tsx scripts/run-with-test-env.ts next build",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
