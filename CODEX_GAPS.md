@@ -30,6 +30,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - Focused Shopify workflow E2E coverage now passes across manual job intake, OAuth scaffold, product/SKU imports, delivery templates, replacement approval gates, product-page audits, and marketplace-safe compliance copy.
 - Focused social-commerce workflow E2E coverage now passes across manual order intake, channel mapping, creative planning, delivery templates, revision tracking, and platform-safe compliance copy.
 - Focused other-sales-channels E2E coverage now passes across manual lead/order intake, selectable Phase 23 source catalog, proposal/follow-up templates, follow-up status, revenue attribution, and manual-only safety copy.
+- Focused image-provider admin E2E coverage now passes across mock provider readiness, real-provider feature flag gating, secret-reference-only display, dry-run test contract, and manual fallback copy.
 - The accessibility audit scans 48 pages with 0 violations.
 - `npm run build` passes, generating 361 static pages with only the known Next middleware/proxy deprecation warning.
 - `npm run smoke` passes for local domain-default smoke coverage.
@@ -48,7 +49,7 @@ These gaps remain active and should not be described as production-ready:
 - Production deployment has not been verified.
 - Production database, SMTP, Stripe, marketplace/provider, image-provider, storage-provider, and webhook credentials were not verified in this repair stream.
 - Real integrations remain disabled by default and must stay feature-flagged until explicit provider verification is completed.
-- 20 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, Fiverr manual workflow E2E, Taskrabbit manual workflow E2E, Etsy workflow E2E, Shopify workflow E2E, social-commerce workflow E2E, and other-sales-channels workflow E2E checks are now runnable local coverage.
+- 19 Playwright specs remain intentionally skipped as scaffold or future-provider coverage; the previously skipped CSRF security suite, upload token secure-intake E2E, delivery token/send E2E, Upwork manual workflow E2E, Gumroad intake E2E, Fiverr manual workflow E2E, Taskrabbit manual workflow E2E, Etsy workflow E2E, Shopify workflow E2E, social-commerce workflow E2E, other-sales-channels workflow E2E, and image-provider admin E2E checks are now runnable local coverage.
 - Several marketplace, storage, reporting, upsell, automation, and provider routes still rely on mock, dry-run, or scaffolded contracts by design.
 - The Next middleware/proxy deprecation warning remains tracked separately because it does not currently block build/runtime verification.
 - Five moderate dependency advisories remain because the available npm fixes require breaking or force upgrades.
@@ -103,6 +104,7 @@ No remaining credential-free QA persistence gaps are currently open. Production/
 - Converted the skipped Shopify workflow scaffold into runnable local Playwright coverage for manual job intake, OAuth scaffold safety, encrypted secret-reference copy, product/SKU import planning, delivery templates, replacement approval gates, product-page audits, and no-scraping/no-guarantee guardrails.
 - Converted the skipped social-commerce workflow scaffold into runnable local Playwright coverage for manual order intake, channel mapping, creative-plan safe copy, delivery templates, revision blocking, and no-scraping/no-password/no-guarantee guardrails.
 - Converted the skipped other-sales-channels scaffold into runnable local Playwright coverage for manual lead/order intake, source catalog mapping, proposal/follow-up templates, follow-up status, revenue attribution, and no-scraping/no-password/no-automation guardrails.
+- Converted the skipped image-provider admin scaffold into runnable local Playwright coverage for mock provider readiness, feature-flagged real-provider blocking, secret-reference labels without values, dry-run-only contract copy, and manual fallback requirements.
 - Convert intentionally skipped Playwright scaffold specs into runnable coverage as the corresponding product flows become real.
 - Expand browser coverage for any route that moves from dry-run/mock mode to real provider behavior.
 - Keep `npm run test-all` as the combined local evidence gate after each broad Phase 38 repair.

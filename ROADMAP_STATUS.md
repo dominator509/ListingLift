@@ -74,6 +74,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Shopify E2E hardening converted the skipped workflow scaffold into runnable local Playwright coverage for manual job intake, OAuth scaffold safety, product/SKU import planning, delivery templates, replacement approval gates, product-page audits, and marketplace-safe guardrails.
 - Phase 38 social-commerce E2E hardening converted the skipped workflow scaffold into runnable local Playwright coverage for manual order intake, channel mapping, creative planning, delivery templates, revision blocking, and platform-safe guardrails.
 - Phase 38 other-sales-channels E2E hardening converted the skipped generic sales channel scaffold into runnable local Playwright coverage for manual lead/order intake, source catalog, proposal/follow-up templates, follow-up status, revenue attribution, and manual-only safety guardrails.
+- Phase 38 image-provider admin E2E hardening converted the skipped provider setup scaffold into runnable local Playwright coverage for mock readiness, feature-flagged real-provider blocking, secret-reference-only display, dry-run contracts, and manual fallback guardrails.
 
 ## Files Changed
 
@@ -98,6 +99,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Shopify E2E hardening updates include `tests/e2e/shopify-workflow.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 social-commerce E2E hardening updates include `tests/e2e/social-commerce-workflow.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 other-sales-channels E2E hardening updates include `tests/e2e/other-sales-channels.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 image-provider admin E2E hardening updates include `tests/e2e/image-provider-admin.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -147,6 +149,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 Shopify E2E hardening: `npx playwright test tests/e2e/shopify-workflow.spec.ts --workers=1` passed, 1 test across seven Shopify workflow routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 social-commerce E2E hardening: `npx playwright test tests/e2e/social-commerce-workflow.spec.ts --workers=1` passed, 1 test across five social-commerce workflow routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 other-sales-channels E2E hardening: `npx playwright test tests/e2e/other-sales-channels.spec.ts --workers=1` passed, 1 test across four generic sales channel workflow routes; `npm run typecheck` passed; `git diff --check` passed.
+- Phase 38 image-provider admin E2E hardening: `npx playwright test tests/e2e/image-provider-admin.spec.ts --workers=1` passed, 1 test for the provider setup route; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
 
 ## Test Results
 
