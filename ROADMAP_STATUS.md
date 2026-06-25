@@ -94,6 +94,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 agency-white-label E2E hardening converted the skipped Phase 35 agency white-label scaffold into runnable local Playwright coverage for the dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells.
 - Phase 38 admin-job-queue and preview-gallery E2E hardening converted the last two fully skipped Playwright shells into runnable local coverage and restored the preview safe-language notice on the admin previews page.
 - Phase 38 rate-limiting env hardening wired Playwright and Prisma-backed local DB scripts to preload `.env.test`, verified the documented Docker PostgreSQL path with migrate/seed idempotency, and removed the final conditional skip branch from the rate-limiting E2E suite.
+- Phase 38 file-storage nested-route hardening verified the previously unconfirmed `connections`, `folder-import`, and `delivery-export` admin shells with focused local Playwright coverage, closing the stale 404/unverified note.
 
 ## Files Changed
 
@@ -137,6 +138,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 agency-white-label E2E hardening updates include `tests/e2e/agency-white-label.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 admin-job-queue and preview-gallery E2E hardening updates include `src/app/admin/previews/page.tsx`, `tests/e2e/admin-job-queue.spec.ts`, `tests/e2e/preview-gallery.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 rate-limiting env hardening updates include `playwright.config.ts`, `scripts/run-with-test-env.ts`, `scripts/verify-env.ts`, `package.json`, `tests/e2e/rate-limiting.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 file-storage nested-route hardening updates include `tests/e2e/file-storage-admin.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -205,6 +207,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 agency-white-label E2E hardening: `npx playwright test tests/e2e/agency-white-label.spec.ts --workers=1` passed, 1 test across the agency dashboard, workspaces, queue, white-label settings, delivery, reports, billing, volume-pricing, and team shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 - Phase 38 admin-job-queue and preview-gallery E2E hardening: `npx playwright test tests/e2e/admin-job-queue.spec.ts tests/e2e/preview-gallery.spec.ts --workers=1` passed, 2 tests across the admin jobs and admin previews shells; `npm run typecheck` passed after clearing the generated `.next/dev/types` validator cache; `git diff --check` passed.
 - Phase 38 rate-limiting env hardening: `npm run verify-env`, `npm run db:validate`, `npm run db:generate`, `npm run db:migrate`, and `npm run db:seed` passed against the safe `.env.test` Docker PostgreSQL path; `npx playwright test tests/e2e/rate-limiting.spec.ts --workers=1` passed, 3 tests, after removing the conditional `test.skip()` branch; `npm run typecheck` passed and `git diff --check` passed after the config/script updates.
+- Phase 38 file-storage nested-route hardening: `npx playwright test tests/e2e/file-storage-admin.spec.ts --workers=1` passed, verifying the main file-storage shell plus the nested `connections`, `folder-import`, and `delivery-export` admin routes; `npm run typecheck` passed and `git diff --check` passed after the spec expansion.
 
 ## Test Results
 
@@ -230,7 +233,7 @@ Phase 39 — Replit Production Deployment
 
 ## Production Readiness Progress
 
-Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include unresolved accessibility violations, QA ledger evidence maturity, and production deployment/provider verification rather than skipped Playwright scaffolds.
+Not production-ready. Local gates now pass through the combined `npm run test-all` command, including typecheck, lint, unit, security, migration deploy, seed idempotency, integration, adapter-contract, E2E/a11y, high-level audit, build, and smoke. Remaining blockers include production deployment/provider verification, moderate dependency advisories requiring force/breaking upgrades, and production observability/artifact-storage decisions rather than skipped Playwright scaffolds or unresolved local a11y findings.
 
 ## Commit-Style History
 

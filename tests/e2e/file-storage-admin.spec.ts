@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('file storage admin shell', () => {
-  test('renders file storage admin integration shell', async ({ page }) => {
+  test('renders file storage admin integration shell and nested route shells', async ({ page }) => {
     await page.setExtraHTTPHeaders({
       'x-demo-user-id': 'test-user-001',
       'x-demo-organization-id': 'test-org-001',
@@ -21,5 +21,17 @@ test.describe('file storage admin shell', () => {
     await expect(page.getByRole('heading', { name: 'Storage safety rules', exact: true })).toBeVisible();
     await expect(page.getByText('Never overwrite original uploads.')).toBeVisible();
     await expect(page.getByText('Do not generate public permanent delivery links.')).toBeVisible();
+
+    await page.goto('/admin/file-storage/connections');
+    await expect(page.locator('h1')).toHaveText('Storage connections');
+    await expect(page.getByText('Manage provider connection drafts.')).toBeVisible();
+
+    await page.goto('/admin/file-storage/folder-import');
+    await expect(page.locator('h1')).toHaveText('Folder import');
+    await expect(page.getByText('Plan Drive, Dropbox, local, or mock folder intake')).toBeVisible();
+
+    await page.goto('/admin/file-storage/delivery-export');
+    await expect(page.locator('h1')).toHaveText('Delivery export');
+    await expect(page.getByText('Plan approved delivery archive exports to storage destinations')).toBeVisible();
   });
 });
