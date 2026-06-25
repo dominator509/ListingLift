@@ -87,6 +87,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 api-access E2E hardening converted the skipped Phase 36 scaffold into runnable local Playwright coverage for the overview plus token management, scope matrix, webhook subscriptions, shared upload portal, and advanced integration catalog shells.
 - Phase 38 admin-dashboard E2E hardening converted the skipped Phase 34 scaffold into runnable local Playwright coverage for the dashboard plus revenue analytics, source tracking, marketplace-to-direct conversions, and retainer alert shells.
 - Phase 38 client-dashboard E2E hardening converted the skipped client shell scaffold into runnable local Playwright coverage for the client workspace plus jobs, downloads, reports, and revisions shells with client-scoped demo headers.
+- Phase 38 marketplace-exports E2E hardening converted the skipped marketplace export scaffold into runnable local Playwright coverage for the overview plus export-plan, manual-order, delivery, and safety shells for Amazon, eBay, and WooCommerce flows.
 
 ## Files Changed
 
@@ -124,6 +125,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 api-access E2E hardening updates include `tests/e2e/api-access.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 admin-dashboard E2E hardening updates include `tests/e2e/admin-dashboard.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 client-dashboard E2E hardening updates include `tests/e2e/client-dashboard.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 marketplace-exports E2E hardening updates include `tests/e2e/marketplace-exports.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -186,6 +188,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 api-access E2E hardening: `npx playwright test tests/e2e/api-access.spec.ts --workers=1` passed, 1 test across the Phase 36 overview plus token, scope, webhook, shared-portal, and integration routes; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
 - Phase 38 admin-dashboard E2E hardening: `npx playwright test tests/e2e/admin-dashboard.spec.ts --workers=1` passed, 1 test across the Phase 34 dashboard plus revenue analytics, source tracking, conversions, and retainer routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 client-dashboard E2E hardening: `npx playwright test tests/e2e/client-dashboard.spec.ts --workers=1` passed, 1 test across the client workspace plus jobs, downloads, reports, and revisions routes; `npm run typecheck` passed; `git diff --check` passed.
+- Phase 38 marketplace-exports E2E hardening: `npx playwright test tests/e2e/marketplace-exports.spec.ts --workers=1` passed, 1 test across the overview plus export-plan, manual-order, delivery, and safety routes; `npm run typecheck` passed; `git diff --check` passed.
 
 ## Test Results
 
