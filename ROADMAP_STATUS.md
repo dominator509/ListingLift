@@ -76,6 +76,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 other-sales-channels E2E hardening converted the skipped generic sales channel scaffold into runnable local Playwright coverage for manual lead/order intake, source catalog, proposal/follow-up templates, follow-up status, revenue attribution, and manual-only safety guardrails.
 - Phase 38 image-provider admin E2E hardening converted the skipped provider setup scaffold into runnable local Playwright coverage for mock readiness, feature-flagged real-provider blocking, secret-reference-only display, dry-run contracts, and manual fallback guardrails.
 - Phase 38 file-storage admin E2E hardening converted the skipped storage integration scaffold into runnable local Playwright coverage for the main file-storage shell’s baseline provider cards, encrypted secret-reference copy, and storage safety rules; nested file-storage subroutes still need follow-up after local 404s.
+- Phase 38 task-notification integration E2E hardening converted the skipped Phase 30 scaffold into runnable local Playwright coverage for provider setup, data exports, task creation, notification templates, integration health, seed-state copy, and manually recoverable integration guardrails.
 
 ## Files Changed
 
@@ -102,6 +103,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 other-sales-channels E2E hardening updates include `tests/e2e/other-sales-channels.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 image-provider admin E2E hardening updates include `tests/e2e/image-provider-admin.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 file-storage admin E2E hardening updates include `tests/e2e/file-storage-admin.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 task-notification integration E2E hardening updates include `tests/e2e/task-notification-integrations.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -153,6 +155,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 other-sales-channels E2E hardening: `npx playwright test tests/e2e/other-sales-channels.spec.ts --workers=1` passed, 1 test across four generic sales channel workflow routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 image-provider admin E2E hardening: `npx playwright test tests/e2e/image-provider-admin.spec.ts --workers=1` passed, 1 test for the provider setup route; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
 - Phase 38 file-storage admin E2E hardening: `npx playwright test tests/e2e/file-storage-admin.spec.ts --workers=1` passed, 1 test for the main file-storage integration route; `npm run typecheck` passed; `git diff --check` passed. Focused probing of nested file-storage subroutes found local 404s and they remain unverified.
+- Phase 38 task-notification integration E2E hardening: `npx playwright test tests/e2e/task-notification-integrations.spec.ts --workers=1` passed, 1 test across the main Phase 30 route plus provider, export, task, template, and health subroutes; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
 
 ## Test Results
 
