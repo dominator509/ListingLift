@@ -19,7 +19,7 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | TypeScript | `npm run typecheck` | PASS | Passed inside `npm run test-all`. | 0 type errors in the latest combined gate. |
 | Lint | `npm run lint` | PASS | Passed inside `npm run test-all`. | 12 warnings remain, 0 errors. |
 | Unit | `npm run test:unit` | PASS | 101 files / 451 tests passed inside `npm run test-all`. | Current local evidence supersedes older seed counts. |
-| Security | `npm run test:security` | PASS | 54 files passed / 1 skipped, 102 tests passed / 7 skipped inside `npm run test-all`. | Intentional skips remain in security coverage only. |
+| Security | `npm run test:security` | PASS | Latest local rerun: 55 files passed / 0 skipped, 112 tests passed / 0 skipped. | Former security skips are now closed in the normal local gate. |
 | Integration | `npm run test:integration` | PASS | 44 files / 114 tests passed inside `npm run test-all`. | Includes persisted QA ledger evidence-reference coverage. |
 | Adapter contracts | `npm run test:adapter-contract` | PASS | 4 files / 7 tests passed inside `npm run test-all`. | Mock adapters remain default. |
 | E2E and a11y | `npm run test:e2e` | PASS | 66 tests passed / 0 skipped in the latest local rerun; a11y audit scanned 48 pages with 0 violations. | Local browser coverage is now fully runnable without skipped scaffold specs. |
@@ -46,7 +46,7 @@ This matrix tracks current local Codex repair evidence. It does not claim produc
 | E2E specs | 66 passed, 0 skipped, 0 failed |
 | A11y audit | 48 pages scanned, 0 violations |
 | Unit tests | 451 passed across 101 files |
-| Security tests | 102 passed / 7 skipped across 55 files |
+| Security tests | 112 passed / 0 skipped across 55 files |
 | Integration tests | 114 passed across 44 files |
 | Adapter contracts | 7 passed across 4 files |
 | Build | 361 static pages generated |

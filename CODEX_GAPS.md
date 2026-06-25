@@ -17,7 +17,7 @@ The earlier seed-era runtime gaps in this file have been partially closed by loc
 - `npm run typecheck` passes with 0 TypeScript errors.
 - `npm run lint` passes with 12 warnings and 0 errors.
 - `npm run test:unit` passes, 101 files / 451 tests.
-- `npm run test:security` passes, 55 files / 112 tests, with the formerly skipped CSRF security file converted to runnable local coverage.
+- `npm run test:security` passes, 55 files / 112 tests with 0 skips, and the formerly skipped CSRF security file is now part of the normal local security gate.
 - `npm run test:integration` passes, 44 files / 114 tests.
 - `npm run test:adapter-contract` passes, 4 files / 7 tests.
 - `npm run test:e2e` passes, 66 tests with 0 skips, and the formerly skipped upload/file-storage/preview/rate-limiting coverage is now part of the normal local E2E gate.

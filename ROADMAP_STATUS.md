@@ -156,7 +156,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 repair: `npm run typecheck` — passed.
 - Phase 38 repair: `npm run lint` — passed with 12 warnings, 0 errors.
 - Phase 38 repair: `npm run test:unit` — passed, 101 files / 451 tests.
-- Phase 38 repair: `npm run test:security` — passed, 54 files passed / 1 skipped, 102 tests passed / 7 skipped.
+- Phase 38 repair: later local reruns superseded the earlier security counts; the current `npm run test:security` evidence is 55 files passed / 0 skipped and 112 tests passed / 0 skipped.
 - Phase 38 repair: `npm run test:adapter-contract` — passed, 4 files / 7 tests.
 - Phase 38 repair: `npm run build` — passed, 361 static pages generated; warning only for deprecated Next middleware convention.
 - Phase 38 repair: `npm run smoke` — passed.
@@ -171,7 +171,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 final hardening: `npm run db:generate` — passed after adding QA ledger `evidenceRefs`.
 - Phase 38 final hardening: `npm run db:migrate` — passed, applied `20260623_phase38_qa_ledger_evidence_refs`.
 - Phase 38 final hardening: focused QA ledger route contract test — passed, 1 file / 4 tests.
-- Phase 38 final hardening: `npm run test:security -- tests/security/full-testing-qa-no-fake-results.test.ts` — passed, 54 files passed / 1 skipped, 102 tests passed / 7 skipped.
+- Phase 38 final hardening: the focused QA no-fake-results security work was later subsumed into the full local security gate; current `npm run test:security` evidence is 55 files passed / 0 skipped and 112 tests passed / 0 skipped.
 - Phase 38 final hardening: focused `tests/e2e/a11y-audit.spec.ts` on fresh port 3100 — passed, 48 pages scanned, 0 violations, 48/48 passing.
 - Phase 38 final hardening: `npm run test-all` — passed as one combined command with safe local test env and Docker PostgreSQL.
 - Phase 38 evidence hardening: `git diff --check` passed; `npm run qa:matrix` passed and prints local evidence plus remaining production blockers; `npm run typecheck` passed.
