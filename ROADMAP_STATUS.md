@@ -82,6 +82,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 reports-upsells E2E hardening converted the skipped Phase 32 scaffold into runnable local Playwright coverage for reports summary copy, report/upsell safety messaging, report-builder shell, upsell opportunity cards, and offer-template table headers.
 - Phase 38 automation-webhooks E2E hardening converted the skipped Phase 29 scaffold into runnable local Playwright coverage for provider scaffolds, trigger/action mapping, dry-run test mode, subscription draft controls, and dead-letter/manual-fallback safety messaging.
 - Phase 38 admin-processing E2E hardening converted the skipped Phase 11 scaffold into runnable local Playwright coverage for pipeline summary copy, processing status messaging, run-summary shell, output-plan headers, and deterministic processing-step copy.
+- Phase 38 admin-delivery-archive E2E hardening converted the skipped Phase 12 scaffold into runnable local Playwright coverage for delivery archive planning copy, seeded ZIP/package checklist shells, file-naming preview, folder-tree output, and manifest preview headers; the local route also required the Next async dynamic-params fix now applied in `src/app/admin/jobs/[jobId]/delivery/page.tsx`.
 
 ## Files Changed
 
@@ -114,6 +115,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 reports-upsells E2E hardening updates include `tests/e2e/reports-upsells.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 automation-webhooks E2E hardening updates include `tests/e2e/automation-webhooks.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 - Phase 38 admin-processing E2E hardening updates include `tests/e2e/admin-processing.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
+- Phase 38 admin-delivery-archive E2E hardening updates include `src/app/admin/jobs/[jobId]/delivery/page.tsx`, `tests/e2e/admin-delivery-archive.spec.ts`, `CODEX_GAPS.md`, and `ROADMAP_STATUS.md`.
 
 ## Tests/Checks Run
 
@@ -171,6 +173,7 @@ Phase 39 — Replit Production Deployment
 - Phase 38 reports-upsells E2E hardening: `npx playwright test tests/e2e/reports-upsells.spec.ts --workers=1` passed, 1 test across the admin reports and upsells routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 automation-webhooks E2E hardening: `npx playwright test tests/e2e/automation-webhooks.spec.ts --workers=1` passed, 1 test across the automation overview, subscriptions, and dead-letter routes; `npm run typecheck` passed; `git diff --check` passed.
 - Phase 38 admin-processing E2E hardening: `npx playwright test tests/e2e/admin-processing.spec.ts --workers=1` passed, 1 test for the image-processing pipeline route; `npm run typecheck` passed; `git diff --check` passed.
+- Phase 38 admin-delivery-archive E2E hardening: `npx playwright test tests/e2e/admin-delivery-archive.spec.ts --workers=1` passed, 1 test for the delivery archive planning route after fixing async dynamic params; `npm run typecheck` passed after clearing stale generated `.next/dev/types`; `git diff --check` passed.
 
 ## Test Results
 
