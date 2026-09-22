@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    env:
+      # Dummy values so Prisma config / env loading works without real secrets.
+      # No step connects to a database or any external service.
+      DATABASE_URL: postgresql://user:pass@localhost:5432/listinglift
+      APP_URL: http://localhost:3000
+      SESSION_SECRET: ci-dummy-session-secret
+      ENCRYPTION_KEY: ci-dummy-encryption-key-16
+      UPLOAD_TOKEN_SECRET: ci-dummy-upload-token-secret
+      DELIVERY_TOKEN_SECRET: ci-dummy-delivery-token-secret
+      CHECKPOINT_DISABLE: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Node 20: Next.js 16 requires >= 20.9.0 (the repo's .nvmrc still says 18.17.0)
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate Prisma schema
+        run: npm run db:validate
+
+      - name: Generate Prisma client
+        run: npm run db:generate
+
+      - name: Lint
+        run: npm run lint
+
+      # The steps below are informational (continue-on-error): they fail on
+      # main today for pre-existing reasons documented in the PR. They stay
+      # wired so the signal is visible until the underlying issues are fixed.
+      - name: Typecheck (informational — pre-existing errors on main)
+        run: npm run typecheck
+        continue-on-error: true
+
+      - name: Unit tests (informational — pre-existing failures on main)
+        run: npm run test:unit
+        continue-on-error: true
+
+      - name: Build (informational — pre-existing break on main)
+        run: npm run build
+        continue-on-error: true
